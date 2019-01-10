@@ -79,16 +79,16 @@ client.on('message', msg => {
 	}
 	
 	//Music player
-	//TODO: Actually make it work
+	//TODO: Allow bot to read links as input and play from the link
 	else if (cmd === 'play') {
-		if (cmd.member.voiceChannel) {
-			cmd.member.voiceChannel.join()
+		if (msg.member.voiceChannel) {
+			msg.member.voiceChannel.join()
 				.then(connection => { // Connection is an instance of VoiceConnection
-					cmd.reply('I have successfully connected to the channel!');
+					msg.reply('I have successfully connected to the channel!');
 				})
-			.catch(console.log);
+				.catch(console.log);
 		} else {
-			cmd.reply('You need to join a voice channel first!');
+			msg.reply('You need to join a voice channel first!');
 		}
 	}
 	
@@ -205,7 +205,7 @@ client.on('message', msg => {
 				client.destroy();
 				break;
 			default:
-				console.log("No such command!");
+				msg.reply("No such command!");
 		}
 	}
 });
