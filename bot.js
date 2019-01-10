@@ -14,36 +14,25 @@ client.on('ready', () => {
 	client.user.setActivity(config.prefix + "help");
 });
 
-//Emojis and help commands
+//TODO: Refactor code, USE FUNCTIONS
+
 client.on('message', msg => {
 	if (msg.content[0] != (config.prefix) || msg.author.bot) {	//check for prefix and ID of caller
 		return;
 	}
+	
 	cmd = msg.content.slice(1);	//remove prefix
-	//msg.reply(cmd);
 	firstFourChar = cmd.substring(0, 4);
-	//msg.reply(firstFourChar);
-	//test = cmd.split(' ');
-	//msg.reply(test);
 	
 	//Dice roller
 	//Currently only supports rolls in the formal XdY + Z
 	//TODO: Output sum for single dice roll when rollFlavours
 	//TODO: Better reading of input to support lack of spaces and other formatting
+	
 	if (firstFourChar === 'roll') {
-		//msg.reply("why");
 		mainRoll = cmd.split(' ');
-		//msg.reply(mainRoll);
 		rollFlavour = mainRoll.slice(2).join(' ');
-		
-		/*
-		if (!rollFlavour) {
-			msg.reply("No rollFlavour");
-		} else {
-			msg.reply(rollFlavour);
-		}
-		*/
-		
+
 		sides = mainRoll[1];
 		rolls = 1;
 		
@@ -80,11 +69,13 @@ client.on('message', msg => {
 	
 	//Music player
 	//TODO: Allow bot to read links as input and play from the link
+	
 	else if (cmd === 'play') {
 		if (msg.member.voiceChannel) {
 			msg.member.voiceChannel.join()
 				.then(connection => { // Connection is an instance of VoiceConnection
-					msg.reply('I have successfully connected to the channel!');
+					//msg.reply('I have successfully connected to the channel!');
+					//const dispatcher = connection.playFile('C:/P/A/T/H.mp3');	 //play local files
 				})
 				.catch(console.log);
 		} else {
@@ -94,6 +85,7 @@ client.on('message', msg => {
 	
 	//Other commands, emoji, pingpong, debugging
 	//TODO: Refactor code to be more readable
+	
 	else {		
 		switch(cmd) {
 			case "help":
