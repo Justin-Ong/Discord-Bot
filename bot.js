@@ -1,6 +1,8 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.1.2
+//Version: 1.2.0
+
+//TODO: Refactor code, USE FUNCTIONS
 
 const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
@@ -15,7 +17,8 @@ client.on("ready", () => {
 	client.user.setActivity(config.prefix + "help");
 });
 
-//TODO: Refactor code, USE FUNCTIONS
+var playlist = playlist || [];	//set up variables for song playing
+var dispatcher = null;
 
 client.on("message", msg => {
 	if (msg.content[0] != (config.prefix) || msg.author.bot) {	//check for prefix and ID of caller to prevent loops and accidental calls
@@ -23,7 +26,8 @@ client.on("message", msg => {
 	}
 	
 	let cmd = msg.content.slice(1);	//remove prefix
-	let firstFourChar = cmd.substring(0, 4);	//dumb solution, replace later
+	let initialSplit = cmd.split(" ");
+	let firstWord = initialSplit[0];
 	
 	//Dice roller
 	//Currently only supports rolls in the formal XdY + Z
@@ -31,11 +35,10 @@ client.on("message", msg => {
 	//TODO: Correctly add sum for multiple rolls with rollFlavours
 	//TODO: Better reading of input to support lack of spaces and other formatting
 	
-	if (firstFourChar === "roll") {
+	if (firstWord === "roll") {
 		
-		let mainRoll = cmd.split(" ");
+		let mainRoll = initialSplit;
 		let rollFlavour = mainRoll.slice(2).join(" ");
-
 		let sides = mainRoll[1];
 		let rolls = 1;
 		
@@ -74,34 +77,36 @@ client.on("message", msg => {
 	}
 	
 	//Music player
-	//TODO: Allow for playlists to be added, fix song queue
+	//TODO: Allow for playlists to be added, bugfix queue
 	
-	else if (firstFourChar === "play") {
+	else if (firstWord === "play") {
 		
-		let temp = cmd.split(" ");
-		let url = temp[1];
-		var playlist = playlist || [];
-		
+		let url = initialSplit[1];
+
 		if (ytdl.validateURL(url)) {
 			
 			playlist.push(url);
+			console.log(playlist.length);
 			
 			if (msg.member.voiceChannel) {
-				msg.member.voiceChannel.join()
-					.then(connection => { // Connection is an instance of VoiceConnection
-						let info = ytdl.getInfo(url);
-						let dispatcher = connection.playStream(ytdl(url, {filter: 'audioonly'}));
-						//msg.reply("I have successfully connected to the channel!");
-						//const dispatcher = connection.playFile("C:/P/A/T/H.mp3");	 //play local files
-						
-						dispatcher.on("end", end => {
-							if (playlist.length) {
-								playlist.shift();
-								dispatcher = connection.playStream(ytdl(playlist[0], {filter: 'audioonly'}));
-							}
-						});
-					})
-					.catch(console.log);
+				if (dispatcher === null || !dispatcher.speaking) {
+					msg.member.voiceChannel.join()
+						.then(connection => {
+							
+							dispatcher = connection.playStream(ytdl(playlist[0], {filter: "audioonly"}));
+							//msg.reply("I have successfully connected to the channel!");
+							//const dispatcher = connection.playFile("C:/P/A/T/H.mp3");	 //play local files
+							
+							dispatcher.on("end", () => {
+								if (playlist.length) {
+									playlist.shift();
+									console.log(playlist.length);
+									dispatcher = connection.playStream(ytdl(playlist[0], {filter: "audioonly"}));
+								}
+							})
+						})
+						.catch(console.log);
+				}
 			}
 			else {
 				msg.reply("You need to join a voice channel first!");
@@ -115,7 +120,7 @@ client.on("message", msg => {
 	//Other commands, emoji, pingpong, debugging
 	//TODO: Refactor code to be more readable
 	
-	else {		
+	else {
 		switch(cmd) {
 			case "help":
 				msg.reply("The following commands are valid: roll, play (YT videos), ping, pong, sleepysparks, sparksshine, rindouyay, jesus, thisisfine, butwhy, diabetes, 2meirl4meirl, thinking, pingtest, logout");
