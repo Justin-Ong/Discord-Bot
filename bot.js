@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.3.1
+//Version: 1.3.2
 
 //TODO: Refactor code, possibly split into various files? Also consider classes.
 
@@ -19,6 +19,7 @@ client.on("ready", () => {
 
 var playlist = playlist || [];  //set up variables for song playing
 var dispatcher = null;
+var isPaused = false;
 
 client.on("message", msg => {
     if (msg.content[0] != (config.prefix) || msg.author.bot) {  //check for prefix and ID of caller to prevent loops and accidental calls
@@ -29,10 +30,9 @@ client.on("message", msg => {
     let initialSplit = cmd.split(" ");
     let firstWord = initialSplit[0];
     
+    //Dice roller
+    //TODO: Use custom parser instead of eval()
     if (firstWord === "roll") {
-        //Dice roller
-        //TODO: Use custom parser instead of eval()
-        
         let text = cmd.replace(/\s+/g, "");   //remove any excess whitespace
         let input = text.slice(4);  //remove "roll"
         let format = RegExp(/([1-9][0-9]*)(d)([1-9][0-9]*)/);   //find XdY
@@ -67,50 +67,72 @@ client.on("message", msg => {
         }
         return msg.reply(ans);
     }
+    
+    //Music player
+    //TODO: Stop, List
+    //TODO: Allow for playlists to be added, bugfix queue
+    //why does adding songs to queue sometimes lag the bot and sometimes not work
     else if (firstWord === "play") {
-        //Music player
-        //TODO: Pause, Resume, Stop, List
-        //TODO: Allow for playlists to be added, bugfix queue
-        //why does adding songs to queue sometimes lag the bot and sometimes not work
-            
-        let url = initialSplit[1];
+        if (isPaused) {
+            dispatcher.resume()
+        }
+        else {
+            let url = initialSplit[1];
 
-        if (ytdl.validateURL(url)) {
-            
-            playlist.push(url);
-            console.log(playlist.length);
-            
-            if (msg.member.voiceChannel) {
-                if (dispatcher === null || !dispatcher.speaking) {
-                    msg.member.voiceChannel.join()
-                        .then(connection => {
-                            
-                            dispatcher = connection.playStream(ytdl(playlist[0], {filter: "audioonly"}));
-                            //msg.reply("I have successfully connected to the channel!");
-                            //const dispatcher = connection.playFile("C:/P/A/T/H.mp3");  //play local files
-                            
-                            dispatcher.on("end", () => {
-                                if (playlist.length) {
-                                    playlist.shift();
-                                    console.log(playlist.length);
-                                    dispatcher = connection.playStream(ytdl(playlist[0], {filter: "audioonly"}));
-                                }
+            if (ytdl.validateURL(url)) {
+                
+                playlist.push(url);
+                console.log(playlist.length);
+                
+                if (msg.member.voiceChannel) {
+                    if (dispatcher === null || !dispatcher.speaking) {
+                        msg.member.voiceChannel.join()
+                            .then(connection => {
+                                
+                                isPaused = false;
+                                
+                                dispatcher = connection.playStream(ytdl(playlist[0], {filter: "audioonly"}));
+                                //msg.reply("I have successfully connected to the channel!");
+                                //const dispatcher = connection.playFile("C:/P/A/T/H.mp3");  //play local files
+                                
+                                dispatcher.on("end", () => {
+                                    if (playlist.length) {
+                                        playlist.shift();
+                                        console.log(playlist.length);
+                                        dispatcher = connection.playStream(ytdl(playlist[0], {filter: "audioonly"}));
+                                    }
+                                })
                             })
-                        })
-                        .catch(console.log);
+                            .catch(console.log);
+                    }
+                }
+                else {
+                    msg.reply("You need to join a voice channel first!");
                 }
             }
             else {
-                msg.reply("You need to join a voice channel first!");
+                msg.reply("Your URL is invalid!");
             }
         }
-        else {
-            msg.reply("Your URL is invalid!");
-        }
     }
+    else if (firstWord === "pause") {
+        isPaused = true;
+        dispatcher.pause();
+    }
+/*     else if (firstWord === "skip") {
+        dispatcher.end();
+    }
+    else if (firstWord === "stop") {
+        playlist = [playlist.shift];
+        dispatcher.end();
+        playlist.length = 0;
+    } 
+    else if (firstWord === "list") {
+        msg.channel.send(playlist.join(", "));
+    } */
+    
+    //Other commands, emoji, pingpong, debugging
     else {
-        //Other commands, emoji, pingpong, debugging
-        
         switch(cmd) {
             case "help":
                 msg.reply("The following commands are valid: roll, play (YT videos), ping, pong, sleepysparks, sparksshine, rindouyay, jesus, thisisfine, butwhy, diabetes, 2meirl4meirl, thinking, pingtest, logout");
