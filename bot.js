@@ -1,8 +1,8 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.3.0
+//Version: 1.3.1
 
-//TODO: Refactor code, possibly split into various files?
+//TODO: Refactor code, possibly split into various files? Also consider classes.
 
 const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
@@ -110,7 +110,6 @@ client.on("message", msg => {
     }
     else {
         //Other commands, emoji, pingpong, debugging
-        //TODO: Refactor code to be more readable
         
         switch(cmd) {
             case "help":
@@ -123,94 +122,49 @@ client.on("message", msg => {
                 msg.reply("ping!");
                 break;
             case "sleepysparks":
-                try {
-                    msg.channel.send("", {
-                        "files": ["./Emojis/SleepySparks.gif"]
-                    });
-                }
-                catch (e) {
-                    console.error(e);
-                }
+                msg.channel.send("", {
+                    "files": ["./Emojis/SleepySparks.gif"]
+                });
                 break;
             case "sparksshine":
-                try {
-                    msg.channel.send("", {
-                        "files": ["./Emojis/SparksShine.gif"]
-                    });
-                }
-                catch (e) {
-                    console.error(e);
-                }
+                msg.channel.send("", {
+                    "files": ["./Emojis/SparksShine.gif"]
+                });
                 break;
             case "rindouyay":
-                try {
-                    msg.channel.send("", {
-                        "files": ["./Emojis/RindouYay.gif"]
-                    });
-                }
-                catch (e) {
-                    console.error(e);
-                }
+                msg.channel.send("", {
+                    "files": ["./Emojis/RindouYay.gif"]
+                });
                 break;
             case "jesus":
-                try {
-                    msg.channel.send("", {
-                        "files": ["./Emojis/JCKid.gif"]
-                    });
-                }
-                catch (e) {
-                    console.error(e);
-                }
+                msg.channel.send("", {
+                    "files": ["./Emojis/JCKid.gif"]
+                });
                 break;
             case "thisisfine":
-                try {
-                    msg.channel.send("", {
-                        "files": ["./Emojis/ThisIsFine.gif"]
-                    });
-                }
-                catch (e) {
-                    console.error(e);
-                }
+                msg.channel.send("", {
+                    "files": ["./Emojis/ThisIsFine.gif"]
+                });
                 break;
             case "butwhy":
-                try {
-                    msg.channel.send("", {
-                        "files": ["./Emojis/ButWhy.gif"]
-                    });
-                }
-                catch (e) {
-                    console.error(e);
-                }
+                msg.channel.send("", {
+                    "files": ["./Emojis/ButWhy.gif"]
+                });
                 break;
             case "diabetes":
-                try {
-                    msg.channel.send("", {
-                        "files": ["./Emojis/Diabetes.gif"]
-                    });
-                }
-                catch (e) {
-                    console.error(e);
-                }
+                msg.channel.send("", {
+                    "files": ["./Emojis/Diabetes.gif"]
+                });
                 break;
             case "2meirl4meirl":
-                try {
-                    msg.channel.send("", {
-                        "files": ["./Emojis/2meirl4meirl.gif"]
-                    });
-                }
-                catch (e) {
-                    console.error(e);
-                }
+                msg.channel.send("", {
+                    "files": ["./Emojis/2meirl4meirl.gif"]
+                });
                 break;
             case "thinking":
-                try {
-                    msg.channel.send("", {
-                        "files": ["./Emojis/ThinkingEmoji.gif"]
-                    });
-                }
-                catch (e) {
-                    console.error(e);
-                }
+                msg.channel.send("", {
+                    "files": ["./Emojis/ThinkingEmoji.gif"]
+                });
                 break;
             case "pingtest":
                 msg.channel.send("Pinging...").then(sent => {
