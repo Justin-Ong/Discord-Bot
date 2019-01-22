@@ -1,43 +1,56 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.3.2
+//Version: 1.4.0
 
-//TODO: Refactor code, possibly split into various files? Also consider classes.
+//TODO: Refactor code, possibly split into various files?
 
 const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
 const config = require("./config.json");
-const fs = require("fs");
 const client = new Discord.Client();
 
 //login using token defined in config.json
 client.login(config.token).then(loginSuccess, loginFailure);
 
-client.on("ready", () => {
-    client.user.setActivity(config.prefix + "help");
-});
-
-var playlist = playlist || [];  //set up variables for song playing
-var dispatcher = null;
-var isPaused = false;
-
-client.on("message", msg => {
-    if (msg.content[0] != (config.prefix) || msg.author.bot) {  //check for prefix and ID of caller to prevent loops and accidental calls
-        return;
+//defining Controller class to handle user input
+class Controller {
+    constructor() {
+        this.playlist = [];  //set up variables for song playing
+        this.dispatcher = null;
+        this.isPaused = false;
+        this.currInput = "";
     }
     
-    let cmd = msg.content.slice(1); //remove prefix
-    let initialSplit = cmd.split(" ");
-    let firstWord = initialSplit[0];
-    
+    //Initial reading of input
+    readInput(msg) {
+        let cmd = msg.content.slice(1); //remove prefix
+        let initialSplit = cmd.split(" ");
+        let firstWord = initialSplit[0];    //workaround because startswith() is for some reason not supported
+        
+        if (firstWord === "roll") {
+            this.diceRoller(msg);
+        }
+        else if (firstWord === "play") {
+            let cmd = msg.content.slice(1);
+            let initialSplit = cmd.split(" ");
+            let song = initialSplit[1];
+            
+            this.musicPlayer(msg, song);
+        }
+        else {
+            this.cmdHandler(msg);
+        }
+    }
+
     //Dice roller
     //TODO: Use custom parser instead of eval()
-    if (firstWord === "roll") {
-        let text = cmd.replace(/\s+/g, "");   //remove any excess whitespace
-        let input = text.slice(4);  //remove "roll"
+    diceRoller(msg) {
+        let input = msg.content.slice(1);
+        let text = input.replace(/\s+/g, "");   //remove any whitespace
+        let temp = text.slice(4);  //remove "roll"
         let format = RegExp(/([1-9][0-9]*)(d)([1-9][0-9]*)/);   //find XdY
-        let mainRoll = format.exec(input);
-        let rollFlavour = input.slice(mainRoll[0].length);
+        let mainRoll = format.exec(temp);
+        let rollFlavour = temp.slice(mainRoll[0].length);
 
         if (mainRoll === null) {
             msg.reply("Invalid Input!");
@@ -69,39 +82,23 @@ client.on("message", msg => {
     }
     
     //Music player
-    //TODO: Stop, List
     //TODO: Allow for playlists to be added, bugfix queue
     //why does adding songs to queue sometimes lag the bot and sometimes not work
-    else if (firstWord === "play") {
-        if (isPaused) {
-            dispatcher.resume()
+    musicPlayer(msg, song) {
+        if (this.isPaused) {
+            this.isPaused = false;
+            this.dispatcher.resume();
         }
         else {
-            let url = initialSplit[1];
-
-            if (ytdl.validateURL(url)) {
-                
-                playlist.push(url);
-                console.log(playlist.length);
-                
+            if (ytdl.validateURL(song)) {
                 if (msg.member.voiceChannel) {
-                    if (dispatcher === null || !dispatcher.speaking) {
+                    this.playlist.push(song);
+                    console.log(this.playlist.length + " songs in queue");
+                    
+                    if (this.dispatcher === null || !this.dispatcher.speaking) {
                         msg.member.voiceChannel.join()
-                            .then(connection => {
-                                
-                                isPaused = false;
-                                
-                                dispatcher = connection.playStream(ytdl(playlist[0], {filter: "audioonly"}));
-                                //msg.reply("I have successfully connected to the channel!");
-                                //const dispatcher = connection.playFile("C:/P/A/T/H.mp3");  //play local files
-                                
-                                dispatcher.on("end", () => {
-                                    if (playlist.length) {
-                                        playlist.shift();
-                                        console.log(playlist.length);
-                                        dispatcher = connection.playStream(ytdl(playlist[0], {filter: "audioonly"}));
-                                    }
-                                })
+                            .then(connection => {                            
+                                this.play(connection);
                             })
                             .catch(console.log);
                     }
@@ -115,27 +112,70 @@ client.on("message", msg => {
             }
         }
     }
-    else if (firstWord === "pause") {
-        isPaused = true;
-        dispatcher.pause();
+    
+    play(connection) {        
+        console.log("Playing " + this.playlist[0]);
+        console.log(this.playlist.length + " songs in queue");
+        
+        this.dispatcher = connection.playStream(ytdl(this.playlist[0], {filter: "audioonly"}));
+        this.dispatcher.on("end", () => {
+            if (this.playlist.length) {
+                this.playlist.shift();
+                this.play(connection);
+            }
+        });
     }
-/*     else if (firstWord === "skip") {
-        dispatcher.end();
-    }
-    else if (firstWord === "stop") {
-        playlist = [playlist.shift];
-        dispatcher.end();
-        playlist.length = 0;
-    } 
-    else if (firstWord === "list") {
-        msg.channel.send(playlist.join(", "));
-    } */
     
     //Other commands, emoji, pingpong, debugging
-    else {
+    cmdHandler(msg) {
+        let cmd = msg.content.slice(1);
+        
         switch(cmd) {
             case "help":
-                msg.reply("The following commands are valid: roll, play (YT videos), ping, pong, sleepysparks, sparksshine, rindouyay, jesus, thisisfine, butwhy, diabetes, 2meirl4meirl, thinking, pingtest, logout");
+                msg.reply("The following commands are valid: roll, play (YT videos), ping, pong, sleepysparks, " +
+                          "sparksshine, rindouyay, jesus, thisisfine, butwhy, diabetes, 2meirl4meirl, thinking, " +
+                          "pingtest, logout"
+                          );
+                break;
+            case "pause":
+                if (!this.playlist.length) {
+                    msg.reply("there are no songs in the queue!");
+                }
+                else if (this.isPaused) {
+                    msg.reply("the player is already paused!");
+                }
+                else {
+                    msg.reply("the player has been paused.");
+                    this.isPaused = true;
+                    this.dispatcher.pause();
+                }
+                break;
+            case "skip":
+                if (!this.playlist.length) {
+                    msg.reply("there are no songs in the queue!");
+                }
+                else {
+                    msg.reply("skipped!");
+                    this.dispatcher.end();
+                }
+                break;
+            case "stop":
+                if (!this.playlist.length) {
+                    msg.reply("nothing is playing!");
+                }
+                else {
+                    msg.reply("the player has been stopped!");
+                    this.playlist.length = 0;
+                    this.dispatcher.end();
+                }
+                break;
+            case "list":
+                if (!this.playlist.length) {
+                    msg.reply("there are no songs in the queue!");
+                }
+                else {
+                    msg.channel.send(this.playlist.join(", "));
+                }
                 break;
             case "ping":
                 msg.reply("pong!");
@@ -201,6 +241,22 @@ client.on("message", msg => {
                 msg.reply("No such command!");
         }
     }
+}
+
+
+//create Controller
+controller = new Controller();
+
+client.on("ready", () => {
+    client.user.setActivity(config.prefix + "help");
+});
+
+client.on("message", msg => {
+    //check for prefix and ID of caller to prevent loops and accidental calls
+    if (msg.content[0] != (config.prefix) || msg.author.bot) {  
+        return;
+    }
+    controller.readInput(msg);
 });
 
 function loginSuccess(result) {
@@ -210,3 +266,7 @@ function loginSuccess(result) {
 function loginFailure(error) {
     console.log("Failed to log in! Close this window and try again.");
 }
+
+client.on("error", (e) => console.error(e));
+client.on("warn", (e) => console.warn(e));
+client.on("debug", (e) => console.info(e));
