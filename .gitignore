@@ -44,4 +44,4 @@ node_modules/
 ProfilePic.jpg
 package-lock.json
 config.json
-autostart.bat
+launcher.bat
