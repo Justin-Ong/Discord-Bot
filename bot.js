@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.4.0
+//Version: 1.4.1
 
 //TODO: Refactor code, possibly split into various files?
 
@@ -33,7 +33,7 @@ class Controller {
         else if (firstWord === "play") {
             let cmd = msg.content.slice(1);
             let initialSplit = cmd.split(" ");
-            let song = initialSplit[1];
+            let song = initialSplit[1] || "";
             
             this.musicPlayer(msg, song);
         }
@@ -85,31 +85,25 @@ class Controller {
     //TODO: Allow for playlists to be added, bugfix queue
     //why does adding songs to queue sometimes lag the bot and sometimes not work
     musicPlayer(msg, song) {
-        if (this.isPaused) {
-            this.isPaused = false;
-            this.dispatcher.resume();
-        }
-        else {
-            if (ytdl.validateURL(song)) {
-                if (msg.member.voiceChannel) {
-                    this.playlist.push(song);
-                    console.log(this.playlist.length + " songs in queue");
-                    
-                    if (this.dispatcher === null || !this.dispatcher.speaking) {
-                        msg.member.voiceChannel.join()
-                            .then(connection => {                            
-                                this.play(connection);
-                            })
-                            .catch(console.log);
-                    }
-                }
-                else {
-                    msg.reply("You need to join a voice channel first!");
+        if (ytdl.validateURL(song)) {
+            if (msg.member.voiceChannel) {
+                this.playlist.push(song);
+                console.log(this.playlist.length + " songs in queue");
+                
+                if (this.dispatcher === null || !this.dispatcher.speaking) {
+                    msg.member.voiceChannel.join()
+                        .then(connection => {                            
+                            this.play(connection);
+                        })
+                        .catch(console.log);
                 }
             }
             else {
-                msg.reply("Your URL is invalid!");
+                msg.reply("You need to join a voice channel first!");
             }
+        }
+        else {
+            msg.reply("Your URL is invalid!");
         }
     }
     
@@ -132,9 +126,9 @@ class Controller {
         
         switch(cmd) {
             case "help":
-                msg.reply("The following commands are valid: roll, play (YT videos), ping, pong, sleepysparks, " +
-                          "sparksshine, rindouyay, jesus, thisisfine, butwhy, diabetes, 2meirl4meirl, thinking, " +
-                          "pingtest, logout"
+                msg.reply("The following commands are valid: roll, play (YT videos), pause, resume, stop, skip, " +
+                          "ping, pong, sleepysparks, sparksshine, rindouyay, jesus, thisisfine, butwhy, diabetes, " +
+                          "2meirl4meirl, thinking, pingtest, logout"
                           );
                 break;
             case "pause":
@@ -148,6 +142,15 @@ class Controller {
                     msg.reply("the player has been paused.");
                     this.isPaused = true;
                     this.dispatcher.pause();
+                }
+                break;
+            case "resume":
+                if (!this.isPaused || !this.playlist.length) {
+                    msg.reply("nothing is paused!");
+                }
+                else {
+                    this.isPaused = false;
+                    this.dispatcher.resume();
                 }
                 break;
             case "skip":
