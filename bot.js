@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.4.1
+//Version: 1.4.2
 
 //TODO: Refactor code, possibly split into various files?
 
@@ -156,6 +156,11 @@ class Controller {
             case "skip":
                 if (!this.playlist.length) {
                     msg.reply("there are no songs in the queue!");
+                }
+                else if (this.playlist.length === 1) {
+                    msg.reply("skipped!");
+                    this.playlist.length = 0;
+                    this.dispatcher.end();
                 }
                 else {
                     msg.reply("skipped!");
