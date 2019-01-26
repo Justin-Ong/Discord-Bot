@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.4.2
+//Version: 1.4.3
 
 //TODO: Refactor code, possibly split into various files?
 
@@ -71,7 +71,7 @@ class Controller {
         sum = eval(sum + rollFlavour);
         
         let tempResults = rollResults.join(", ");
-        let tempFlavour = rollFlavour.split("").join(" ");
+        let tempFlavour = rollFlavour.split(/([+\-\*\/])/).join(" ");
         
         let ans = "[" + tempResults + "] " + tempFlavour + ", Total Sum is: " + sum;
         
@@ -275,6 +275,7 @@ function loginFailure(error) {
     console.log("Failed to log in! Close this window and try again.");
 }
 
-client.on("error", (e) => console.error(e));
-client.on("warn", (e) => console.warn(e));
-client.on("debug", (e) => console.info(e));
+//for debugging, uncomment to enable
+// client.on("error", (e) => console.error(e));
+// client.on("warn", (e) => console.warn(e));
+// client.on("debug", (e) => console.info(e));
