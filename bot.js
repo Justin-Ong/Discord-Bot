@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.4.3
+//Version: 1.4.4
 
 //TODO: Refactor code, possibly split into various files?
 
@@ -48,7 +48,7 @@ class Controller {
         let input = msg.content.slice(1);
         let text = input.replace(/\s+/g, "");   //remove any whitespace
         let temp = text.slice(4);  //remove "roll"
-        let format = RegExp(/([1-9][0-9]*)(d)([1-9][0-9]*)/);   //find XdY
+        let format = RegExp(/(\d*)(d)(\d*)/);   //find XdY
         let mainRoll = format.exec(temp);
         let rollFlavour = temp.slice(mainRoll[0].length);
 
