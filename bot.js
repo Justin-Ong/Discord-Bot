@@ -1,15 +1,14 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.5.0
+//Version: 1.5.1
 
 //TODO: Refactor code, possibly split into various files?
 
-const Booru = require("booru")
+const Booru = require("booru");
 const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
 const config = require("./config.json");
 const client = new Discord.Client();
-const siteArray = ['e621.net', 'e926.net', 'konachan.com', 'konachan.net', 'yande.re', 'safebooru.org', 'tbib.org', 'lolibooru.moe']
 
 //login using token defined in config.json
 client.login(config.token).then(loginSuccess, loginFailure);
@@ -40,7 +39,7 @@ class Controller {
             this.musicPlayer(msg, song);
         }
 		else if (firstWord === "neko") {
-			this.neko(msg)
+			this.neko(msg);
 		}
         else {
             this.cmdHandler(msg);
@@ -128,10 +127,11 @@ class Controller {
 	//Booru image scraper
 	//TODO: Look into improving speed
 	neko(msg) {
+		let siteArray = config.sites;
 		let site = siteArray[Math.floor(Math.random() * siteArray.length)];
 		Booru.search(site, ['nekomimi', 'rating:safe', '-comic', '-text'], {limit: 1, random: true})
 			.then(posts => {
-				var url = posts[0].fileUrl
+				var url = posts[0].fileUrl;
 					console.log('Sending neko: ' + url + ' at ' + Date());
 					msg.channel.send({
 						file:url
@@ -218,9 +218,6 @@ class Controller {
                     msg.channel.send(this.playlist.join(", "));
                 }
                 break;
-			// case "neko":
-				// neko();
-				// break;
             case "ping":
                 msg.reply("pong!");
                 break;
@@ -301,8 +298,8 @@ client.on("message", msg => {
     if (msg.content[0] != (config.prefix) || msg.author.bot) {  
         return;
     }
-    controller.readInput(msg)
-})
+    controller.readInput(msg);
+});
 
 function loginSuccess(result) {
     console.log("Logged in as " + client.user.username + "!");

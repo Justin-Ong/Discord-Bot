@@ -1,4 +1,5 @@
 {
 	"token":"Your Token",
-	"prefix":"$"
+	"prefix":"$",
+	"sites":["e926.net", "safebooru.org"]
 }
