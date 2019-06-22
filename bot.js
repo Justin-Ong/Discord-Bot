@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.5.1
+//Version: 1.5.2
 
 //TODO: Refactor code, possibly split into various files?
 
@@ -112,16 +112,21 @@ class Controller {
     }
     
     play(connection) {        
-        console.log("Playing " + this.playlist[0]);
-        console.log(this.playlist.length + " songs in queue");
-        
-        this.dispatcher = connection.playStream(ytdl(this.playlist[0], {filter: "audioonly"}));
-        this.dispatcher.on("end", () => {
-            if (this.playlist.length) {
-                this.playlist.shift();
-                this.play(connection);
-            }
-        });
+		if (this.playlist.length > 0) {
+			console.log("Playing " + this.playlist[0]);
+			console.log(this.playlist.length + " songs in queue");
+			
+			this.dispatcher = connection.playStream(ytdl(this.playlist[0], {filter: "audioonly"}));
+			this.dispatcher.on("end", () => {
+				if (this.playlist.length) {
+					this.playlist.shift();
+					this.play(connection);
+				}
+			});
+		}
+		else {
+			console.log("Queue is empty!")
+		}
     }
     
 	//Booru image scraper
@@ -131,13 +136,13 @@ class Controller {
 		let site = siteArray[Math.floor(Math.random() * siteArray.length)];
 		Booru.search(site, ['nekomimi', 'rating:safe', '-comic', '-text'], {limit: 1, random: true})
 			.then(posts => {
-				var url = posts[0].fileUrl;
-					console.log('Sending neko: ' + url + ' at ' + Date());
+				var imageUrl = posts[0].fileUrl;
+					console.log('Sending neko: ' + imageUrl + ' at ' + Date());
 					msg.channel.send({
-						file:url
+						file:imageUrl
 					})
 					.catch(err => {
-						console.log('Error sending image from: ' + url);
+						console.log('Error sending image from: ' + imageUrl);
 						console.log('retrying...');
 						this.neko(msg);
 					});
