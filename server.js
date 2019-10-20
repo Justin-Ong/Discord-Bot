@@ -31,10 +31,10 @@ class Controller {
         if (firstWord === "roll") {
             this.diceRoller(msg);
         }
-        else if (firstWord === "play") {
-            let cmd = msg.content.slice(1);
-            let initialSplit = cmd.split(" ");
-            let song = initialSplit[1] || "";
+        else if (firstWord === "play" || firstWord === "p") {
+            let cmd = msg.content.slice(1 + firstWord.length);
+            let initialSplit = cmd.trim;
+            let song = initialSplit || "";
             
             this.musicPlayer(msg, song);
         }
@@ -92,6 +92,7 @@ class Controller {
         if (ytdl.validateURL(song)) {
             if (msg.member.voiceChannel) {
                 this.playlist.push(song);
+                console.log(this.playlist.length + " songs in queue");
                 
                 if (this.dispatcher === null || !this.dispatcher.speaking) {
                     msg.member.voiceChannel.join()
