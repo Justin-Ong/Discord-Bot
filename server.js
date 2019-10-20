@@ -31,10 +31,10 @@ class Controller {
         if (firstWord === "roll") {
             this.diceRoller(msg);
         }
-        else if (firstWord === "play") {
-            let cmd = msg.content.slice(1);
-            let initialSplit = cmd.split(" ");
-            let song = initialSplit[1] || "";
+        else if (firstWord === "play" || firstWord === "p") {
+            let cmd = msg.content.slice(1 + firstWord.length);
+            let initialSplit = cmd.trim();
+            let song = initialSplit || "";
             
             this.musicPlayer(msg, song);
         }
@@ -52,7 +52,7 @@ class Controller {
         let input = msg.content.slice(1);
         let text = input.replace(/\s+/g, "");   //remove any whitespace
         let temp = text.slice(4);  //remove "roll"
-        let format = RegExp(/(\d*)(d)(\d*)/);   //find XdY
+        let format = RegExp(/(\d*)(d)(\d*)/g);   //find XdY
         let mainRoll = format.exec(temp);
         let rollFlavour = temp.slice(mainRoll[0].length);
 
@@ -92,6 +92,7 @@ class Controller {
         if (ytdl.validateURL(song)) {
             if (msg.member.voiceChannel) {
                 this.playlist.push(song);
+                console.log(this.playlist.length + " songs in queue");
                 
                 if (this.dispatcher === null || !this.dispatcher.speaking) {
                     msg.member.voiceChannel.join()
@@ -110,10 +111,10 @@ class Controller {
         }
     }
     
-    play(connection) {        
+    play(connection) {
 		if (this.playlist.length > 0) {
 			console.log("Playing " + this.playlist[0]);
-			console.log(this.playlist.length + " songs in queue");
+      console.log(this.playlist.length + " songs in queue");
 			
 			this.dispatcher = connection.playStream(ytdl(this.playlist[0], {filter: "audioonly"}));
 			this.dispatcher.on("end", () => {
