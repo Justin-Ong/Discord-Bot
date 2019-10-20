@@ -114,16 +114,18 @@ class Controller {
     play(connection) {        
         if (this.playlist.length > 0) {
           console.log("Playing " + this.playlist[0]);
-          console.log(ytdl.getInfo(this.playlist[0]));
           console.log(this.playlist.length + " songs in queue");
+          
+          let video = ytdl.getBasicInfo(this.playlist[0]);
 
-          this.dispatcher = connection.playStream(ytdl(this.playlist[0], {filter: "audioonly"}));
-          this.dispatcher.on("end", () => {
-            if (this.playlist.length) {
-              this.playlist.shift();
-              this.play(connection);
-            }
-          });
+          this.dispatcher = connection.playStream(ytdl(this.playlist[0], {filter: "audioonly"}))
+            .on("end", () => {
+              if (this.playlist.length) {
+                this.playlist.shift();
+                this.play(connection);
+              }
+            })
+            .on("error", console.error);
         }
         else {
           console.log("Queue is empty!")
@@ -183,7 +185,7 @@ class Controller {
                     this.dispatcher.pause();
                 }
                 break;
-            case "resume":
+           case "resume":
                 if (!this.isPaused || !this.playlist.length) {
                     msg.reply("nothing is paused!");
                 }
