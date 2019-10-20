@@ -35,7 +35,7 @@ class Controller {
             let cmd = msg.content.slice(1 + firstWord.length);
             let initialSplit = cmd.trim();
             let song = initialSplit || "";
-            
+
             this.musicPlayer(msg, song);
         }
 		else if (firstWord === "neko") {
@@ -196,7 +196,7 @@ class Controller {
                     msg.reply("there are no songs in the queue!");
                 }
                 else if (this.playlist.length === 1) {
-                    msg.reply("skipped!");
+                    msg.reply("skipped! No more songs in queue.");
                     this.playlist.length = 0;
                     this.dispatcher.end();
                 }
