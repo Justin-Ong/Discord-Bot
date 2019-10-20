@@ -33,7 +33,7 @@ class Controller {
         }
         else if (firstWord === "play" || firstWord === "p") {
             let cmd = msg.content.slice(1 + firstWord.length);
-            let initialSplit = cmd.trim;
+            let initialSplit = cmd.trim();
             let song = initialSplit || "";
             
             this.musicPlayer(msg, song);
@@ -112,21 +112,22 @@ class Controller {
     }
     
     play(connection) {        
-		if (this.playlist.length > 0) {
-			console.log("Playing " + this.playlist[0]);
-			console.log(this.playlist.length + " songs in queue");
-			
-			this.dispatcher = connection.playStream(ytdl(this.playlist[0], {filter: "audioonly"}));
-			this.dispatcher.on("end", () => {
-				if (this.playlist.length) {
-					this.playlist.shift();
-					this.play(connection);
-				}
-			});
-		}
-		else {
-			console.log("Queue is empty!")
-		}
+        if (this.playlist.length > 0) {
+          console.log("Playing " + this.playlist[0]);
+          console.log(ytdl.getInfo(this.playlist[0]));
+          console.log(this.playlist.length + " songs in queue");
+
+          this.dispatcher = connection.playStream(ytdl(this.playlist[0], {filter: "audioonly"}));
+          this.dispatcher.on("end", () => {
+            if (this.playlist.length) {
+              this.playlist.shift();
+              this.play(connection);
+            }
+          });
+        }
+        else {
+          console.log("Queue is empty!")
+        }
     }
     
 	//Booru image scraper
@@ -306,6 +307,6 @@ function loginFailure(error) {
 }
 
 //for debugging, uncomment to enable
-// client.on("error", (e) => console.error(e));
-// client.on("warn", (e) => console.warn(e));
-// client.on("debug", (e) => console.info(e));
+//client.on("error", (e) => console.error(e));
+//client.on("warn", (e) => console.warn(e));
+//client.on("debug", (e) => console.info(e));
