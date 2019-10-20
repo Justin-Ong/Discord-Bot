@@ -229,49 +229,40 @@ class Controller {
                 msg.reply("ping!");
                 break;
             case "sleepysparks":
-                msg.channel.send("", {
-                    "files": ["./Emojis/SleepySparks.gif"]
-                });
+                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FSleepySparks.gif?v=1571569391112");
+                msg.channel.send({ embed });
                 break;
             case "sparksshine":
-                msg.channel.send("", {
-                    "files": ["./Emojis/SparksShine.gif"]
-                });
+                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FSparksShine.gif?v=1571569401801");
+                msg.channel.send({ embed });
                 break;
             case "rindouyay":
-                msg.channel.send("", {
-                    "files": ["./Emojis/RindouYay.gif"]
-                });
+                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FRindouYay.gif?v=1571569402211");
+                msg.channel.send({ embed });
                 break;
             case "jesus":
-                msg.channel.send("", {
-                    "files": ["./Emojis/JCKid.gif"]
-                });
+                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FJCKid.gif?v=1571569403502");
+                msg.channel.send({ embed });
                 break;
             case "thisisfine":
-                msg.channel.send("", {
-                    "files": ["./Emojis/ThisIsFine.gif"]
-                });
+                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FThisIsFine.gif?v=1571569445819");
+                msg.channel.send({ embed });
                 break;
             case "butwhy":
-                msg.channel.send("", {
-                    "files": ["./Emojis/ButWhy.gif"]
-                });
+                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FButWhy.gif?v=1571569461101");
+                msg.channel.send({ embed });
                 break;
             case "diabetes":
-                msg.channel.send("", {
-                    "files": ["./Emojis/Diabetes.gif"]
-                });
+                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FDiabetes.gif?v=1571569404078");
+                msg.channel.send({ embed });
                 break;
             case "2meirl4meirl":
-                msg.channel.send("", {
-                    "files": ["./Emojis/2meirl4meirl.gif"]
-                });
+                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2F2meirl4meirl.gif?v=1571569377639");
+                msg.channel.send({ embed });
                 break;
             case "thinking":
-                msg.channel.send("", {
-                    "files": ["./Emojis/ThinkingEmoji.gif"]
-                });
+                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FThinkingEmoji.gif?v=1571569423231");
+                msg.channel.send({ embed });
                 break;
             case "pingtest":
                 msg.channel.send("Pinging...").then(sent => {
