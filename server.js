@@ -115,8 +115,6 @@ class Controller {
         if (this.playlist.length > 0) {
           console.log("Playing " + this.playlist[0]);
           console.log(this.playlist.length + " songs in queue");
-          
-          let video = ytdl.getBasicInfo(this.playlist[0]);
 
           this.dispatcher = connection.playStream(ytdl(this.playlist[0], {filter: "audioonly"}))
             .on("end", () => {
