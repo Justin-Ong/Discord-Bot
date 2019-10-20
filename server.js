@@ -31,11 +31,11 @@ class Controller {
         if (firstWord === "roll") {
             this.diceRoller(msg);
         }
-        else if (firstWord === "play" || firstWord === "p") {
-            let cmd = msg.content.slice(1 + firstWord.length);
-            let initialSplit = cmd.trim();
-            let song = initialSplit || "";
-
+        else if (firstWord === "play") {
+            let cmd = msg.content.slice(1);
+            let initialSplit = cmd.split(" ");
+            let song = initialSplit[1] || "";
+            
             this.musicPlayer(msg, song);
         }
 		else if (firstWord === "neko") {
@@ -52,7 +52,7 @@ class Controller {
         let input = msg.content.slice(1);
         let text = input.replace(/\s+/g, "");   //remove any whitespace
         let temp = text.slice(4);  //remove "roll"
-        let format = RegExp(/(\d*)(d)(\d*)/g);   //find XdY
+        let format = RegExp(/(\d*)(d)(\d*)/);   //find XdY
         let mainRoll = format.exec(temp);
         let rollFlavour = temp.slice(mainRoll[0].length);
 
@@ -92,7 +92,6 @@ class Controller {
         if (ytdl.validateURL(song)) {
             if (msg.member.voiceChannel) {
                 this.playlist.push(song);
-                console.log(this.playlist.length + " songs in queue");
                 
                 if (this.dispatcher === null || !this.dispatcher.speaking) {
                     msg.member.voiceChannel.join()
@@ -111,10 +110,10 @@ class Controller {
         }
     }
     
-    play(connection) {
+    play(connection) {        
 		if (this.playlist.length > 0) {
 			console.log("Playing " + this.playlist[0]);
-      console.log(this.playlist.length + " songs in queue");
+			console.log(this.playlist.length + " songs in queue");
 			
 			this.dispatcher = connection.playStream(ytdl(this.playlist[0], {filter: "audioonly"}));
 			this.dispatcher.on("end", () => {
@@ -196,7 +195,7 @@ class Controller {
                     msg.reply("there are no songs in the queue!");
                 }
                 else if (this.playlist.length === 1) {
-                    msg.reply("skipped! No more songs in queue.");
+                    msg.reply("skipped!");
                     this.playlist.length = 0;
                     this.dispatcher.end();
                 }
@@ -230,40 +229,49 @@ class Controller {
                 msg.reply("ping!");
                 break;
             case "sleepysparks":
-                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FSleepySparks.gif?v=1571569391112");
-                msg.channel.send({ embed });
+                msg.channel.send("", {
+                    "files": ["./Emojis/SleepySparks.gif"]
+                });
                 break;
             case "sparksshine":
-                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FSparksShine.gif?v=1571569401801");
-                msg.channel.send({ embed });
+                msg.channel.send("", {
+                    "files": ["./Emojis/SparksShine.gif"]
+                });
                 break;
             case "rindouyay":
-                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FRindouYay.gif?v=1571569402211");
-                msg.channel.send({ embed });
+                msg.channel.send("", {
+                    "files": ["./Emojis/RindouYay.gif"]
+                });
                 break;
             case "jesus":
-                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FJCKid.gif?v=1571569403502");
-                msg.channel.send({ embed });
+                msg.channel.send("", {
+                    "files": ["./Emojis/JCKid.gif"]
+                });
                 break;
             case "thisisfine":
-                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FThisIsFine.gif?v=1571569445819");
-                msg.channel.send({ embed });
+                msg.channel.send("", {
+                    "files": ["./Emojis/ThisIsFine.gif"]
+                });
                 break;
             case "butwhy":
-                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FButWhy.gif?v=1571569461101");
-                msg.channel.send({ embed });
+                msg.channel.send("", {
+                    "files": ["./Emojis/ButWhy.gif"]
+                });
                 break;
             case "diabetes":
-                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FDiabetes.gif?v=1571569404078");
-                msg.channel.send({ embed });
+                msg.channel.send("", {
+                    "files": ["./Emojis/Diabetes.gif"]
+                });
                 break;
             case "2meirl4meirl":
-                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2F2meirl4meirl.gif?v=1571569377639");
-                msg.channel.send({ embed });
+                msg.channel.send("", {
+                    "files": ["./Emojis/2meirl4meirl.gif"]
+                });
                 break;
             case "thinking":
-                var embed = new Discord.RichEmbed().setImage("https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FThinkingEmoji.gif?v=1571569423231");
-                msg.channel.send({ embed });
+                msg.channel.send("", {
+                    "files": ["./Emojis/ThinkingEmoji.gif"]
+                });
                 break;
             case "pingtest":
                 msg.channel.send("Pinging...").then(sent => {
