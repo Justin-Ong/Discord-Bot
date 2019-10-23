@@ -90,16 +90,9 @@ class Controller {
     //TODO: Allow for playlists to be added, bugfix queue
     //why does adding songs to queue sometimes lag the bot and sometimes not work
     musicPlayer(msg, song) {
-        if (ytpl.validateURL(song)) {
-            var list = song.split("list=")[1];
-            var temp = ytpl(list);
-            var videos = temp.items;
-
+        if (ytpl.validateURL(song)) {          
             if (msg.member.voiceChannel) {
-                for (let video of videos) {
-                    this.playlist.push(video.url_simple);
-                }
-                console.log(this.playlist.length + " songs in queue");
+                var list = ytpl(song.split("list=")[1], 0, this.addListToQueue);
 
                 if (this.dispatcher === null || !this.dispatcher.speaking) {
                     msg.member.voiceChannel.join()
@@ -109,12 +102,14 @@ class Controller {
                         .catch(console.log);
                 }
             }
+            else {
+                msg.reply("You need to join a voice channel first!");
+            }
         }
         else if (ytdl.validateURL(song)) {
             if (msg.member.voiceChannel) {
-                this.playlist.push(song);
-                console.log(this.playlist.length + " songs in queue");
-                
+                this.addSongToQueue(song);
+              
                 if (this.dispatcher === null || !this.dispatcher.speaking) {
                     msg.member.voiceChannel.join()
                         .then(connection => {                            
@@ -132,8 +127,17 @@ class Controller {
         }
     }
   
-    addSongToQueue(connection, song) {
-        
+    addSongToQueue(song) {
+        this.playlist.push(song);
+        console.log(this.playlist.length + " songs in queue");
+    }
+  
+    addListToQueue(list) {
+        console.log(list);
+        for (let i in list) {
+            this.playlist.push(i.url_simple);
+        }
+        console.log(this.playlist.length + " songs in queue");
     }
     
     play(connection) {        
