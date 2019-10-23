@@ -91,18 +91,16 @@ class Controller {
     //why does adding songs to queue sometimes lag the bot and sometimes not work
     musicPlayer(msg, song) {
         if (ytpl.validateURL(song)) {
-            var list = ytpl(song.split("list=")[1])
-            var videos = list.items;
-            console.log(videos);
-            /*
+            var list = song.split("list=")[1];
+            var temp = ytpl(list);
+            var videos = temp.items;
+
             if (msg.member.voiceChannel) {
-                for (const video of videos) {
+                for (let video of videos) {
                     this.playlist.push(video.url_simple);
                 }
                 console.log(this.playlist.length + " songs in queue");
-              
-                msg.channel.send("Playlist " + playlist.title + " (" + videos.length + ") has been added to the queue!");
-                
+
                 if (this.dispatcher === null || !this.dispatcher.speaking) {
                     msg.member.voiceChannel.join()
                         .then(connection => {                            
@@ -111,7 +109,6 @@ class Controller {
                         .catch(console.log);
                 }
             }
-            */
         }
         else if (ytdl.validateURL(song)) {
             if (msg.member.voiceChannel) {
@@ -133,6 +130,10 @@ class Controller {
         else {
             msg.reply("Your URL is invalid!");
         }
+    }
+  
+    addSongToQueue(connection, song) {
+        
     }
     
     play(connection) {        
