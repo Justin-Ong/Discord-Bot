@@ -92,7 +92,11 @@ class Controller {
     musicPlayer(msg, song) {
         if (ytpl.validateURL(song)) {          
             if (msg.member.voiceChannel) {
-                var list = ytpl(song.split("list=")[1], 0, this.addListToQueue);
+                ytpl(song.split("list=")[1], 0)
+                    .then(result => {
+                        this.addListToQueue(result.items);
+                    })
+                    .catch(console.log);
 
                 if (this.dispatcher === null || !this.dispatcher.speaking) {
                     msg.member.voiceChannel.join()
@@ -133,9 +137,8 @@ class Controller {
     }
   
     addListToQueue(list) {
-        console.log(list);
         for (let i in list) {
-            this.playlist.push(i.url_simple);
+            this.playlist.push(list[i].url_simple);
         }
         console.log(this.playlist.length + " songs in queue");
     }
