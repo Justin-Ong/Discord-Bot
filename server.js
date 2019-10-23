@@ -7,6 +7,7 @@
 const Booru = require("booru");
 const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
+const ytpl = require("ytpl");
 const config = require("./config.json");
 const client = new Discord.Client();
 
@@ -89,7 +90,30 @@ class Controller {
     //TODO: Allow for playlists to be added, bugfix queue
     //why does adding songs to queue sometimes lag the bot and sometimes not work
     musicPlayer(msg, song) {
-        if (ytdl.validateURL(song)) {
+        if (ytpl.validateURL(song)) {
+            var list = ytpl(song.split("list=")[1])
+            var videos = list.items;
+            console.log(videos);
+            /*
+            if (msg.member.voiceChannel) {
+                for (const video of videos) {
+                    this.playlist.push(video.url_simple);
+                }
+                console.log(this.playlist.length + " songs in queue");
+              
+                msg.channel.send("Playlist " + playlist.title + " (" + videos.length + ") has been added to the queue!");
+                
+                if (this.dispatcher === null || !this.dispatcher.speaking) {
+                    msg.member.voiceChannel.join()
+                        .then(connection => {                            
+                            this.play(connection);
+                        })
+                        .catch(console.log);
+                }
+            }
+            */
+        }
+        else if (ytdl.validateURL(song)) {
             if (msg.member.voiceChannel) {
                 this.playlist.push(song);
                 console.log(this.playlist.length + " songs in queue");
