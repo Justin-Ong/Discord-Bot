@@ -87,8 +87,7 @@ class Controller {
     }
     
     //Music player
-    //TODO: Allow for playlists to be added, bugfix queue
-    //why does adding songs to queue sometimes lag the bot and sometimes not work
+    //TODO: Add search functionality
     musicPlayer(msg, song) {
         if (ytpl.validateURL(song)) {          
             if (msg.member.voiceChannel) {
@@ -138,9 +137,8 @@ class Controller {
   
     addListToQueue(list) {
         for (let i in list) {
-            this.playlist.push(list[i].url_simple);
+            this.addSongToQueue(list[i].url_simple);
         }
-        console.log(this.playlist.length + " songs in queue");
     }
     
     play(connection) {        
@@ -149,13 +147,13 @@ class Controller {
           console.log(this.playlist.length + " songs in queue");
 
           this.dispatcher = connection.playStream(ytdl(this.playlist[0], {filter: "audioonly"}))
-            .on("end", () => {
-              if (this.playlist.length) {
-                this.playlist.shift();
-                this.play(connection);
-              }
-            })
-            .on("error", console.error);
+              .on("end", () => {
+                  if (this.playlist.length) {
+                      this.playlist.shift();
+                      this.play(connection);
+                  }
+              })
+              .on("error", console.error);
         }
         else {
           console.log("Queue is empty!")
