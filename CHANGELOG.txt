@@ -1,0 +1,8 @@
+
+
+1.1.0:
+Add dice roller
+Inform user if command is invalid
+
+1.0.0:
+Initial Release

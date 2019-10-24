@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.5.2
+//Version: 1.6.0
 
 //TODO: Refactor code, possibly split into various files?
 
