@@ -12,7 +12,7 @@ const config = require("./config.json");
 const client = new Discord.Client();
 
 //login using token defined in config.json
-client.login(config.token).then(loginSuccess, loginFailure);
+client.login(process.env.SECRET).then(loginSuccess, loginFailure);
 
 //defining Controller class to handle user input
 class Controller {
