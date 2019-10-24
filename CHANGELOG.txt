@@ -1,7 +1,15 @@
+1.3.0:
+Update dice roller to allow multiple dice (e.g. 1d4 + 1d6)
 
+1.2.1:
+Implement video queue
+
+1.2.0:
+ytdl-core integration
+Add ability to play youtube video from direct link to video
 
 1.1.0:
-Add dice roller
+Add dice roller that performs single die rolls (e.g. 1d4)
 Inform user if command is invalid
 
 1.0.0:
