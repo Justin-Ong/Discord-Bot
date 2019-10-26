@@ -1,6 +1,8 @@
 // client-side js
 // run by the browser each time your view template is loaded
 
+require("http").createServer(async (req,res) => { res.statusCode = 200; res.write("ok"); res.end(); }).listen(3000, () => console.log("Now listening on port 3000"));
+
 console.log('hello world :o');
 
 // our default array of dreams
