@@ -1,6 +1,8 @@
 // client-side js
 // run by the browser each time your view template is loaded
 
+alert('Test');
+
 console.log('hello world :o');
 
 // our default array of dreams
