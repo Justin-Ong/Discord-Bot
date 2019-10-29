@@ -2,6 +2,11 @@
 //Author: Justin Ong
 //Version: 1.6.0
 
+const express = require("express");
+const expressApp = express();
+expressApp.get("/", (req, res) => res.json("OK"));
+expressApp.listen(process.env.PORT);
+
 //TODO: Refactor code, possibly split into various files?
 
 const Booru = require("booru");
