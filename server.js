@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.6.0
+//Version: 1.6.1
 
 const express = require("express");
 const expressApp = express();
@@ -30,10 +30,9 @@ class Controller {
     
     //Initial reading of input
     readInput(msg) {
-        msg = msg.toLowerCase();
         let cmd = msg.content.slice(1); //remove prefix
         let initialSplit = cmd.split(" ");
-        let firstWord = initialSplit[0];    //workaround because startswith() is for some reason not supported
+        let firstWord = initialSplit[0].toLowerCase();    //workaround because startswith() is for some reason not supported
         
         if (firstWord === "roll") {
             this.diceRoller(msg);
@@ -166,34 +165,34 @@ class Controller {
         }
     }
     
-	//Booru image scraper
-	//TODO: Look into improving speed
-	neko(msg) {
-		let siteArray = config.sites;
-		let site = siteArray[Math.floor(Math.random() * siteArray.length)];
-		Booru.search(site, ['nekomimi', 'rating:safe', '-comic', '-text'], {limit: 1, random: true})
-			.then(posts => {
-				var imageUrl = posts[0].fileUrl;
-					console.log('Sending neko: ' + imageUrl + ' at ' + Date());
-					msg.channel.send({
-						file:imageUrl
-					})
-					.catch(err => {
-						console.log('Error sending image from: ' + imageUrl);
-						console.log('retrying...');
-						this.neko(msg);
-					});
-			})
-			.catch(err => {
-				if (err.name === 'booruError') {
-					console.log(err.message);
-				} else {
-					console.log(err);
-					console.log('retrying...');
-					this.neko(msg);
-			}
-		});
-	}
+    //Booru image scraper
+    //TODO: Look into improving speed
+    neko(msg) {
+        let siteArray = config.sites;
+        let site = siteArray[Math.floor(Math.random() * siteArray.length)];
+        Booru.search(site, ['nekomimi', 'rating:safe', '-comic', '-text'], {limit: 1, random: true})
+            .then(posts => {
+            var imageUrl = posts[0].fileUrl;
+                console.log('Sending neko: ' + imageUrl + ' at ' + Date());
+                msg.channel.send({
+                    file:imageUrl
+                })
+            .catch(err => {
+                console.log('Error sending image from: ' + imageUrl);
+                console.log('retrying...');
+                this.neko(msg);
+            });
+        })
+        .catch(err => {
+            if (err.name === 'booruError') {
+                console.log(err.message);
+            } else {
+                console.log(err);
+                console.log('retrying...');
+                this.neko(msg);
+            }
+        });
+    }
 	
     //Other commands, emoji, pingpong, debugging
     cmdHandler(msg) {
@@ -219,7 +218,7 @@ class Controller {
                     this.dispatcher.pause();
                 }
                 break;
-           case "resume":
+            case "resume":
                 if (!this.isPaused || !this.playlist.length) {
                     msg.reply("nothing is paused!");
                 }
@@ -228,8 +227,8 @@ class Controller {
                     this.dispatcher.resume();
                 }
                 break;
-          case "skip":
-          case "s":
+            case "skip":
+            case "s":
                 if (!this.playlist.length) {
                     msg.reply("there are no songs in the queue!");
                 }
@@ -254,6 +253,7 @@ class Controller {
                 }
                 break;
             case "list":
+            case "l":
                 if (!this.playlist.length) {
                     msg.reply("there are no songs in the queue!");
                 }
