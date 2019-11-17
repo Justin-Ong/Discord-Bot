@@ -30,6 +30,7 @@ class Controller {
     
     //Initial reading of input
     readInput(msg) {
+        msg = msg.toLowerCase();
         let cmd = msg.content.slice(1); //remove prefix
         let initialSplit = cmd.split(" ");
         let firstWord = initialSplit[0];    //workaround because startswith() is for some reason not supported
@@ -227,7 +228,8 @@ class Controller {
                     this.dispatcher.resume();
                 }
                 break;
-            case "skip":
+          case "skip":
+          case "s":
                 if (!this.playlist.length) {
                     msg.reply("there are no songs in the queue!");
                 }
