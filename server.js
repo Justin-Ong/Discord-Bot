@@ -11,6 +11,7 @@ expressApp.listen(process.env.PORT);
 
 const Booru = require("booru");
 const Discord = require("discord.js");
+var fs = require("fs");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const config = require("./config.json");
@@ -313,6 +314,7 @@ class Controller {
                 let count = parseInt(alex_counter.count, 10);
                 count++;
                 alex_counter.count = count;
+                fs.writeFileSync("alex_counter", JSON.stringify(count, null, 2));
                 let string = "Current Alex Count: " + alex_counter.count;
                 msg.channel.send(string);
                 break;
