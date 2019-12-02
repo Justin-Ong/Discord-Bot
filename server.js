@@ -14,6 +14,7 @@ const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const config = require("./config.json");
+const alex_counter = require("./alex_counter.json");
 const client = new Discord.Client();
 
 //login using token defined in config.json
@@ -307,6 +308,13 @@ class Controller {
                 msg.channel.send("Pinging...").then(sent => {
                     sent.edit("Took " + `${sent.createdTimestamp - msg.createdTimestamp}` + " ms");
                 });
+                break;
+            case "alex":
+                let count = parseInt(alex_counter.count, 10);
+                count++;
+                alex_counter.count = count;
+                let string = "Current Alex Count: " + alex_counter.count;
+                msg.channel.send(string);
                 break;
             case "logout":
 				console.log("Logging out...");
