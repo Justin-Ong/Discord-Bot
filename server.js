@@ -314,7 +314,11 @@ class Controller {
                 let count = parseInt(alex_counter.count, 10);
                 count++;
                 alex_counter.count = count;
-                fs.writeFileSync("alex_counter", JSON.stringify(count, null, 2));
+                fs.writeFile("alex_counter.json", JSON.stringify(alex_counter, null, 2), function (err) {
+                    if (err) return console.log(err);
+                    console.log(JSON.stringify(alex_counter));
+                    console.log('writing to ' + "alex_counter.json");
+                });
                 let string = "Current Alex Count: " + alex_counter.count;
                 msg.channel.send(string);
                 break;
