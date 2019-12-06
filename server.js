@@ -98,12 +98,13 @@ class Controller {
     musicPlayer(msg, song) {
         if (ytpl.validateURL(song)) {          
             if (msg.member.voiceChannel) {
-                ytpl(song.split("list=")[1], 0)
+                song = song.split("list=")[1];
+                song = song.split("&index=")[0];
+                ytpl(song, 0)
                     .then(result => {
                         this.addListToQueue(result.items);
                     })
                     .catch(console.log);
-
                 if (this.dispatcher === null || !this.dispatcher.speaking) {
                     msg.member.voiceChannel.join()
                         .then(connection => {                            
