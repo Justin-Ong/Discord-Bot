@@ -15,7 +15,7 @@ var fs = require("fs");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const config = require("./config.json");
-const alex_counter = require("./alex_counter.json");
+const counter = require("./counter.json");
 const client = new Discord.Client();
 
 //login using token defined in config.json
@@ -200,7 +200,8 @@ class Controller {
     //Other commands, emoji, pingpong, debugging
     cmdHandler(msg) {
         let cmd = msg.content.slice(1);
-        
+        let count = parseInt(counter.count, 10);
+        let string = '';
         switch(cmd) {
             case "help":
                 msg.reply("The following commands are valid: roll, play (YT videos), pause, resume, stop, skip, " +
@@ -311,16 +312,30 @@ class Controller {
                     sent.edit("Took " + `${sent.createdTimestamp - msg.createdTimestamp}` + " ms");
                 });
                 break;
-            case "alex":
-                let count = parseInt(alex_counter.count, 10);
+            case "count":
                 count++;
-                alex_counter.count = count;
-                fs.writeFile("alex_counter.json", JSON.stringify(alex_counter, null, 2), function (err) {
+                counter.count = count;
+                fs.writeFile("counter.json", JSON.stringify(counter, null, 2), function (err) {
                     if (err) return console.log(err);
-                    console.log(JSON.stringify(alex_counter));
-                    console.log('writing to ' + "alex_counter.json");
+                    console.log(JSON.stringify(counter));
+                    console.log('writing to ' + "counter.json");
                 });
-                let string = "Current Alex Count: " + alex_counter.count;
+                string = "Current Kick Count: " + counter.count;
+                msg.channel.send(string);
+                break;
+            case "currcount":
+                count = parseInt(counter.count, 10);
+                string = "Current Kick Count: " + count;
+                msg.channel.send(string);
+                break;
+            case "resetcount":
+                counter.count = 0;
+                fs.writeFile("counter.json", JSON.stringify(counter, null, 2), function (err) {
+                    if (err) return console.log(err);
+                    console.log(JSON.stringify(counter));
+                    console.log('writing to ' + "counter.json");
+                });
+                string = "Current Kick Count: " + counter.count;
                 msg.channel.send(string);
                 break;
             case "logout":
