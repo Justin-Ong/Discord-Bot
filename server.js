@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.6.1
+//Version: 1.6.2
 
 const express = require("express");
 const expressApp = express();
