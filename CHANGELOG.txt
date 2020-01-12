@@ -1,3 +1,7 @@
+1.6.2:
+Add counter command
+Add
+
 1.6.1:
 Allow commands to be in CAPS
 Add short forms for some music commands
