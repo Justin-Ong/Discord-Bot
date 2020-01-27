@@ -296,7 +296,8 @@ class Controller {
                 else {
                     this.isLoopingList = false;
                     this.isLoopingSingle = true;
-                    console.log("Now looping: " + this.playlist[0].title);
+                    console.log("looping: " + this.playlist[0].title);
+                    msg.channel.send("Now looping: " + this.playlist[0].title);
                 }
                 break;
             case "loop all":
@@ -306,6 +307,7 @@ class Controller {
                 else {
                     this.isLoopingSingle = false;
                     this.isLoopingList = true;
+                    console.log("looping songs in current playlist");
                     msg.channel.send("Now looping songs in current playlist.");
                 }
                 break;
