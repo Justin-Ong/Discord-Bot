@@ -26,6 +26,7 @@ client.login(process.env.SECRET).then(loginSuccess, loginFailure);
 class Controller {
     constructor() {
         this.playlist = [];  //set up variables for song playing
+        this.songNameList = [];
         this.dispatcher = null;
         this.isPaused = false;
         this.currInput = "";
@@ -140,6 +141,13 @@ class Controller {
     }
   
     addSongToQueue(song) {
+        ytdl.getInfo(song, function(err, info) {
+            console.log(info.title);
+            console.log(info.length_seconds);
+            let duration = new Date(info.length_seconds * 1000).toISOString().substr(11, 8);
+            console.log(duration);
+        });
+        this.songNameList.push();
         this.playlist.push(song);
         console.log(this.playlist.length + " songs in queue");
     }
@@ -263,6 +271,7 @@ class Controller {
                     msg.reply("there are no songs in the queue!");
                 }
                 else {
+                    console.log(this.playlist);
                     msg.channel.send(this.playlist.join(", "));
                 }
                 break;
