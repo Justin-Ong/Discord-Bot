@@ -1,3 +1,6 @@
+1.6.4:
+Modify list command to print song info in a more readable manner
+
 1.6.3:
 Add log file to keep track of login timings
 

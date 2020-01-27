@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.6.3
+//Version: 1.6.4
 
 const express = require("express");
 const expressApp = express();
@@ -158,7 +158,7 @@ class Controller {
     
     play(connection) {        
         if (this.playlist.length > 0) {
-          console.log("Playing " + this.playlist[0]);
+          console.log("Playing " + this.playlist[0].title);
           console.log(this.playlist.length + " songs in queue");
 
           this.dispatcher = connection.playStream(ytdl(this.playlist[0].url, {filter: "audioonly"}))
@@ -269,8 +269,17 @@ class Controller {
                     msg.reply("there are no songs in the queue!");
                 }
                 else {
-                    console.log(this.playlist);
-                    msg.channel.send(this.playlist.join(", "));
+                    try {
+                        let result = "";
+                        for (let i = 0; i < this.playlist.length; i++) {
+                            let song = this.playlist[i];
+                            result += ("Song " + (i+1) + ": " + song.title +  ", Duration: " + song.duration + ", URL: " + "<" + song.url + ">\n");
+                        }
+                        msg.channel.send(result);
+                    }
+                    catch(err) {
+                        msg.channel.send("Sorry, please wait a few seconds and try again.")
+                    }
                 }
                 break;
             case "ping":
