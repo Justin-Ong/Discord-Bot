@@ -26,7 +26,6 @@ client.login(process.env.SECRET).then(loginSuccess, loginFailure);
 class Controller {
     constructor() {
         this.playlist = [];  //set up variables for song playing
-        this.songNameList = [];
         this.dispatcher = null;
         this.isPaused = false;
         this.currInput = "";
@@ -141,15 +140,14 @@ class Controller {
     }
   
     addSongToQueue(song) {
+        let _this = this;
         ytdl.getInfo(song, function(err, info) {
-            console.log(info.title);
-            console.log(info.length_seconds);
+            let title = info.title;
             let duration = new Date(info.length_seconds * 1000).toISOString().substr(11, 8);
-            console.log(duration);
+            _this.playlist.push({"url": song, "title": title, "duration": duration});
+            console.log("Added " + title + " to queue")
+            console.log(_this.playlist.length + " songs in queue");
         });
-        this.songNameList.push();
-        this.playlist.push(song);
-        console.log(this.playlist.length + " songs in queue");
     }
   
     addListToQueue(list) {
@@ -163,7 +161,7 @@ class Controller {
           console.log("Playing " + this.playlist[0]);
           console.log(this.playlist.length + " songs in queue");
 
-          this.dispatcher = connection.playStream(ytdl(this.playlist[0], {filter: "audioonly"}))
+          this.dispatcher = connection.playStream(ytdl(this.playlist[0].url, {filter: "audioonly"}))
               .on("end", () => {
                   if (this.playlist.length) {
                       this.playlist.shift();
