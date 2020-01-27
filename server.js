@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.6.2
+//Version: 1.6.3
 
 const express = require("express");
 const expressApp = express();
@@ -16,6 +16,7 @@ const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const config = require("./config.json");
 const counter = require("./counter.json");
+const startup_log = require("./")
 const client = new Discord.Client();
 
 //login using token defined in config.json
@@ -369,40 +370,36 @@ function loginSuccess(result) {
     let now = Date();
     let string = "Logged in as " + client.user.username + " at " + now;
   
-    fs.open("startup_log.json", 'w', function(err, fd) {
+    fs.readFile('startup_log.json', function (err, data) {
         if (err) {
-            throw 'could not open file: ' + err;
+            throw 'could not read log file due to: ' + err;
         }
-        fs.write(fd, JSON.stringify(string, null, 2), function (err) {
+        var json = JSON.parse(data);
+        console.log(json);
+        json = json + string + "\n";
+        console.log(JSON.stringify(json));
+
+        fs.writeFile("results.json", JSON.stringify(json), function (err) {
             if (err) {
                 return console.log(err);
             }
             console.log(JSON.stringify(string));
         });
     });
-  
-    fs.readFile('startup_log.json', function (err, data) {
-        if (err) {
-            throw 'could not read log file due to: ' + err;
-        }
-        var json = JSON.parse(string);
-        json.push('search result: ' + currentSearchResult)
-
-        fs.writeFile("results.json", JSON.stringify(json))
-        console.log(JSON.stringify(string));
-    });
 }
-
 
 function loginFailure(error) {
     let now = Date();
     let string = "Failed to log in at " + now;
   
-    fs.open("startup_log.json", 'w', function(err, fd) {
+    fs.readFile('startup_log.json', function (err, data) {
         if (err) {
-            throw 'could not open file: ' + err;
+            throw 'could not read log file due to: ' + err;
         }
-        fs.write(fd, JSON.stringify(string, null, 2), function (err) {
+        var json = JSON.parse(data);
+        json = json + string + "\n";
+
+        fs.writeFile("results.json", JSON.stringify(json), function (err) {
             if (err) {
                 return console.log(err);
             }

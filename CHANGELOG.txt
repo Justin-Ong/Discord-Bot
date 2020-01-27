@@ -1,3 +1,6 @@
+1.6.3:
+Add log file to keep track of login timings
+
 1.6.2:
 Add counter command
 Add file to keep track of counter even after server reset
