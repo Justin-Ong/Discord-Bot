@@ -293,15 +293,21 @@ class Controller {
                 if (!this.playlist.length) {
                     msg.reply("there are no songs in the queue!");
                 }
-                else {}
-                this.isLoopingList = false;
-                this.isLoopingSingle = true;
-                console.log("Now looping: " + this.playlist[0].title);
+                else {
+                    this.isLoopingList = false;
+                    this.isLoopingSingle = true;
+                    console.log("Now looping: " + this.playlist[0].title);
+                }
                 break;
             case "loop all":
-                this.isLoopingSingle = false;
-                this.isLoopingList = true;
-                console.log();
+                if (!this.playlist.length) {
+                    msg.reply("there are no songs in the queue!");
+                }
+                else {
+                    this.isLoopingSingle = false;
+                    this.isLoopingList = true;
+                    msg.channel.send("Now looping songs in current playlist.");
+                }
                 break;
             case "ping":
                 msg.reply("pong!");
