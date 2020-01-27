@@ -292,10 +292,12 @@ class Controller {
             case "loop one":
                 this.isLoopingList = false;
                 this.isLoopingSingle = true;
+                console.log();
                 break;
             case "loop all":
                 this.isLoopingSingle = false;
                 this.isLoopingList = true;
+                console.log();
                 break;
             case "ping":
                 msg.reply("pong!");
