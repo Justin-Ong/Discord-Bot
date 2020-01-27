@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.6.4
+//Version: 1.6.5
 
 const express = require("express");
 const expressApp = express();
@@ -166,7 +166,12 @@ class Controller {
           this.dispatcher = connection.playStream(ytdl(this.playlist[0].url, {filter: "audioonly"}))
               .on("end", () => {
                   if (this.playlist.length) {
-                      this.playlist.shift();
+                      if (this.isLoopingAll == true) {
+                          this.playlist.push(this.playlist.shift());
+                      }
+                      else if (this.isLoopingSingle == false) {
+                          this.playlist.shift();
+                      }
                       this.play(connection);
                   }
               })
@@ -284,8 +289,13 @@ class Controller {
                     }
                 }
                 break;
-            case "loop":
-                this.isLooping = true;
+            case "loop one":
+                this.isLoopingList = false;
+                this.isLoopingSingle = true;
+                break;
+            case "loop all":
+                this.isLoopingSingle = false;
+                this.isLoopingList = true;
                 break;
             case "ping":
                 msg.reply("pong!");
