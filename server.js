@@ -290,9 +290,13 @@ class Controller {
                 }
                 break;
             case "loop one":
+                if (!this.playlist.length) {
+                    msg.reply("there are no songs in the queue!");
+                }
+                else {}
                 this.isLoopingList = false;
                 this.isLoopingSingle = true;
-                console.log();
+                console.log("Now looping: " + this.playlist[0].title);
                 break;
             case "loop all":
                 this.isLoopingSingle = false;
