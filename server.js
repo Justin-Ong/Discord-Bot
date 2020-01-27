@@ -28,6 +28,8 @@ class Controller {
         this.playlist = [];  //set up variables for song playing
         this.dispatcher = null;
         this.isPaused = false;
+        this.isLoopingSingle = false;
+        this.isLoopingList = false;
         this.currInput = "";
     }
     
@@ -281,6 +283,9 @@ class Controller {
                         msg.channel.send("Sorry, please wait a few seconds and try again.")
                     }
                 }
+                break;
+            case "loop":
+                this.isLooping = true;
                 break;
             case "ping":
                 msg.reply("pong!");
