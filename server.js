@@ -368,18 +368,46 @@ client.on("message", msg => {
 function loginSuccess(result) {
     let now = Date();
     let string = "Logged in as " + client.user.username + " at " + now;
-    fs.writeFile("startup_log.json", JSON.stringify(string, null, 2), function (err) {
-        if (err) return console.log(err);
+  
+    fs.open("startup_log.json", 'w', function(err, fd) {
+        if (err) {
+            throw 'could not open file: ' + err;
+        }
+        fs.write(fd, JSON.stringify(string, null, 2), function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log(JSON.stringify(string));
+        });
+    });
+  
+    fs.readFile('startup_log.json', function (err, data) {
+        if (err) {
+            throw 'could not read log file due to: ' + err;
+        }
+        var json = JSON.parse(string);
+        json.push('search result: ' + currentSearchResult)
+
+        fs.writeFile("results.json", JSON.stringify(json))
         console.log(JSON.stringify(string));
     });
 }
 
+
 function loginFailure(error) {
     let now = Date();
     let string = "Failed to log in at " + now;
-    fs.writeFile("startup_log.json", JSON.stringify(string, null, 2), function (err) {
-        if (err) return console.log(err);
-        console.log(JSON.stringify(string));
+  
+    fs.open("startup_log.json", 'w', function(err, fd) {
+        if (err) {
+            throw 'could not open file: ' + err;
+        }
+        fs.write(fd, JSON.stringify(string, null, 2), function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log(JSON.stringify(string));
+        });
     });
 }
 
