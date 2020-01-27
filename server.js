@@ -16,7 +16,7 @@ const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const config = require("./config.json");
 const counter = require("./counter.json");
-const startup_log = require("./")
+const startup_log = require("./startup_log.json");
 const client = new Discord.Client();
 
 //login using token defined in config.json
@@ -319,7 +319,7 @@ class Controller {
                 fs.writeFile("counter.json", JSON.stringify(counter, null, 2), function (err) {
                     if (err) return console.log(err);
                     console.log(JSON.stringify(counter));
-                    console.log('writing to ' + "counter.json");
+                    console.log("writing to " + "counter.json");
                 });
                 string = "Current Kick Count: " + counter.count;
                 msg.channel.send(string);
@@ -334,7 +334,7 @@ class Controller {
                 fs.writeFile("counter.json", JSON.stringify(counter, null, 2), function (err) {
                     if (err) return console.log(err);
                     console.log(JSON.stringify(counter));
-                    console.log('writing to ' + "counter.json");
+                    console.log("writing to " + "counter.json");
                 });
                 string = "Current Kick Count: " + counter.count;
                 msg.channel.send(string);
@@ -374,12 +374,11 @@ function loginSuccess(result) {
         if (err) {
             throw 'could not read log file due to: ' + err;
         }
-        var json = JSON.parse(data);
-        console.log(json);
-        json = json + string + "\n";
-        console.log(JSON.stringify(json));
+      
+        startup_log.prev_success = startup_log.curr_success;    
+        startup_log.curr_success = string;
 
-        fs.writeFile("results.json", JSON.stringify(json), function (err) {
+        fs.writeFile("startup_log.json", JSON.stringify(startup_log, null, 2), function (err) {
             if (err) {
                 return console.log(err);
             }
@@ -390,16 +389,16 @@ function loginSuccess(result) {
 
 function loginFailure(error) {
     let now = Date();
-    let string = "Failed to log in at " + now;
-  
+    let string = "Failed to log in at " + now + " due to: " + error;
+
     fs.readFile('startup_log.json', function (err, data) {
         if (err) {
             throw 'could not read log file due to: ' + err;
         }
-        var json = JSON.parse(data);
-        json = json + string + "\n";
+        startup_log.prev_failure = startup_log.curr_failure;
+        startup_log.curr_failure = string;
 
-        fs.writeFile("results.json", JSON.stringify(json), function (err) {
+        fs.writeFile("startup_log.json", JSON.stringify(startup_log, null, 2), function (err) {
             if (err) {
                 return console.log(err);
             }
