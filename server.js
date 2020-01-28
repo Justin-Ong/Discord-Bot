@@ -29,7 +29,9 @@ class Controller {
     constructor() {
         this.playlist = [];  //set up variables for song playing
         this.searchList = [];
+        this.currChannel = null;
         this.dispatcher = null;
+        this.isPlaying = false;
         this.isPaused = false;
         this.isLoopingSingle = false;
         this.isLoopingList = false;
@@ -114,10 +116,14 @@ class Controller {
                     .catch(console.log);
                 if (this.dispatcher === null || !this.dispatcher.speaking) {
                     msg.member.voiceChannel.join()
-                        .then(connection => {                            
+                        .then(connection => {
                             this.play(connection);
                         })
                         .catch(console.log);
+                    this.currChannel = msg.member.voiceChannel;
+                }
+                else if (!this.isPlaying) {
+                    this.play(connection);
                 }
             }
             else {
