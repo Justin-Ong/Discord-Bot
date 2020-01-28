@@ -105,9 +105,19 @@ class Controller {
   
     //Music player
     musicPlayer(msg, song) {
-        if (ytpl.validateURL(song)) {          
-            if (msg.member.voiceChannel) {
-                this.currChannel = msg.member.voiceChannel;
+        if (!msg.member.voiceChannel) {
+            msg.reply("You need to join a voice channel first!");
+        }
+        else {
+            this.currChannel = msg.member.voiceChannel;
+            if (this.currConnection == null) {
+                this.currChannel.join()
+                    .then(connection => {
+                        this.currConnection = connection;
+                    })
+                    .catch(console.log);
+            }
+            if (ytpl.validateURL(song)) {          
                 song = song.split("list=")[1];
                 song = song.split("&index=")[0];
                 ytpl(song, 0)
@@ -116,23 +126,11 @@ class Controller {
                     })
                     .catch(console.log);
             }
-            else {
-                msg.reply("You need to join a voice channel first!");
-            }
-        }
-        else if (ytdl.validateURL(song)) {
-            if (msg.member.voiceChannel) {
-                this.currChannel = msg.member.voiceChannel;
+            else if (ytdl.validateURL(song)) {
                 this.addSongToQueue(song)
             }
             else {
-                msg.reply("You need to join a voice channel first!");
-            }
-        }
-        else {
-            let _this = this;
-            if (msg.member.voiceChannel) {
-                this.currChannel = msg.member.voiceChannel;
+                let _this = this;
                 ytsr(song, {limit: 10}, function(err, result) {
                     if (err) {
                         throw err;
@@ -169,9 +167,6 @@ class Controller {
                     }
                 });
             }
-            else {
-                msg.reply("You need to join a voice channel first!");
-            }
         }
     }
 
@@ -183,16 +178,7 @@ class Controller {
             _this.playlist.push({"url": song, "title": title, "duration": duration});
             console.log("Added " + title + " to queue")
             console.log(_this.playlist.length + " songs in queue");
-
-            if (_this.currConnection == null) {
-                _this.currChannel.join()
-                    .then(connection => {
-                        _this.currConnection = connection;
-                        _this.play(_this.currConnection);
-                    })
-                    .catch(console.log);
-            }
-            else if (_this.playlist.length <= 1) {
+            if (_this.playlist.length == 1) {
                 _this.play(_this.currConnection);
             }
         });
