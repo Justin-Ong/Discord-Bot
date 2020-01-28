@@ -5,6 +5,7 @@ dependencies:
   node-opus: 0.3.3
   ytdl-core: 1.0.7
   ytpl: 0.1.19
+  ytsr: 0.1.10
 packages:
   /accepts/1.3.7:
     dependencies:
@@ -568,6 +569,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-Sy0ePxvMXBfp/9PJfJg0FQ7+Cdop65M8i6x9kX4pA80AT6huaIGnMVneUfI+NhDwwfm7tdxdke1JPRD7I5tH0w==
+  /ytsr/0.1.10:
+    dependencies:
+      html-entities: 1.2.1
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-9wq0TiFejj6T5t9WXx/7Uw7Pix6vtXq3nd7BbPvz3BwUjJ4rdW4maylj1/sW+AUaSNgZgVbVngH/Y1a7V1kzsA==
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
@@ -578,3 +587,4 @@ specifiers:
   node-opus: ^0.3.2
   ytdl-core: ^1.0.7
   ytpl: ^0.1.19
+  ytsr: ^0.1.10

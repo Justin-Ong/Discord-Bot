@@ -14,6 +14,7 @@ const Discord = require("discord.js");
 var fs = require("fs");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
+const ytsr = require("ytsr");
 const config = require("./config.json");
 const counter = require("./counter.json");
 const startup_log = require("./startup_log.json");
@@ -187,25 +188,25 @@ class Controller {
     neko(msg) {
         let siteArray = config.sites;
         let site = siteArray[Math.floor(Math.random() * siteArray.length)];
-        Booru.search(site, ['nekomimi', 'rating:safe', '-comic', '-text'], {limit: 1, random: true})
+        Booru.search(site, ["nekomimi", "rating:safe", "-comic", "-text"], {limit: 1, random: true})
             .then(posts => {
             var imageUrl = posts[0].fileUrl;
-                console.log('Sending neko: ' + imageUrl + ' at ' + Date());
+                console.log("Sending neko: " + imageUrl + " at " + Date());
                 msg.channel.send({
                     file:imageUrl
                 })
             .catch(err => {
-                console.log('Error sending image from: ' + imageUrl);
-                console.log('retrying...');
+                console.log("Error sending image from: " + imageUrl);
+                console.log("retrying...");
                 this.neko(msg);
             });
         })
         .catch(err => {
-            if (err.name === 'booruError') {
+            if (err.name === "booruError") {
                 console.log(err.message);
             } else {
                 console.log(err);
-                console.log('retrying...');
+                console.log("retrying...");
                 this.neko(msg);
             }
         });
@@ -215,7 +216,7 @@ class Controller {
     cmdHandler(msg) {
         let cmd = msg.content.slice(1);
         let count = parseInt(counter.count, 10);
-        let string = '';
+        let string = "";
         switch(cmd) {
             case "help":
                 msg.reply("The following commands are valid: roll, play (YT videos), pause, resume, stop, skip, " +
@@ -415,9 +416,9 @@ function loginSuccess(result) {
     let now = Date();
     let string = "Logged in as " + client.user.username + " at " + now;
   
-    fs.readFile('startup_log.json', function (err, data) {
+    fs.readFile("startup_log.json", function (err, data) {
         if (err) {
-            throw 'could not read log file due to: ' + err;
+            throw "could not read log file due to: " + err;
         }
       
         startup_log.prev_success = startup_log.curr_success;    
@@ -427,7 +428,7 @@ function loginSuccess(result) {
             if (err) {
                 return console.log(err);
             }
-            console.log(JSON.stringify(string));
+            console.log(string);
         });
     });
 }
@@ -436,9 +437,9 @@ function loginFailure(error) {
     let now = Date();
     let string = "Failed to log in at " + now + " due to: " + error;
 
-    fs.readFile('startup_log.json', function (err, data) {
+    fs.readFile("startup_log.json", function (err, data) {
         if (err) {
-            throw 'could not read log file due to: ' + err;
+            throw "could not read log file due to: " + err;
         }
         startup_log.prev_failure = startup_log.curr_failure;
         startup_log.curr_failure = string;
@@ -447,7 +448,7 @@ function loginFailure(error) {
             if (err) {
                 return console.log(err);
             }
-            console.log(JSON.stringify(string));
+            console.log(string);
         });
     });
 }
