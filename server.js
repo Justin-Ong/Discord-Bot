@@ -138,20 +138,18 @@ class Controller {
             }
         }
         else {
-            ytsr.getFilters(song, function(err, result) {
+            ytsr(song, {limit: 10}, function(err, result) {
                 if (err) {
                     throw err;
                 }
                 else {
-                    console.log(result);
-                }
-            });
-            ytsr(song, {limit: 10, type: "video"}, function(err, result) {
-                if (err) {
-                    throw err;
-                }
-                else {
-                    console.log(result);
+                    let list = [];
+                    for (let i = 0; i < result.items.length; i++) {
+                        if (result.items[i].type === "video" && list.length < 5) {
+                            list.unshift({"title": result.items[i].title, "URL": result.items[i].link});
+                        }
+                    }
+                    console.log(list);
                 }
             });
         }
