@@ -106,7 +106,11 @@ class Controller {
     if (!msg.member.voiceChannel) {
       msg.reply("You need to join a voice channel first!");
     } else {
-      this.getConnection(msg).then(() => this.parseInput(msg, song));
+      if (this.currConnection == null) {
+        this.getConnection(msg).then(() => this.parseInput(msg, song));
+      } else {
+        this.parseInput(msg, song);
+      }
     }
   }
 
