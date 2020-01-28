@@ -150,12 +150,20 @@ class Controller {
                     else {
                         if (_this.isSearching) {
                             if (new Date() - _this.searchStartTime > 10000) {
+                                _this.searchList = [];
                                 _this.isSearching = false;
                                 msg.channel.send("Search timed out.")
                             }
                             else if (song in searchChoices) {
-                                song = song / 1;
+                                song = (song / 1) - 1;
                                 _this.addSongToQueue(_this.searchList[song].URL);
+                                if (_this.dispatcher === null || !_this.dispatcher.speaking) {
+                                    msg.member.voiceChannel.join()
+                                        .then(connection => {                            
+                                            _this.play(connection);
+                                        })
+                                        .catch(console.log);
+                                }
                                 _this.isSearching = false;
                             }
                             else {
@@ -167,7 +175,7 @@ class Controller {
                             for (let i = 0; i < result.items.length; i++) {
                                 if (result.items[i].type === "video" && _this.searchList.length < searchChoices.length) {
                                     _this.searchList.push({"title": result.items[i].title, "URL": result.items[i].link});
-                                    string += (i + 1) + ": " + result.items[i].title + "\n";
+                                    string += (_this.searchList.length) + ": " + result.items[i].title + "\n";
                                 }
                             }
                             msg.channel.send(string).then(() => {
