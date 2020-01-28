@@ -218,6 +218,9 @@ class Controller {
                       else if (this.isLoopingSingle == true) {
                           //do nothing
                       }
+                      else {
+                          this.playlist.shift();
+                      }
                       this.play(connection);
                   }
               })
