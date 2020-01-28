@@ -441,10 +441,9 @@ class Controller {
                 });
                 string = "Current Kick Count: " + counter.count;
                 msg.channel.send(string);
-                break;
+              break;
             case "logout":
                 console.log("Logging out...");
-                client.leave();
                 client.destroy();
                 console.log("Logged out!");
                 break;
