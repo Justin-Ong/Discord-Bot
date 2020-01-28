@@ -109,64 +109,74 @@ class Controller {
             msg.reply("You need to join a voice channel first!");
         }
         else {
-            this.currChannel = msg.member.voiceChannel;
-            if (this.currConnection == null) {
-                this.currChannel.join()
-                    .then(connection => {
-                        this.currConnection = connection;
-                    })
-                    .catch(console.log);
-            }
-            if (ytpl.validateURL(song)) {          
-                song = song.split("list=")[1];
-                song = song.split("&index=")[0];
-                ytpl(song, 0)
-                    .then(result => {
-                        this.addListToQueue(result.items);
-                    })
-                    .catch(console.log);
-            }
-            else if (ytdl.validateURL(song)) {
-                this.addSongToQueue(song)
-            }
-            else {
-                let _this = this;
-                ytsr(song, {limit: 10}, function(err, result) {
-                    if (err) {
-                        throw err;
-                    }
-                    else {
-                        if (_this.isSearching) {
-                            if (new Date() - _this.searchStartTime > 10000) {
-                                _this.searchList.length = 0;
-                                _this.isSearching = false;
-                            }
-                            else if (song in searchChoices) {
-                                song = (song / 1) - 1;
-                                _this.addSongToQueue(_this.searchList[song].URL);
-                                _this.searchList.length = 0;
-                                _this.isSearching = false;
-                            }
-                            else {
-                                msg.channel.send("Only one search at a time, please!");
-                            }
+            this.getConnection(msg);
+            this.parseInput(msg, song);
+        }
+    }
+
+    parseInput(msg, song) {
+        if (ytpl.validateURL(song)) {
+            song = song.split("list=")[1];
+            song = song.split("&index=")[0];
+            ytpl(song, 0)
+                .then(result => {
+                    this.addListToQueue(result.items);
+                })
+                .catch(console.log);
+        }
+        else if (ytdl.validateURL(song)) {
+            this.addSongToQueue(song)
+        }
+        else {
+            let _this = this;
+            ytsr(song, {limit: 10}, function(err, result) {
+                if (err) {
+                    throw err;
+                }
+                else {
+                    if (_this.isSearching) {
+                        if (new Date() - _this.searchStartTime > 10000) {
+                            _this.searchList.length = 0;
+                            _this.isSearching = false;
+                        }
+                        else if (song in searchChoices) {
+                            song = (song / 1) - 1;
+                            _this.addSongToQueue(_this.searchList[song].URL);
+                            _this.searchList.length = 0;
+                            _this.isSearching = false;
                         }
                         else {
-                            let string = "";
-                            for (let i = 0; i < result.items.length; i++) {
-                                if (result.items[i].type === "video" && _this.searchList.length < searchChoices.length) {
-                                    _this.searchList.push({"title": result.items[i].title, "URL": result.items[i].link});
-                                    string += (_this.searchList.length) + ": " + result.items[i].title + "\n";
-                                }
-                            }
-                            msg.channel.send(string).then(() => {
-                                _this.searchStartTime = new Date();
-                                _this.isSearching = true;
-                            });
+                            msg.channel.send("Only one search at a time, please!");
                         }
                     }
-                });
-            }
+                    else {
+                        let string = "";
+                        for (let i = 0; i < result.items.length; i++) {
+                            if (result.items[i].type === "video" && _this.searchList.length < searchChoices.length) {
+                                _this.searchList.push({"title": result.items[i].title, "URL": result.items[i].link});
+                                string += (_this.searchList.length) + ": " + result.items[i].title + "\n";
+                            }
+                        }
+                        msg.channel.send(string).then(() => {
+                            _this.searchStartTime = new Date();
+                            _this.isSearching = true;
+                        });
+                    }
+                }
+            });
+        }
+        resolve();
+    }
+    
+    getConnection(msg) {
+        this.currChannel = msg.member.voiceChannel;
+        if (this.currConnection == null) {
+            this.currChannel.join()
+                .then(connection => {
+                    this.currConnection = connection;
+                    console.log(connection);
+                })
+                .catch(console.log);
         }
     }
 
@@ -179,7 +189,7 @@ class Controller {
             console.log("Added " + title + " to queue")
             console.log(_this.playlist.length + " songs in queue");
             if (_this.playlist.length == 1) {
-                _this.play(_this.currConnection);
+                _this.play();
             }
         });
     }
@@ -190,12 +200,12 @@ class Controller {
         }
     }
     
-    play(connection) {
+    play() {
         if (this.playlist.length > 0) {
           console.log("Playing " + this.playlist[0].title);
           console.log(this.playlist.length + " songs in queue");
           
-          this.dispatcher = connection.playStream(ytdl(this.playlist[0].url, {filter: "audioonly"}))
+          this.dispatcher = this.currentConnection.playStream(ytdl(this.playlist[0].url, {filter: "audioonly"}))
               .on("end", () => {
                   if (this.playlist.length > 0) {
                       if (this.isLoopingAll == true) {
@@ -207,7 +217,7 @@ class Controller {
                       else {
                           this.playlist.shift();
                       }
-                      this.play(connection);
+                      this.play();
                   }
               })
               .on("error", console.error);
