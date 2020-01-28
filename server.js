@@ -150,7 +150,7 @@ class Controller {
                     else {
                         if (_this.isSearching) {
                             if (new Date() - _this.searchStartTime > 10000) {
-                                _this.searchList = [];
+                                _this.searchList.length = 0;
                                 _this.isSearching = false;
                                 msg.channel.send("Search timed out.")
                             }
@@ -164,6 +164,7 @@ class Controller {
                                         })
                                         .catch(console.log);
                                 }
+                                _this.searchList.length = 0;
                                 _this.isSearching = false;
                             }
                             else {
@@ -362,6 +363,12 @@ class Controller {
                     msg.channel.send("Now looping songs in current playlist.");
                 }
                 break;
+            case "loop off":
+                this.isLoopingSingle = false;
+                this.isLoopingList = false;
+                console.log("looping off");
+                msg.channel.send("Looping has been stopped.");
+                break;
             case "ping":
                 msg.reply("pong!");
                 break;
@@ -436,9 +443,10 @@ class Controller {
                 msg.channel.send(string);
                 break;
             case "logout":
-				console.log("Logging out...");
-				client.destroy();
-				console.log("Logged out!");
+                console.log("Logging out...");
+                client.leave();
+                client.destroy();
+                console.log("Logged out!");
                 break;
             default:
                 msg.reply("No such command!");
