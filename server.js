@@ -104,7 +104,7 @@ class Controller {
     }
   
     //Music player
-    async musicPlayer(msg, song) {
+    musicPlayer(msg, song) {
         if (!msg.member.voiceChannel) {
             msg.reply("You need to join a voice channel first!");
         }
@@ -166,6 +166,7 @@ class Controller {
                         }
                     });
                 }
+                resolve();
             }
             catch(err) {
                 reject(err);
@@ -182,7 +183,7 @@ class Controller {
                     _this.currChannel.join()
                         .then(connection => {
                             _this.currConnection = connection;
-                            resolve(1);
+                            resolve();
                         })
                         .catch(console.log);
                 }
@@ -202,7 +203,7 @@ class Controller {
             console.log("Added " + title + " to queue")
             console.log(_this.playlist.length + " songs in queue");
             if (_this.playlist.length == 1) {
-                _this.play();
+                _this.play(song);
             }
         });
     }
@@ -213,12 +214,12 @@ class Controller {
         }
     }
     
-    play() {
+    play(msg) {
         if (this.playlist.length > 0) {
           console.log("Playing " + this.playlist[0].title);
           console.log(this.playlist.length + " songs in queue");
           
-          this.dispatcher = this.currentConnection.playStream(ytdl(this.playlist[0].url, {filter: "audioonly"}))
+          this.dispatcher = msg.connection.playStream(ytdl(this.playlist[0].url, {filter: "audioonly"}))
               .on("end", () => {
                   if (this.playlist.length > 0) {
                       if (this.isLoopingAll == true) {
@@ -230,7 +231,7 @@ class Controller {
                       else {
                           this.playlist.shift();
                       }
-                      this.play();
+                      this.play(msg);
                   }
               })
               .on("error", console.error);
