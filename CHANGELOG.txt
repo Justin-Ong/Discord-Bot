@@ -1,3 +1,9 @@
+1.7.1:
+Bug fixes
+
+1.7.0:
+Add YouTube search command
+
 1.6.5:
 Add loop command to repeat either a single song or the current playlist
 

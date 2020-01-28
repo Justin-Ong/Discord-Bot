@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.6.5
+//Version: 1.7.1
 
 const express = require("express");
 const expressApp = express();
@@ -29,9 +29,8 @@ class Controller {
     constructor() {
         this.playlist = [];  //set up variables for song playing
         this.searchList = [];
-        this.currChannel = null;
+        this.currConnection = null;
         this.dispatcher = null;
-        this.isPlaying = false;
         this.isPaused = false;
         this.isLoopingSingle = false;
         this.isLoopingList = false;
@@ -114,16 +113,16 @@ class Controller {
                         this.addListToQueue(result.items);
                     })
                     .catch(console.log);
-                if (this.dispatcher === null || !this.dispatcher.speaking) {
+                if (this.currConnection == null) {
                     msg.member.voiceChannel.join()
                         .then(connection => {
+                            this.currConnection = connection;
                             this.play(connection);
                         })
                         .catch(console.log);
-                    this.currChannel = msg.member.voiceChannel;
                 }
-                else if (!this.isPlaying) {
-                    this.play(connection);
+                else if (this.playlist.length <= 0) {
+                    this.play(this.currConnection);
                 }
             }
             else {
@@ -133,13 +132,17 @@ class Controller {
         else if (ytdl.validateURL(song)) {
             if (msg.member.voiceChannel) {
                 this.addSongToQueue(song);
-              
-                if (this.dispatcher === null || !this.dispatcher.speaking) {
+
+                if (this.currConnection == null) {
                     msg.member.voiceChannel.join()
-                        .then(connection => {                            
+                        .then(connection => {
+                            this.currConnection = connection;
                             this.play(connection);
                         })
                         .catch(console.log);
+                }
+                else if (this.playlist.length <= 0) {
+                    this.play(this.currConnection);
                 }
             }
             else {
@@ -163,12 +166,16 @@ class Controller {
                             else if (song in searchChoices) {
                                 song = (song / 1) - 1;
                                 _this.addSongToQueue(_this.searchList[song].URL);
-                                if (_this.dispatcher === null || !_this.dispatcher.speaking) {
+                                if (_this.currConnection == null) {
                                     msg.member.voiceChannel.join()
-                                        .then(connection => {                            
+                                        .then(connection => {
+                                            _this.currConnection = connection;
                                             _this.play(connection);
                                         })
                                         .catch(console.log);
+                                }
+                                else if (_this.playlist.length <= 0) {
+                                    _this.play(this.currConnection);
                                 }
                                 _this.searchList.length = 0;
                                 _this.isSearching = false;
@@ -223,7 +230,7 @@ class Controller {
 
           this.dispatcher = connection.playStream(ytdl(this.playlist[0].url, {filter: "audioonly"}))
               .on("end", () => {
-                  if (this.playlist.length) {
+                  if (this.playlist.length > 0) {
                       if (this.isLoopingAll == true) {
                           this.playlist.push(this.playlist.shift());
                       }
@@ -447,7 +454,7 @@ class Controller {
                 });
                 string = "Current Kick Count: " + counter.count;
                 msg.channel.send(string);
-              break;
+                break;
             case "logout":
                 console.log("Logging out...");
                 client.destroy();
