@@ -109,8 +109,9 @@ class Controller {
             msg.reply("You need to join a voice channel first!");
         }
         else {
-            this.getConnection(msg);
-            this.parseInput(msg, song);
+            this.getConnection(msg).then(() =>
+                this.parseInput(msg, song))
+                .catch(err => console.log(err));
         }
     }
 
@@ -165,9 +166,8 @@ class Controller {
                 }
             });
         }
-        resolve();
     }
-    
+
     getConnection(msg) {
         this.currChannel = msg.member.voiceChannel;
         if (this.currConnection == null) {
@@ -178,6 +178,7 @@ class Controller {
                 })
                 .catch(console.log);
         }
+         new Promise();
     }
 
     addSongToQueue(song) {
