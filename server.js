@@ -144,12 +144,28 @@ class Controller {
                 }
                 else {
                     let list = [];
+                    let string = "";
+                    let fiter = response => {
+                        return 
+                    }
                     for (let i = 0; i < result.items.length; i++) {
-                        if (result.items[i].type === "video" && list.length < 5) {
-                            list.unshift({"title": result.items[i].title, "URL": result.items[i].link});
+                        if (result.items[i].type === "video" && list.length < searchChoices.length) {
+                            list.push({"title": result.items[i].title, "URL": result.items[i].link});
+                            string += (i + 1) + ": " + result.items[i].title + "\n";
                         }
                     }
-                    console.log(list);
+                    msg.channel.send(string).then(() => {
+                        msg.channel.awaitMessages(searchChoices, { maxMatches: 1, time: 30000, errors: ['time'] })
+                        .then(collected => {
+                            console.log(collected);
+                            if (collected === "1") {
+                                msg.channel.send("Added " + list[collected].title + " to the queue.");
+                            }
+                        })
+                        .catch(collected => {
+                            msg.channel.send("Search timed out.");
+                        });
+                    });
                 }
             });
         }
