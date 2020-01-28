@@ -104,14 +104,13 @@ class Controller {
     }
   
     //Music player
-    musicPlayer(msg, song) {
+    async musicPlayer(msg, song) {
         if (!msg.member.voiceChannel) {
             msg.reply("You need to join a voice channel first!");
         }
         else {
-            this.getConnection(msg).then(() =>
-                this.parseInput(msg, song))
-                .catch(err => console.log(err));
+            await this.getConnection(msg);
+            this.parseInput(msg, song);
         }
     }
 
@@ -175,10 +174,10 @@ class Controller {
                 .then(connection => {
                     this.currConnection = connection;
                     console.log(connection);
+                    return;
                 })
                 .catch(console.log);
         }
-         new Promise();
     }
 
     addSongToQueue(song) {
