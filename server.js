@@ -109,75 +109,88 @@ class Controller {
             msg.reply("You need to join a voice channel first!");
         }
         else {
-            await this.getConnection(msg);
-            this.parseInput(msg, song);
+            this.getConnection(msg).then(() => this.parseInput(msg, song));
         }
     }
 
     parseInput(msg, song) {
-        if (ytpl.validateURL(song)) {
-            song = song.split("list=")[1];
-            song = song.split("&index=")[0];
-            ytpl(song, 0)
-                .then(result => {
-                    this.addListToQueue(result.items);
-                })
-                .catch(console.log);
-        }
-        else if (ytdl.validateURL(song)) {
-            this.addSongToQueue(song)
-        }
-        else {
-            let _this = this;
-            ytsr(song, {limit: 10}, function(err, result) {
-                if (err) {
-                    throw err;
+        let _this = this;
+        return new Promise(function(resolve, reject) {
+            try {
+                if (ytpl.validateURL(song)) {
+                    song = song.split("list=")[1];
+                    song = song.split("&index=")[0];
+                    ytpl(song, 0)
+                        .then(result => {
+                            _this.addListToQueue(result.items);
+                        })
+                        .catch(console.log);
+                }
+                else if (ytdl.validateURL(song)) {
+                    _this.addSongToQueue(song)
                 }
                 else {
-                    if (_this.isSearching) {
-                        if (new Date() - _this.searchStartTime > 10000) {
-                            _this.searchList.length = 0;
-                            _this.isSearching = false;
-                        }
-                        else if (song in searchChoices) {
-                            song = (song / 1) - 1;
-                            _this.addSongToQueue(_this.searchList[song].URL);
-                            _this.searchList.length = 0;
-                            _this.isSearching = false;
+                    ytsr(song, {limit: 10}, function(err, result) {
+                        if (err) {
+                            throw err;
                         }
                         else {
-                            msg.channel.send("Only one search at a time, please!");
-                        }
-                    }
-                    else {
-                        let string = "";
-                        for (let i = 0; i < result.items.length; i++) {
-                            if (result.items[i].type === "video" && _this.searchList.length < searchChoices.length) {
-                                _this.searchList.push({"title": result.items[i].title, "URL": result.items[i].link});
-                                string += (_this.searchList.length) + ": " + result.items[i].title + "\n";
+                            if (_this.isSearching) {
+                                if (new Date() - _this.searchStartTime > 10000) {
+                                    _this.searchList.length = 0;
+                                    _this.isSearching = false;
+                                }
+                                else if (song in searchChoices) {
+                                    song = (song / 1) - 1;
+                                    _this.addSongToQueue(_this.searchList[song].URL);
+                                    _this.searchList.length = 0;
+                                    _this.isSearching = false;
+                                }
+                                else {
+                                    msg.channel.send("Only one search at a time, please!");
+                                }
+                            }
+                            else {
+                                let string = "";
+                                for (let i = 0; i < result.items.length; i++) {
+                                    if (result.items[i].type === "video" && _this.searchList.length < searchChoices.length) {
+                                        _this.searchList.push({"title": result.items[i].title, "URL": result.items[i].link});
+                                        string += (_this.searchList.length) + ": " + result.items[i].title + "\n";
+                                    }
+                                }
+                                msg.channel.send(string).then(() => {
+                                    _this.searchStartTime = new Date();
+                                    _this.isSearching = true;
+                                });
                             }
                         }
-                        msg.channel.send(string).then(() => {
-                            _this.searchStartTime = new Date();
-                            _this.isSearching = true;
-                        });
-                    }
+                    });
                 }
-            });
-        }
+            }
+            catch(err) {
+                reject(err);
+            }
+        });
     }
 
     getConnection(msg) {
-        this.currChannel = msg.member.voiceChannel;
-        if (this.currConnection == null) {
-            this.currChannel.join()
-                .then(connection => {
-                    this.currConnection = connection;
-                    console.log(connection);
-                    return;
-                })
-                .catch(console.log);
-        }
+        let _this = this;
+        return new Promise(function(resolve, reject) {
+            _this.currChannel = msg.member.voiceChannel;
+            if (_this.currConnection == null) {
+                try {
+                    _this.currChannel.join()
+                        .then(connection => {
+                            _this.currConnection = connection;
+                            resolve(1);
+                        })
+                        .catch(console.log);
+                }
+                catch(err) {
+                    reject(err);
+                }
+            }
+        });
     }
 
     addSongToQueue(song) {
