@@ -19,7 +19,7 @@ const config = require("./config.json");
 const counter = require("./counter.json");
 const startup_log = require("./startup_log.json");
 const client = new Discord.Client();
-const songFilter = [1, 2, 3, 4, 5]; 
+const searchChoices = [1, 2, 3, 4, 5]; 
 
 //login using token defined in config.json
 client.login(process.env.SECRET).then(loginSuccess, loginFailure);
@@ -97,9 +97,8 @@ class Controller {
         }
         return msg.reply(ans);
     }
-    
+  
     //Music player
-    //TODO: Add search functionality
     musicPlayer(msg, song) {
         if (ytpl.validateURL(song)) {          
             if (msg.member.voiceChannel) {
@@ -139,7 +138,11 @@ class Controller {
             }
         }
         else {
-            msg.reply("Your URL is invalid!");
+            ytsr(song, function(err, results) {
+                if (err) {
+                    
+                }
+            }
         }
     }
   
