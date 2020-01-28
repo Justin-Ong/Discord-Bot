@@ -143,7 +143,7 @@ class Controller {
                                 _this.searchList.length = 0;
                                 _this.isSearching = false;
                             }
-                            if (song in searchChoices) {
+                            else if (song in searchChoices) {
                                 song = (song / 1) - 1;
                                 _this.addSongToQueue(_this.searchList[song].URL);
                                 _this.searchList.length = 0;
@@ -174,7 +174,7 @@ class Controller {
             }
         }
     }
-  
+
     addSongToQueue(song) {
         let _this = this;
         ytdl.getInfo(song, function(err, info) {
@@ -188,13 +188,16 @@ class Controller {
                 _this.currChannel.join()
                     .then(connection => {
                         _this.currConnection = connection;
-                        _this.play(connection);
+                        _this.play(_this.currConnection);
                     })
                     .catch(console.log);
             }
+            else if (_this.playlist.length <= 1) {
+                _this.play(_this.currConnection);
+            }
         });
     }
-  
+
     addListToQueue(list) {
         for (let i in list) {
             this.addSongToQueue(list[i].url_simple);
@@ -212,8 +215,8 @@ class Controller {
                       if (this.isLoopingAll == true) {
                           this.playlist.push(this.playlist.shift());
                       }
-                      else if (this.isLoopingSingle == false) {
-                          this.playlist.shift();
+                      else if (this.isLoopingSingle == true) {
+                          //do nothing
                       }
                       this.play(connection);
                   }
@@ -261,7 +264,7 @@ class Controller {
         let string = "";
         switch(cmd) {
             case "help":
-                msg.reply("The following commands are valid: roll, play (YT videos), pause, resume, stop, skip, " +
+                msg.reply("The following commands are valid: roll, play (YT videos, playlists or search), pause, resume, stop, skip, " +
                           "ping, pong, sleepysparks, sparksshine, rindouyay, jesus, thisisfine, butwhy, diabetes, " +
                           "2meirl4meirl, thinking, pingtest, logout"
                           );
@@ -293,13 +296,8 @@ class Controller {
                 if (!this.playlist.length) {
                     msg.reply("there are no songs in the queue!");
                 }
-                else if (this.playlist.length === 1) {
-                    msg.reply("skipped!");
-                    this.playlist.length = 0;
-                    this.dispatcher.end();
-                }
                 else {
-                    msg.reply("skipped!");
+                    msg.reply(this.playlist[0].title + " has been skipped.");
                     this.dispatcher.end();
                 }
                 break;
@@ -308,7 +306,7 @@ class Controller {
                     msg.reply("nothing is playing!");
                 }
                 else {
-                    msg.reply("the player has been stopped!");
+                    msg.reply("the player has been stopped.");
                     this.playlist.length = 0;
                     this.dispatcher.end();
                 }
