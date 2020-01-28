@@ -138,11 +138,22 @@ class Controller {
             }
         }
         else {
-            ytsr(song, function(err, results) {
+            ytsr.getFilters(song, function(err, result) {
                 if (err) {
-                    
+                    throw err;
                 }
-            }
+                else {
+                    console.log(result);
+                }
+            });
+            ytsr(song, {limit: 10, type: "video"}, function(err, result) {
+                if (err) {
+                    throw err;
+                }
+                else {
+                    console.log(result);
+                }
+            });
         }
     }
   
