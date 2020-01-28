@@ -28,10 +28,12 @@ client.login(process.env.SECRET).then(loginSuccess, loginFailure);
 class Controller {
     constructor() {
         this.playlist = [];  //set up variables for song playing
+        this.searchList = [];
         this.dispatcher = null;
         this.isPaused = false;
         this.isLoopingSingle = false;
         this.isLoopingList = false;
+        this.isSearching = false;
         this.currInput = "";
     }
     
@@ -143,29 +145,28 @@ class Controller {
                     throw err;
                 }
                 else {
-                    let list = [];
-                    let string = "";
-                    let fiter = response => {
-                        return 
-                    }
-                    for (let i = 0; i < result.items.length; i++) {
-                        if (result.items[i].type === "video" && list.length < searchChoices.length) {
-                            list.push({"title": result.items[i].title, "URL": result.items[i].link});
-                            string += (i + 1) + ": " + result.items[i].title + "\n";
+                    if (this.isSearching) {
+                        if () {
+                            this.isSearching = false;
+                        }
+                        if (song in searchChoices) {
+                            song = song / 1;
+                            this.addSongToQueue(this.searchList[song].URL);
+                            this.isSearching = false;
                         }
                     }
-                    msg.channel.send(string).then(() => {
-                        msg.channel.awaitMessages(searchChoices, { maxMatches: 1, time: 30000, errors: ['time'] })
-                        .then(collected => {
-                            console.log(collected);
-                            if (collected === "1") {
-                                msg.channel.send("Added " + list[collected].title + " to the queue.");
+                    else {
+                        let string = "";
+                        for (let i = 0; i < result.items.length; i++) {
+                            if (result.items[i].type === "video" && this.searchList.length < searchChoices.length) {
+                                this.searchList.push({"title": result.items[i].title, "URL": result.items[i].link});
+                                string += (i + 1) + ": " + result.items[i].title + "\n";
                             }
-                        })
-                        .catch(collected => {
-                            msg.channel.send("Search timed out.");
+                        }
+                        msg.channel.send(string).then(() => {
+                            this.isSearching = true;
                         });
-                    });
+                    }
                 }
             });
         }
@@ -188,7 +189,7 @@ class Controller {
         }
     }
     
-    play(connection) {        
+    play(connection) {
         if (this.playlist.length > 0) {
           console.log("Playing " + this.playlist[0].title);
           console.log(this.playlist.length + " songs in queue");
