@@ -199,8 +199,8 @@ class Controller {
     }
 
     addListToQueue(list) {
-        for (let i in list) {
-            this.addSongToQueue(list[i].url_simple);
+        for (let i = 0; i < list.length; i++) {
+            setTimeout(this.addSongToQueue(list[i].url_simple), 1000);
         }
     }
     
@@ -208,7 +208,7 @@ class Controller {
         if (this.playlist.length > 0) {
           console.log("Playing " + this.playlist[0].title);
           console.log(this.playlist.length + " songs in queue");
-
+          
           this.dispatcher = connection.playStream(ytdl(this.playlist[0].url, {filter: "audioonly"}))
               .on("end", () => {
                   if (this.playlist.length > 0) {
