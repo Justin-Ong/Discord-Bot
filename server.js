@@ -35,6 +35,7 @@ class Controller {
         this.isLoopingList = false;
         this.isSearching = false;
         this.currInput = "";
+        this.searchStartTime = null;
     }
     
     //Initial reading of input
@@ -140,35 +141,46 @@ class Controller {
             }
         }
         else {
-            ytsr(song, {limit: 10}, function(err, result) {
-                if (err) {
-                    throw err;
-                }
-                else {
-                    if (this.isSearching) {
-                        if () {
-                            this.isSearching = false;
-                        }
-                        if (song in searchChoices) {
-                            song = song / 1;
-                            this.addSongToQueue(this.searchList[song].URL);
-                            this.isSearching = false;
-                        }
+            let _this = this;
+            if (msg.member.voiceChannel) {
+                ytsr(song, {limit: 10}, function(err, result) {
+                    if (err) {
+                        throw err;
                     }
                     else {
-                        let string = "";
-                        for (let i = 0; i < result.items.length; i++) {
-                            if (result.items[i].type === "video" && this.searchList.length < searchChoices.length) {
-                                this.searchList.push({"title": result.items[i].title, "URL": result.items[i].link});
-                                string += (i + 1) + ": " + result.items[i].title + "\n";
+                        if (_this.isSearching) {
+                            if (new Date() - _this.searchStartTime > 10000) {
+                                _this.isSearching = false;
+                                msg.channel.send("Search timed out.")
+                            }
+                            else if (song in searchChoices) {
+                                song = song / 1;
+                                _this.addSongToQueue(_this.searchList[song].URL);
+                                _this.isSearching = false;
+                            }
+                            else {
+                                msg.channel.send("Only one search at a time, please!");
                             }
                         }
-                        msg.channel.send(string).then(() => {
-                            this.isSearching = true;
-                        });
+                        else {
+                            let string = "";
+                            for (let i = 0; i < result.items.length; i++) {
+                                if (result.items[i].type === "video" && _this.searchList.length < searchChoices.length) {
+                                    _this.searchList.push({"title": result.items[i].title, "URL": result.items[i].link});
+                                    string += (i + 1) + ": " + result.items[i].title + "\n";
+                                }
+                            }
+                            msg.channel.send(string).then(() => {
+                                _this.searchStartTime = new Date();
+                                _this.isSearching = true;
+                            });
+                        }
                     }
-                }
-            });
+                });
+            }
+            else {
+                msg.reply("You need to join a voice channel first!");
+            }
         }
     }
   
