@@ -183,7 +183,7 @@ class Controller {
             _this.playlist.push({"url": song, "title": title, "duration": duration});
             console.log("Added " + title + " to queue")
             console.log(_this.playlist.length + " songs in queue");
-          
+
             if (_this.currConnection == null) {
                 _this.currChannel.join()
                     .then(connection => {
@@ -200,7 +200,7 @@ class Controller {
 
     addListToQueue(list) {
         for (let i = 0; i < list.length; i++) {
-            setTimeout(this.addSongToQueue(list[i].url_simple), 1000);
+            this.addSongToQueue(list[i].url_simple);
         }
     }
     
