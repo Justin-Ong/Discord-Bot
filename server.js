@@ -478,6 +478,12 @@ class Controller {
         string = "Current Kick Count: " + counter.count;
         msg.channel.send(string);
         break;
+      case "reset":
+        console.log("Resetting...");
+        client.destroy();
+        this.playlist.length = 0;
+        client.login(process.env.SECRET).then(loginSuccess, loginFailure);
+        break;
       case "logout":
         console.log("Logging out...");
         client.destroy();
