@@ -14,7 +14,7 @@
     "node-opus": "^0.3.2",
     "ytpl": "^0.1.19",
     "ytsr": "^0.1.10",
-    "appmetrics-dash": "^5.3.0"
+    "express-status-monitor": "^1.2.8"
   },
   "engines": {
     "node": "8.x"

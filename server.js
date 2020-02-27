@@ -2,12 +2,11 @@
 //Author: Justin Ong
 //Version: 1.7.1
 
-require('appmetrics-dash').attach()
-
 const express = require("express");
 const expressApp = express();
 expressApp.get("/", (req, res) => res.json("OK"));
 expressApp.listen(process.env.PORT);
+expressApp.use(require('express-status-monitor')());
 
 //TODO: Refactor code, possibly split into various files?
 
