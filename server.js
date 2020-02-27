@@ -12,13 +12,12 @@ expressApp.listen(process.env.PORT);
 //Monitoring setup
 var osu = require('node-os-utils');
 var netstat = osu.netstat;
-
-netstat.inOut();
+netstat.inOut()
   .then(info => {
     console.log(info);
   });
 
-
+//Various inits
 const Booru = require("booru");
 const Discord = require("discord.js");
 var fs = require("fs");
