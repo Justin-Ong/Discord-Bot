@@ -2,6 +2,8 @@
 //Author: Justin Ong
 //Version: 1.7.1
 
+require('appmetrics-dash').attach()
+
 const express = require("express");
 const expressApp = express();
 expressApp.get("/", (req, res) => res.json("OK"));
