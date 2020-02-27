@@ -1,14 +1,23 @@
 //Program: Discord Bot
 //Author: Justin Ong
 //Version: 1.7.1
+//TODO: Refactor code, possibly split into various files?
 
+//Express server for keeping project alive with pings
 const express = require("express");
 const expressApp = express();
 expressApp.get("/", (req, res) => res.json("OK"));
 expressApp.listen(process.env.PORT);
-expressApp.use(require('express-status-monitor')());
 
-//TODO: Refactor code, possibly split into various files?
+//Monitoring setup
+var osu = require('node-os-utils');
+var netstat = osu.netstat;
+
+netstat.inOut();
+  .then(info => {
+    console.log(info);
+  });
+
 
 const Booru = require("booru");
 const Discord = require("discord.js");
@@ -559,8 +568,3 @@ function loginFailure(error) {
     );
   });
 }
-
-//for debugging, uncomment to enable
-//client.on("error", (e) => console.error(e));
-//client.on("warn", (e) => console.warn(e));
-//client.on("debug", (e) => console.info(e));
