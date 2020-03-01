@@ -10,8 +10,9 @@ expressApp.get("/", (req, res) => res.json("OK"));
 expressApp.listen(process.env.PORT);
 
 //Monitoring setup
-var osu = require('node-os-utils');
-var netstat = osu.netstat;
+const osu = require('node-os-utils');
+const netstat = osu.netstat;
+const fs = require("fs");
 
 setInterval(function() {
   netstat.inOut()
@@ -26,7 +27,6 @@ setInterval(function() {
 //Various inits
 const Booru = require("booru");
 const Discord = require("discord.js");
-var fs = require("fs");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
