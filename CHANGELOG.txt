@@ -1,3 +1,6 @@
+1.7.2:
+Add network and OS monitoring
+
 1.7.1:
 Bug fixes
 

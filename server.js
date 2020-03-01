@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.7.1
+//Version: 1.7.2
 //TODO: Refactor code, possibly split into various files?
 
 //Express server for keeping project alive with pings
