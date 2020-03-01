@@ -144,12 +144,6 @@ class Controller {
                  })
                  .catch(console.log);
             });
-            /*
-          ytpl(song, {"limit": "0"})
-            .then(result => {
-              _this.addListToQueue(result.items);
-            })
-            */
         } else if (ytdl.validateURL(song)) {
           _this.addSongToQueue(song);
         } else {
