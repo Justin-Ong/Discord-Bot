@@ -133,7 +133,9 @@ class Controller {
     let _this = this;
     return new Promise(function(resolve, reject) {
       try {
+        console.log("a");
         if (ytpl.validateURL(song)) {
+          console.log("b");
           song = song.split("list=")[1];
           song = song.split("&index=")[0];
           ytpl(song, 0)
