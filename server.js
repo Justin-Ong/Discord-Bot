@@ -140,9 +140,10 @@ class Controller {
             .then(playlist => {
                playlist.getVideos()
                  .then(videos => {
-                   _this.addListToQueue(result.items);
-               })
+                   _this.addListToQueue(videos);
+                 })
                  .catch(console.log);
+            });
             /*
           ytpl(song, {"limit": "0"})
             .then(result => {
@@ -239,7 +240,7 @@ class Controller {
 
   addListToQueue(list) {
     for (let i = 0; i < list.length; i++) {
-      this.addSongToQueue(list[i].url_simple);
+      this.addSongToQueue(list[i].id);
     }
   }
 
