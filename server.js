@@ -30,6 +30,8 @@ var fs = require("fs");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
+const YouTube = require('simple-youtube-api');
+const youtube = new YouTube(process.env.YT_API_KEY);
 const config = require("./config.json");
 const counter = require("./counter.json");
 const startup_log = require("./startup_log.json");
@@ -134,11 +136,19 @@ class Controller {
     return new Promise(function(resolve, reject) {
       try {
         if (ytpl.validateURL(song)) {
+          youtube.getPlaylist(song)
+            .then(playlist => {
+               playlist.getVideos()
+                 .then(videos => {
+                   _this.addListToQueue(result.items);
+               })
+                 .catch(console.log);
+            /*
           ytpl(song, {"limit": "0"})
             .then(result => {
               _this.addListToQueue(result.items);
             })
-            .catch(console.log);
+            */
         } else if (ytdl.validateURL(song)) {
           _this.addSongToQueue(song);
         } else {

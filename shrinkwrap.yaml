@@ -4,6 +4,7 @@ dependencies:
   express: 4.17.1
   node-opus: 0.3.3
   node-os-utils: 1.2.2
+  simple-youtube-api: 5.2.1
   ytdl-core: 2.0.0
   ytpl: 0.1.20
   ytsr: 0.1.10
@@ -279,6 +280,10 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha512-M4Sjn6N/+O6/IXSJseKqHoFc+5FdGJ22sXqnjTpdZweHK64MzEPAyQZyEU3R/KRv2GLoa7nNtg/C2Ev6m7z+eA==
+  /iso8601-duration/1.2.0:
+    dev: false
+    resolution:
+      integrity: sha512-ErTBd++b17E8nmWII1K1uZtBgD1E8RjyvwmxlCjPHNqHMD7gmcMHOw0E8Ro/6+QT4PhHRSnnMo7bxa1vFPkwhg==
   /long/4.0.0:
     dev: false
     resolution:
@@ -502,6 +507,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
+  /simple-youtube-api/5.2.1:
+    dependencies:
+      iso8601-duration: 1.2.0
+      node-fetch: 2.6.0
+    dev: false
+    resolution:
+      integrity: sha512-vmndP9Bkh35tifn2OwY+th2imSsfYtmDqczgdOW5yEARFzvSoR8VSQFsivJnctfV5QHQUL6VrOpNdbmDRLh9Bg==
   /snekfetch/3.6.4:
     deprecated: use node-fetch instead
     dev: false
@@ -592,6 +604,7 @@ specifiers:
   express: ^4.17.1
   node-opus: ^0.3.2
   node-os-utils: ^1.2.2
+  simple-youtube-api: ^5.2.1
   ytdl-core: ^2.0.0
   ytpl: ^0.1.20
   ytsr: ^0.1.10
