@@ -134,9 +134,7 @@ class Controller {
     return new Promise(function(resolve, reject) {
       try {
         if (ytpl.validateURL(song)) {
-          song = song.split("list=")[1];
-          song = song.split("&index=")[0];
-          ytpl(song)
+          ytpl(song, {"limit": "0"})
             .then(result => {
               _this.addListToQueue(result.items);
             })
