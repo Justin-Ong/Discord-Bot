@@ -13,17 +13,18 @@ expressApp.listen(process.env.PORT);
 const osu = require('node-os-utils');
 const netstat = osu.netstat;
 const fs = require("fs");
-
+/*
 setInterval(function() {
   netstat.inOut()
     .then(info => {
+      console.log(info);
       fs.appendFile('network_log.txt', info, 'utf8',
         function(err) { 
             if (err) throw err;
       });
   });
 }, 1000);
-
+*/
 //Various inits
 const Booru = require("booru");
 const Discord = require("discord.js");
