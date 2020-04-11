@@ -8,12 +8,12 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "booru": "^2.2.0",
-    "discord.js": "^12.1.1",
-    "ytdl-core": "^2.0.1",
+    "booru": "^2.1.0",
+    "discord.js": "^11.6.1",
+    "ytdl-core": "^2.0.0",
     "node-opus": "^0.3.2",
     "ytpl": "^0.1.20",
-    "ytsr": "^0.1.12",
+    "ytsr": "^0.1.10",
     "node-os-utils": "^1.2.2",
     "simple-youtube-api": "^5.2.1"
   },
