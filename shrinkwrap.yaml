@@ -1,13 +1,13 @@
 dependencies:
-  booru: 2.1.0
-  discord.js: 11.6.1
+  booru: 2.2.1
+  discord.js: 11.6.4
   express: 4.17.1
   node-opus: 0.3.3
   node-os-utils: 1.2.2
   simple-youtube-api: 5.2.1
-  ytdl-core: 2.0.0
+  ytdl-core: 2.0.1
   ytpl: 0.1.20
-  ytsr: 0.1.10
+  ytsr: 0.1.12
 packages:
   /accepts/1.3.7:
     dependencies:
@@ -54,7 +54,7 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-dhEPs72UPbDnAQJ9ZKMNTP6ptJaionhP5cBb541nXPlW60Jepo9RV/a4fX4XWW9CuFNK22krhrj1+rgzifNCsw==
-  /booru/2.1.0:
+  /booru/2.2.1:
     dependencies:
       fast-xml-parser: 3.16.0
       node-fetch: 2.6.0
@@ -62,7 +62,7 @@ packages:
     engines:
       node: '>=10.0.0'
     resolution:
-      integrity: sha512-WsDVIQmJWgDOdeaidIFGMkIQV7wmxvqhPNRcI9X/lRHOM25eOSpeI1xtBtl/UG+v0SHsRoWaeCrRgyOZoxxIxA==
+      integrity: sha512-1ii/Xw10AXaQoarz63n4z1CjTTAzxyqEmUqcfGqEyw4sWFdICsEZmd4XASPy2BTo/O2U4bV++i56hvQI11ORAg==
   /bytes/3.1.0:
     dev: false
     engines:
@@ -113,7 +113,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
-  /discord.js/11.6.1:
+  /discord.js/11.6.4:
     dependencies:
       long: 4.0.0
       prism-media: 0.0.4
@@ -133,7 +133,7 @@ packages:
       opusscript: ^0.0.6
       sodium: ^2.0.3
     resolution:
-      integrity: sha512-UV7rMQL2xtHtbHAaGwRlAhEepHjz3V0UEEoWd89QbLMu3MV0D7+xkYCaAhlxnvuJWbhPO8p49Anx8qJ/SrcdwQ==
+      integrity: sha512-cK6rH1PuGjSjpmEQbnpuTxq1Yv8B89SotyKUFcr4RhnsiZnfBfDOev7DD7v5vhtEyyj51NuMWFoRJzgy/m08Uw==
   /ee-first/1.1.1:
     dev: false
     resolution:
@@ -175,7 +175,7 @@ packages:
       on-finished: 2.3.0
       parseurl: 1.3.3
       path-to-regexp: 0.1.7
-      proxy-addr: 2.0.5
+      proxy-addr: 2.0.6
       qs: 6.7.0
       range-parser: 1.2.1
       safe-buffer: 5.1.2
@@ -274,12 +274,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
-  /ipaddr.js/1.9.0:
+  /ipaddr.js/1.9.1:
     dev: false
     engines:
       node: '>= 0.10'
     resolution:
-      integrity: sha512-M4Sjn6N/+O6/IXSJseKqHoFc+5FdGJ22sXqnjTpdZweHK64MzEPAyQZyEU3R/KRv2GLoa7nNtg/C2Ev6m7z+eA==
+      integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==
   /iso8601-duration/1.2.0:
     dev: false
     resolution:
@@ -290,7 +290,7 @@ packages:
       integrity: sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==
   /m3u8stream/0.6.5:
     dependencies:
-      miniget: 1.6.1
+      miniget: 1.7.0
       sax: 1.2.4
     dev: false
     engines:
@@ -334,12 +334,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==
-  /miniget/1.6.1:
+  /miniget/1.7.0:
     dev: false
     engines:
-      node: '>=8'
+      node: '>=10'
     resolution:
-      integrity: sha512-I5oBwZmcaOuJrjQn7lpS29HM+aAZDbzKbX5ouxVyhFYdg6fA6YKOTwOCgzZQwlHuMek3FlCxz6eNrd4pOXbwOA==
+      integrity: sha512-yrgaDSMRzrfYTkudB4Y6xK8pCb7oAH2bvfv6iPY2m6CedZfs9yK4b/ofh0Vzv08hCYXH/HHkoS8an6fkWtOAQA==
   /ms/2.0.0:
     dev: false
     resolution:
@@ -365,6 +365,11 @@ packages:
     resolution:
       integrity: sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
   /node-opus/0.3.3:
+    cpu:
+      - x64
+      - arm
+      - arm64
+      - ia32
     dependencies:
       bindings: 1.2.1
       commander: 2.20.3
@@ -374,6 +379,12 @@ packages:
       node: '>=5.10.0'
     optionalDependencies:
       ogg-packet: 1.0.1
+    os:
+      - linux
+      - darwin
+      - win32
+      - freebsd
+      - android
     requiresBuild: true
     resolution:
       integrity: sha512-ZQniA8iJ6y/qOTmW6eyzM9m8odt4CIGV0NM9/U03/pYLhGyxy18QXO25WfrWd8XsUYx57tnxll2xxj54CN08uQ==
@@ -410,15 +421,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-dG2w7WtovUa4SiYTdWn9H8Bd4JNdei2djtkP/Bk9fXq81j5Q15ZPHYSwhUVvBRbp5zMkGtu0Yk62HuMcly0pRw==
-  /proxy-addr/2.0.5:
+  /proxy-addr/2.0.6:
     dependencies:
       forwarded: 0.1.2
-      ipaddr.js: 1.9.0
+      ipaddr.js: 1.9.1
     dev: false
     engines:
       node: '>= 0.10'
     resolution:
-      integrity: sha512-t/7RxHXPH6cJtP0pRG6smSr9QJidhB+3kXu0KgXnbGYMgzEnUxRQ4/LDdfOwZEMyIh3/xHb8PX3t+lfL9z+YVQ==
+      integrity: sha512-dh/frvCBVmSsDYzw6n926jv974gddhkFPfiN8hPOi30Wax25QZyZEGveluCgliBnqmuM+UJmBErbAUFIoDbjOw==
   /qs/6.7.0:
     dev: false
     engines:
@@ -568,17 +579,17 @@ packages:
     dev: false
     resolution:
       integrity: sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
-  /ytdl-core/2.0.0:
+  /ytdl-core/2.0.1:
     dependencies:
       html-entities: 1.2.1
       m3u8stream: 0.6.5
-      miniget: 1.6.1
+      miniget: 1.7.0
       sax: 1.2.4
     dev: false
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-cYdcxXhgldJeOaWaN/mxT+j07XFZdR+qUqfz5eddx4WcyWCha66FfJvmQBOPqyQo1TCyj/IkgZqdGADWlNdTcQ==
+      integrity: sha512-PZBcVzQpkBxi9OQh9I4QIrYNmkbM/zh4QJQuxE8I6RojLUVYkkps5iLYquE3H+pwmBXtEXQMDJfVRajgdiz+iA==
   /ytpl/0.1.20:
     dependencies:
       html-entities: 1.2.1
@@ -587,24 +598,24 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-iOvKzFZPtm2eoxQAlTWGcRfQo1MhKYSjf8B5eiiRvbcUHsOteQeychA/al1EcJrR7DuaR83nbu60gtAUbfEG6g==
-  /ytsr/0.1.10:
+  /ytsr/0.1.12:
     dependencies:
       html-entities: 1.2.1
     dev: false
     engines:
       node: '>=8'
     resolution:
-      integrity: sha512-9wq0TiFejj6T5t9WXx/7Uw7Pix6vtXq3nd7BbPvz3BwUjJ4rdW4maylj1/sW+AUaSNgZgVbVngH/Y1a7V1kzsA==
+      integrity: sha512-j+VUakSps8qTF6JBXUJuP7WXDxTxID7e3W7AdslZvMACm9id69e2XFS4iCkMr8bsa77B11JKsnyvnW6CQShk6g==
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  booru: ^2.1.0
+  booru: ^2.2.0
   discord.js: ^11.6.1
   express: ^4.17.1
   node-opus: ^0.3.2
   node-os-utils: ^1.2.2
   simple-youtube-api: ^5.2.1
-  ytdl-core: ^2.0.0
+  ytdl-core: ^2.0.1
   ytpl: ^0.1.20
-  ytsr: ^0.1.10
+  ytsr: ^0.1.12
