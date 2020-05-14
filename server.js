@@ -29,7 +29,7 @@ const searchChoices = [1, 2, 3, 4, 5];
 //login using token
 client.login(process.env.SECRET).then(loginSuccess, loginFailure);
 
-console.log("Starting");
+console.log("Starting...");
 
 //defining Controller class to handle user input
 class Controller {
