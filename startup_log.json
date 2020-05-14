@@ -1,6 +1,6 @@
 {
   "curr_success": "Logged in as GeneralGrievous at Thu Apr 30 2020 13:47:26 GMT+0000 (UTC)",
   "prev_success": "Logged in as GeneralGrievous at Thu Apr 30 2020 03:29:24 GMT+0000 (UTC)",
-  "curr_failure": "Failed to log in at Mon Jan 27 2020 08:05:03 GMT+0000 (UTC) due to: Error: Incorrect login details were provided.",
-  "prev_failure": null
+  "curr_failure": "Failed to log in at Thu May 14 2020 11:43:13 GMT+0000 (Coordinated Universal Time) due to: Error [TOKEN_INVALID]: An invalid token was provided.",
+  "prev_failure": "Failed to log in at Thu May 14 2020 11:39:01 GMT+0000 (Coordinated Universal Time) due to: Error [TOKEN_INVALID]: An invalid token was provided."
 }

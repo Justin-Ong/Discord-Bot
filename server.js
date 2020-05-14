@@ -10,8 +10,6 @@ expressApp.get("/", (req, res) => res.json("OK"));
 expressApp.listen(process.env.PORT);
 
 //Monitoring setup
-const osu = require('node-os-utils');
-const netstat = osu.netstat;
 const fs = require("fs");
 
 //Various inits
@@ -28,8 +26,10 @@ const startup_log = require("./startup_log.json");
 const client = new Discord.Client();
 const searchChoices = [1, 2, 3, 4, 5];
 
-//login using token defined in config.json
+//login using token
 client.login(process.env.SECRET).then(loginSuccess, loginFailure);
+
+console.log("Starting");
 
 //defining Controller class to handle user input
 class Controller {
@@ -521,7 +521,6 @@ client.on("message", msg => {
 function loginSuccess(result) {
   let now = Date();
   let string = "Logged in as " + client.user.username + " at " + now;
-
   fs.readFile("startup_log.json", function(err, data) {
     if (err) {
       throw "could not read log file due to: " + err;
@@ -546,7 +545,6 @@ function loginSuccess(result) {
 function loginFailure(error) {
   let now = Date();
   let string = "Failed to log in at " + now + " due to: " + error;
-
   fs.readFile("startup_log.json", function(err, data) {
     if (err) {
       throw "could not read log file due to: " + err;
