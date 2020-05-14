@@ -52,7 +52,7 @@ class Controller {
     let cmd = msg.content.slice(1); //remove prefix
     let initialSplit = cmd.split(" ");
     let firstWord = initialSplit[0].toLowerCase(); //workaround because startswith() is for some reason not supported
-
+    console.log(firstWord);
     if (firstWord === "roll") {
       this.diceRoller(msg);
     } else if (firstWord === "play" || firstWord === "p") {
