@@ -52,7 +52,7 @@ class Controller {
     let cmd = msg.content.slice(1); //remove prefix
     let initialSplit = cmd.split(" ");
     let firstWord = initialSplit[0].toLowerCase(); //workaround because startswith() is for some reason not supported
-    console.log(firstWord);
+
     if (firstWord === "roll") {
       this.diceRoller(msg);
     } else if (firstWord === "play" || firstWord === "p") {
@@ -110,7 +110,7 @@ class Controller {
 
   //Music player
   musicPlayer(msg, song) {
-    if (!msg.member.voiceChannel) {
+    if (!msg.member.voice.channel) {
       msg.reply("You need to join a voice channel first!");
     } else {
       if (this.currConnection == null) {
@@ -189,7 +189,7 @@ class Controller {
   getConnection(msg) {
     let _this = this;
     return new Promise(function(resolve, reject) {
-      _this.currChannel = msg.member.voiceChannel;
+      _this.currChannel = msg.member.voice.channel;
       if (_this.currConnection == null) {
         try {
           _this.currChannel
@@ -234,7 +234,7 @@ class Controller {
       console.log(this.playlist.length + " songs in queue");
 
       this.dispatcher = this.currConnection
-        .playStream(ytdl(this.playlist[0].url, { filter: "audioonly" }))
+        .play(ytdl(this.playlist[0].url, { filter: "audioonly" }))
         .on("end", () => {
           if (this.playlist.length > 0) {
             if (this.isLoopingAll == true) {
