@@ -217,7 +217,7 @@ class Controller {
       console.log("Added " + title + " to queue");
       console.log(_this.playlist.length + " songs in queue");
       if (_this.playlist.length == 1) {
-        _this.play();
+        _this.playMusic();
       }
     });
   }
@@ -228,7 +228,7 @@ class Controller {
     }
   }
 
-  play() {
+  playMusic() {
     if (this.playlist.length > 0) {
       console.log("Playing " + this.playlist[0].title);
       console.log(this.playlist.length + " songs in queue");
@@ -237,14 +237,14 @@ class Controller {
         .play(ytdl(this.playlist[0].url, { filter: "audioonly" }))
         .on("end", () => {
           if (this.playlist.length > 0) {
-            if (this.isLoopingAll == true) {
+            if (this.isLoopingList == true) {
               this.playlist.push(this.playlist.shift());
             } else if (this.isLoopingSingle == true) {
               //do nothing
             } else {
               this.playlist.shift();
             }
-            this.play();
+            this.playMusic();
           }
         })
         .on("error", console.error);
