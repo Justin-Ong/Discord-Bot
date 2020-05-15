@@ -235,7 +235,7 @@ class Controller {
 
       this.dispatcher = this.currConnection
         .play(ytdl(this.playlist[0].url, { filter: "audioonly" }))
-        .on("end", () => {
+        .on("finish", () => {
           if (this.playlist.length > 0) {
             if (this.isLoopingList == true) {
               this.playlist.push(this.playlist.shift());
