@@ -486,7 +486,7 @@ class Controller {
         string = "Current Kick Count: " + counter.count;
         msg.channel.send(string);
         break;
-      case "reset":
+      case "destroy":
         console.log("Resetting...");
         client.destroy();
         this.playlist.length = 0;
