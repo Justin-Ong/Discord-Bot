@@ -71,6 +71,7 @@ class Controller {
     let idleTimer = setTimeout(function () {
       if (_this.playlist.length == 0 && _this.currChannel != null) {
         _this.currChannel.leave();
+        _this.currChannel = null;
       }
       else {
         idleTimer.refresh();
