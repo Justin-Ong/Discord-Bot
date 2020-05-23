@@ -45,7 +45,7 @@ class Controller {
     this.isSearching = false;
     this.currInput = "";
     this.searchStartTime = null;
-    this.channelTimeout = 
+    this.channelTimeoutValue = 1200000;
   }
 
   //Initial reading of input
@@ -67,6 +67,15 @@ class Controller {
     } else {
       this.cmdHandler(msg);
     }
+    
+    let idleTimer = setTimeout(function () {
+      if (this.playlist.length == 0 && this.currChannel != null) {
+        this.currChannel.leave();
+      }
+      else {
+        
+      }
+    }, this.channelTimeoutValue)
   }
 
   //Dice roller
