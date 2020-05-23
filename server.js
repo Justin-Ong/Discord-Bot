@@ -514,6 +514,11 @@ client.on("message", msg => {
   controller.readInput(msg);
 });
 
+client.on('voiceStateUpdate', async (oldMember, newMember) => {
+  console.log(oldMember);
+  console.log(newMember);
+});
+
 function loginSuccess(result) {
   let now = Date();
   let string = "Logged in as " + client.user.username + " at " + now;
