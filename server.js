@@ -67,10 +67,10 @@ class Controller {
     } else {
       this.cmdHandler(msg);
     }
-    
+    let _this = this;
     let idleTimer = setTimeout(function () {
-      if (this.playlist.length == 0 && this.currChannel != null) {
-        this.currChannel.leave();
+      if (_this.playlist.length == 0 && _this.currChannel != null) {
+        _this.currChannel.leave();
       }
       else {
         idleTimer.refresh();
