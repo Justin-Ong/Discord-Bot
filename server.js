@@ -117,7 +117,7 @@ class Controller {
       if (this.currConnection == null) {
         this.getConnection(msg).then(() => this.parseInput(msg, song));
       } else {
-        this.parseInput(msg, song);
+        this.parseInput(msg, song).then(() => this.playMusic());
       }
     }
   }
@@ -135,8 +135,10 @@ class Controller {
                  })
                  .catch(console.log);
             });
+          resolve();
         } else if (ytdl.validateURL(song)) {
           _this.addSongToQueue(song);
+          resolve();
         } else {
           ytsr(song, { limit: 10 }, function(err, result) {
             if (err) {
@@ -218,9 +220,6 @@ class Controller {
       _this.playlist.push({ url: song, title: title, duration: duration });
       console.log("Added " + title + " to queue");
       console.log(_this.playlist.length + " songs in queue");
-      if (_this.playlist.length == 1) {
-        _this.playMusic();
-      }
     });
   }
 
@@ -491,6 +490,10 @@ class Controller {
       case "destroy":
       case "logout":
         console.log("Resetting...");
+        if (currChannel != null) {
+          console.log("Channel is empty, leaving");
+          currChannel.leave();
+        }
         client.destroy();
         this.playlist.length = 0;
         client.login(process.env.SECRET).then(loginSuccess, loginFailure);
