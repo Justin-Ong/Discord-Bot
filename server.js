@@ -487,15 +487,11 @@ class Controller {
         msg.channel.send(string);
         break;
       case "destroy":
+      case "logout":
         console.log("Resetting...");
         client.destroy();
         this.playlist.length = 0;
         client.login(process.env.SECRET).then(loginSuccess, loginFailure);
-        break;
-      case "logout":
-        console.log("Logging out...");
-        client.destroy();
-        console.log("Logged out!");
         break;
       default:
         msg.reply("No such command!");
