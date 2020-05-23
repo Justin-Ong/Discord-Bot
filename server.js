@@ -25,7 +25,6 @@ const counter = require("./counter.json");
 const startup_log = require("./startup_log.json");
 const client = new Discord.Client();
 const searchChoices = [1, 2, 3, 4, 5];
-var currChannel = null;
 
 //login using token
 client.login(process.env.SECRET).then(loginSuccess, loginFailure);
@@ -37,8 +36,8 @@ class Controller {
   constructor() {
     this.playlist = []; //set up variables for song playing
     this.searchList = [];
-    this.currentConnection = null;
-    this.currentChannel = null;
+    this.currConnection = null;
+    this.currChannel = null;
     this.dispatcher = null;
     this.isPaused = false;
     this.isLoopingSingle = false;
@@ -115,9 +114,9 @@ class Controller {
       msg.reply("You need to join a voice channel first!");
     } else {
       if (this.currConnection == null) {
-        this.getConnection(msg).then(() => this.parseInput(msg, song)).then(() => this.playMusic());
+        this.getConnection(msg).then(() => this.parseInput(msg, song));
       } else {
-        this.parseInput(msg, song).then(() => this.playMusic());
+        this.parseInput(msg, song);
       }
     }
   }
@@ -190,11 +189,10 @@ class Controller {
   getConnection(msg) {
     let _this = this;
     return new Promise(function(resolve, reject) {
-      _this.currentChannel = msg.member.voice.channel;
-      currChannel = msg.member.voice.channel;
+      _this.currChannel = msg.member.voice.channel;
       if (_this.currConnection == null) {
         try {
-          _this.currentChannel
+          _this.currChannel
             .join()
             .then(connection => {
               _this.currConnection = connection;
@@ -218,6 +216,9 @@ class Controller {
       _this.playlist.push({ url: song, title: title, duration: duration });
       console.log("Added " + title + " to queue");
       console.log(_this.playlist.length + " songs in queue");
+      if (_this.playlist.length == 1) {
+        _this.playMusic();
+      }
     });
   }
 
@@ -228,38 +229,30 @@ class Controller {
   }
 
   playMusic() {
-    let _this = this;
-    return new Promise(function(resolve, reject) {
-      try {
-        if (_this.playlist.length > 0) {
-          console.log("Playing " + _this.playlist[0].title);
-          console.log(_this.playlist.length + " songs in queue");
+    if (this.playlist.length > 0) {
+      console.log("Playing " + this.playlist[0].title);
+      console.log(this.playlist.length + " songs in queue");
 
-          _this.dispatcher = _this.currConnection
-            .play(ytdl(_this.playlist[0].url, { filter: "audioonly" }))
-            .on("finish", () => {
-              if (_this.playlist.length > 0) {
-                if (_this.isLoopingList == true) {
-                  _this.playlist.push(_this.playlist.shift());
-                } else if (_this.isLoopingSingle == true) {
-                  //do nothing
-                } else {
-                  _this.playlist.shift();
-                }
-                _this.playMusic();
-              }
-            })
-            .on("error", console.error);
-        } else {
-          console.log("Queue is empty!");
-        }
-        resolve();
-      } catch {
-        reject();
-      }
-    });
+      this.dispatcher = this.currConnection
+        .play(ytdl(this.playlist[0].url, { filter: "audioonly" }))
+        .on("finish", () => {
+          if (this.playlist.length > 0) {
+            if (this.isLoopingList == true) {
+              this.playlist.push(this.playlist.shift());
+            } else if (this.isLoopingSingle == true) {
+              //do nothing
+            } else {
+              this.playlist.shift();
+            }
+            this.playMusic();
+          }
+        })
+        .on("error", console.error);
+    } else {
+      console.log("Queue is empty!");
+    }
   }
-  
+
   //Booru image scraper
   //TODO: Look into improving speed
   neko(msg) {
@@ -494,14 +487,15 @@ class Controller {
         msg.channel.send(string);
         break;
       case "destroy":
-      case "logout":
         console.log("Resetting...");
-        if (currChannel != null) {
-          currChannel.leave();
-        }
         client.destroy();
         this.playlist.length = 0;
         client.login(process.env.SECRET).then(loginSuccess, loginFailure);
+        break;
+      case "logout":
+        console.log("Logging out...");
+        client.destroy();
+        console.log("Logged out!");
         break;
       default:
         msg.reply("No such command!");
@@ -522,13 +516,6 @@ client.on("message", msg => {
     return;
   }
   controller.readInput(msg);
-});
-
-client.on('voiceStateUpdate', (oldState, newState) => {
-  if (currChannel != null && currChannel.members.size == 1) {
-    console.log("Channel is empty, leaving");
-    currChannel.leave();
-  }
 });
 
 function loginSuccess(result) {
