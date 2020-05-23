@@ -515,6 +515,10 @@ client.on("message", msg => {
 });
 
 client.on('voiceStateUpdate', async (oldState, newState) => {
+  console.log(newState);
+  //if (newState.channel.members.size() == 1) {
+  //  console.log("Channel is empty");
+  //}
 });
 
 function loginSuccess(result) {
