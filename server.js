@@ -45,6 +45,7 @@ class Controller {
     this.isSearching = false;
     this.currInput = "";
     this.searchStartTime = null;
+    this.channelTimeout = 
   }
 
   //Initial reading of input
