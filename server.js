@@ -73,9 +73,9 @@ class Controller {
         this.currChannel.leave();
       }
       else {
-        
+        idleTimer.refresh();
       }
-    }, this.channelTimeoutValue)
+    }, this.channelTimeoutValue);
   }
 
   //Dice roller
