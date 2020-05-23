@@ -115,7 +115,7 @@ class Controller {
       msg.reply("You need to join a voice channel first!");
     } else {
       if (this.currConnection == null) {
-        this.getConnection(msg).then(() => this.parseInput(msg, song));
+        this.getConnection(msg).then(() => this.parseInput(msg, song)).then(() => this.playMusic());
       } else {
         this.parseInput(msg, song).then(() => this.playMusic());
       }
@@ -135,10 +135,8 @@ class Controller {
                  })
                  .catch(console.log);
             });
-          resolve();
         } else if (ytdl.validateURL(song)) {
           _this.addSongToQueue(song);
-          resolve();
         } else {
           ytsr(song, { limit: 10 }, function(err, result) {
             if (err) {
@@ -230,30 +228,38 @@ class Controller {
   }
 
   playMusic() {
-    if (this.playlist.length > 0) {
-      console.log("Playing " + this.playlist[0].title);
-      console.log(this.playlist.length + " songs in queue");
+    let _this = this;
+    return new Promise(function(resolve, reject) {
+      try {
+        if (_this.playlist.length > 0) {
+          console.log("Playing " + _this.playlist[0].title);
+          console.log(_this.playlist.length + " songs in queue");
 
-      this.dispatcher = this.currConnection
-        .play(ytdl(this.playlist[0].url, { filter: "audioonly" }))
-        .on("finish", () => {
-          if (this.playlist.length > 0) {
-            if (this.isLoopingList == true) {
-              this.playlist.push(this.playlist.shift());
-            } else if (this.isLoopingSingle == true) {
-              //do nothing
-            } else {
-              this.playlist.shift();
-            }
-            this.playMusic();
-          }
-        })
-        .on("error", console.error);
-    } else {
-      console.log("Queue is empty!");
-    }
+          _this.dispatcher = _this.currConnection
+            .play(ytdl(_this.playlist[0].url, { filter: "audioonly" }))
+            .on("finish", () => {
+              if (_this.playlist.length > 0) {
+                if (_this.isLoopingList == true) {
+                  _this.playlist.push(_this.playlist.shift());
+                } else if (_this.isLoopingSingle == true) {
+                  //do nothing
+                } else {
+                  _this.playlist.shift();
+                }
+                _this.playMusic();
+              }
+            })
+            .on("error", console.error);
+        } else {
+          console.log("Queue is empty!");
+        }
+        resolve();
+      } catch {
+        reject();
+      }
+    });
   }
-
+  
   //Booru image scraper
   //TODO: Look into improving speed
   neko(msg) {
@@ -491,7 +497,6 @@ class Controller {
       case "logout":
         console.log("Resetting...");
         if (currChannel != null) {
-          console.log("Channel is empty, leaving");
           currChannel.leave();
         }
         client.destroy();
