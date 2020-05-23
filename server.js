@@ -25,6 +25,7 @@ const counter = require("./counter.json");
 const startup_log = require("./startup_log.json");
 const client = new Discord.Client();
 const searchChoices = [1, 2, 3, 4, 5];
+var currChannel = null;
 
 //login using token
 client.login(process.env.SECRET).then(loginSuccess, loginFailure);
@@ -36,8 +37,8 @@ class Controller {
   constructor() {
     this.playlist = []; //set up variables for song playing
     this.searchList = [];
-    this.currConnection = null;
-    this.currChannel = null;
+    this.currentConnection = null;
+    this.currentChannel = null;
     this.dispatcher = null;
     this.isPaused = false;
     this.isLoopingSingle = false;
@@ -189,10 +190,11 @@ class Controller {
   getConnection(msg) {
     let _this = this;
     return new Promise(function(resolve, reject) {
-      _this.currChannel = msg.member.voice.channel;
+      _this.currentChannel = msg.member.voice.channel;
+      currChannel = msg.member.voice.channel;
       if (_this.currConnection == null) {
         try {
-          _this.currChannel
+          _this.currentChannel
             .join()
             .then(connection => {
               _this.currConnection = connection;
@@ -514,11 +516,11 @@ client.on("message", msg => {
   controller.readInput(msg);
 });
 
-client.on('voiceStateUpdate', async (oldState, newState) => {
-  console.log(newState);
-  //if (newState.channel.members.size() == 1) {
-  //  console.log("Channel is empty");
-  //}
+client.on('voiceStateUpdate', (oldState, newState) => {
+  if (currChannel != null && currChannel.members.size == 1) {
+    console.log("Channel is empty, leaving");
+    currChannel.leave();
+  }
 });
 
 function loginSuccess(result) {
