@@ -67,6 +67,7 @@ class Controller {
     } else {
       this.cmdHandler(msg);
     }
+    /*
     let _this = this;
     let idleTimer = setTimeout(function () {
       if (_this.playlist.length == 0 && _this.currChannel != null) {
@@ -77,6 +78,7 @@ class Controller {
         idleTimer.refresh();
       }
     }, this.channelTimeoutValue);
+    */
   }
 
   //Dice roller
