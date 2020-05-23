@@ -514,9 +514,7 @@ client.on("message", msg => {
   controller.readInput(msg);
 });
 
-client.on('voiceStateUpdate', async (oldMember, newMember) => {
-  console.log(oldMember);
-  console.log(newMember);
+client.on('voiceStateUpdate', async (oldState, newState) => {
 });
 
 function loginSuccess(result) {
