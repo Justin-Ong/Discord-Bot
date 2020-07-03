@@ -1,13 +1,13 @@
 dependencies:
-  booru: 2.2.3
+  booru: 2.3.0
   discord.js: 12.2.0
   express: 4.17.1
   node-opus: 0.3.3
-  node-os-utils: 1.2.2
+  node-os-utils: 1.3.0
   simple-youtube-api: 5.2.1
-  ytdl-core: 2.1.2
-  ytpl: 0.1.21
-  ytsr: 0.1.13
+  ytdl-core: 3.1.1
+  ytpl: 0.1.22
+  ytsr: 0.1.15
 packages:
   /@discordjs/collection/0.1.5:
     dev: false
@@ -76,15 +76,15 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-dhEPs72UPbDnAQJ9ZKMNTP6ptJaionhP5cBb541nXPlW60Jepo9RV/a4fX4XWW9CuFNK22krhrj1+rgzifNCsw==
-  /booru/2.2.3:
+  /booru/2.3.0:
     dependencies:
-      fast-xml-parser: 3.16.0
+      fast-xml-parser: 3.17.4
       node-fetch: 2.6.0
     dev: false
     engines:
       node: '>=10.0.0'
     resolution:
-      integrity: sha512-K3LO91YQOJyyJpdmib6AedKePTgTt1WrlKkhuRGqkD/PS3yrUgIjpRUJSJJch441V86Gu2F0SAgv0jTQT4zihA==
+      integrity: sha512-id7+audQ0qfPcwHA6nuPNAMiRS3i7GJC1jvk2xBwbCpE1pEZlasC+j4EtemTkKKONzK4dNFJTARg8ESzXKFDrg==
   /bytes/3.1.0:
     dev: false
     engines:
@@ -234,12 +234,12 @@ packages:
       node: '>= 0.10.0'
     resolution:
       integrity: sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g==
-  /fast-xml-parser/3.16.0:
+  /fast-xml-parser/3.17.4:
     dev: false
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-U+bpScacfgnfNfIKlWHDu4u6rtOaCyxhblOLJ8sZPkhsjgGqdZmVPBhdOyvdMGCDt8CsAv+cssOP3NzQptNt2w==
+      integrity: sha512-qudnQuyYBgnvzf5Lj/yxMcf4L9NcVWihXJg7CiU1L+oUCq8MUnFEfH2/nXR/W5uq+yvUN1h7z6s7vs2v1WkL1A==
   /file-uri-to-path/1.0.0:
     dev: false
     optional: true
@@ -325,15 +325,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ErTBd++b17E8nmWII1K1uZtBgD1E8RjyvwmxlCjPHNqHMD7gmcMHOw0E8Ro/6+QT4PhHRSnnMo7bxa1vFPkwhg==
-  /m3u8stream/0.6.5:
+  /m3u8stream/0.7.1:
     dependencies:
-      miniget: 1.7.0
+      miniget: 1.7.2
       sax: 1.2.4
     dev: false
     engines:
-      node: '>=6'
+      node: '>=10'
     resolution:
-      integrity: sha512-QZCzhcfUliZfsOboi68QkNcMejPKTEhxE+s1TApvHubDeR8ythm4ViWuYFqgUwZeoHe8q0nsPxOvA3lQvdSzyg==
+      integrity: sha512-z6ldnAdhbuWOL6LmMkwptSZGzj+qbRytMKLTbNicwF/bJMjf9U9lqD57RNQUFecvWadEkzy6PDjcNJFFgi19uQ==
   /media-typer/0.3.0:
     dev: false
     engines:
@@ -385,12 +385,18 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==
-  /miniget/1.7.0:
+  /miniget/1.7.2:
     dev: false
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-yrgaDSMRzrfYTkudB4Y6xK8pCb7oAH2bvfv6iPY2m6CedZfs9yK4b/ofh0Vzv08hCYXH/HHkoS8an6fkWtOAQA==
+      integrity: sha512-USPNNK2bnHLOplX8BZVMehUkyQizS/DFpBdoH0TS+fM+hQoLNg9tWg4MeY9wE8gfY0pbzmx5UBEODujt3Lz8AA==
+  /miniget/2.0.1:
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-MX+QfVIPAutz6c+T7WKuFKtjcw0nOyRRh1ubhTDD+z/e/pKcSAsfAV63aQKUgb1MFRT1GyfJeW53N5fHkX0wIA==
   /ms/2.0.0:
     dev: false
     resolution:
@@ -440,10 +446,10 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha512-ZQniA8iJ6y/qOTmW6eyzM9m8odt4CIGV0NM9/U03/pYLhGyxy18QXO25WfrWd8XsUYx57tnxll2xxj54CN08uQ==
-  /node-os-utils/1.2.2:
+  /node-os-utils/1.3.0:
     dev: false
     resolution:
-      integrity: sha512-QepEuY8kw+kRPdpciSSB2AFLM76RNRiSxtlXG5AisIQ8ow9tuSZ/QiS8cFro1iA843ZjSvaoM8DGa8R9loDlWA==
+      integrity: sha512-1nA/jJ7JIT94BD/zCDFnU7GKbtSGJ7Cpbk/hCZcHLWTsERRtR8osnbnDZdT3Z8ZV7ugP38iYls6eGZfyA8M98A==
   /ogg-packet/1.0.1:
     dependencies:
       ref-struct: 1.1.0
@@ -638,43 +644,43 @@ packages:
       utf-8-validate: ^5.0.2
     resolution:
       integrity: sha512-iFtXzngZVXPGgpTlP1rBqsUK82p9tKqsWRPg5L56egiljujJT3vGAYnHANvFxBieXrTFavhzhxW52jnaWV+w2w==
-  /ytdl-core/2.1.2:
+  /ytdl-core/3.1.1:
     dependencies:
       html-entities: 1.3.1
-      m3u8stream: 0.6.5
-      miniget: 1.7.0
+      m3u8stream: 0.7.1
+      miniget: 2.0.1
       sax: 1.2.4
     dev: false
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-/tOT9Pka6nX+LuvzNLBU8AbVHe8XELn3aZ69mvCxzvwO/ty9k8cRvF6jXqti7l5M+0hf+UPpP9jYPSAFAuoBUA==
-  /ytpl/0.1.21:
+      integrity: sha512-sHw8Vz56Bs7LRKhJARW8j2JREndHFBuEdnYKgjx4RHwh1t75TsdZ5/SRpz9TLkNm2M5S8gVwvWm7AD1blhjb0g==
+  /ytpl/0.1.22:
     dependencies:
       html-entities: 1.3.1
     dev: false
     engines:
       node: '>=8'
     resolution:
-      integrity: sha512-TT8t4eSqkjP8Pvlxl7wgQ6MCCEEdMgJ8rS1gOdkW7GM7A7tuXmsxNK+VSt7HjKVH/iJ5f0S3AfOYczZdx2WExw==
-  /ytsr/0.1.13:
+      integrity: sha512-3o/zmo7VA6EH6SA6z4Ni2t5bmRzPNSJgsDP60f+FFjPr7nOOOEjkU0Z8ky5TfDUocFs4iQNB19BDd0owrzRZ2g==
+  /ytsr/0.1.15:
     dependencies:
       html-entities: 1.3.1
     dev: false
     engines:
       node: '>=8'
     resolution:
-      integrity: sha512-cZKwLlVkWo/K03/z8acGoRupzHjkTsl/ohrZtFjNjjKu0/x012YMvmoLd5XPhj0H8YQ6RskMkx3ikIXEhshhsg==
+      integrity: sha512-oOzklBMlRn4SVODMPG/McgX78R5pVBio32TPAoZtP2LBGo/glIbf+QqH8FXbkzIc03Qzp4tsEtQAHOJzg1noFg==
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  booru: ^2.2.3
+  booru: ^2.3.0
   discord.js: ^12.2.0
   express: ^4.17.1
   node-opus: ^0.3.3
-  node-os-utils: ^1.2.2
+  node-os-utils: ^1.3.0
   simple-youtube-api: ^5.2.1
-  ytdl-core: ^2.1.2
-  ytpl: ^0.1.21
-  ytsr: ^0.1.13
+  ytdl-core: ^3.1.1
+  ytpl: ^0.1.22
+  ytsr: ^0.1.15
