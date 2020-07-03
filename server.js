@@ -12,6 +12,8 @@ expressApp.listen(process.env.PORT);
 //Monitoring setup
 const fs = require("fs");
 
+process.on('warning', e => console.warn(e.stack));
+
 //Various inits
 const Booru = require("booru");
 const Discord = require("discord.js");
