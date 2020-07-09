@@ -1,9 +1,11 @@
+//ARCHIVED
 //Program: Discord Bot
 //Author: Justin Ong
 //Version: 1.7.2
 //TODO: Refactor code, possibly split into various files?
 
 //Monitoring setup
+ARCHIVED
 const fs = require("fs");
 
 process.on('warning', e => console.warn(e.stack));
