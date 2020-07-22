@@ -3,7 +3,7 @@
 //Author: Justin Ong
 //Version: 1.7.2
 //TODO: Refactor code, possibly split into various files?
-ARCHIVED
+//ARCHIVED
 //Monitoring setup
 
 const fs = require("fs");
