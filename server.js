@@ -5,7 +5,7 @@
 //TODO: Refactor code, possibly split into various files?
 
 //Monitoring setup
-ARCHIVED
+
 const fs = require("fs");
 
 process.on('warning', e => console.warn(e.stack));
