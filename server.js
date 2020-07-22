@@ -354,7 +354,7 @@ class Controller {
         } else {
           try {
             let result = "";
-            for (let i = 0; i < this.playlist.length; i++) {
+            for (let i = 0; i < 5; i++) {
               let song = this.playlist[i];
               result +=
                 "Song " +
@@ -368,6 +368,7 @@ class Controller {
                 song.url +
                 ">\n";
             }
+            result += this.playlist.length + "songs in queue";
             msg.channel.send(result);
           } catch (err) {
             msg.channel.send("Sorry, please wait a few seconds and try again.");
