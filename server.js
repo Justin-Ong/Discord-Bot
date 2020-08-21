@@ -1,14 +1,17 @@
-ARCHIVED
 //Program: Discord Bot
 //Author: Justin Ong
 //Version: 1.7.2
 //TODO: Refactor code, possibly split into various files?
 
+//Express server for keeping project alive with pings
+const express = require("express");
+
+const expressApp = express();
+expressApp.get("/", (req, res) => res.json("OK"));
+expressApp.listen(process.env.PORT);
+
 //Monitoring setup
-
 const fs = require("fs");
-
-process.on('warning', e => console.warn(e.stack));
 
 //Various inits
 const Booru = require("booru");
@@ -16,10 +19,11 @@ const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
-const YouTube = require('simple-youtube-api');
+const YouTube = require("simple-youtube-api");
 const youtube = new YouTube(process.env.YT_API_KEY);
 const config = require("./config.json");
 const counter = require("./counter.json");
+const neko_log = require("./neko_log.json");
 const startup_log = require("./startup_log.json");
 const client = new Discord.Client();
 const searchChoices = [1, 2, 3, 4, 5];
@@ -76,7 +80,6 @@ class Controller {
         idleTimer.refresh();
       }
     }, this.channelTimeoutValue);
-    
   }
 
   //Dice roller
@@ -281,8 +284,28 @@ class Controller {
             files: [imageUrl]
           })
           .catch(err => {
+            error = err;
             console.log("Error sending image from: " + imageUrl);
+            console.log(error);
             console.log("retrying...");
+            fs.readFile("neko_log.json", function(err, data) {
+              if (err) {
+                throw "Could not log neko error because: " + err;
+              }
+
+              startup_log.reason = error;
+
+              fs.writeFile(
+                "neko_log.json",
+                JSON.stringify(neko_log, null, 2),
+                function(err) {
+                  if (err) {
+                    return console.log(err);
+                  }
+                  console.log(string);
+                }
+              );
+            });
             this.neko(msg);
           });
       })
