@@ -284,7 +284,7 @@ class Controller {
             files: [imageUrl]
           })
           .catch(err => {
-            error = err;
+            var error = err;
             console.log("Error sending image from: " + imageUrl);
             console.log(error);
             console.log("retrying...");
@@ -302,7 +302,6 @@ class Controller {
                   if (err) {
                     return console.log(err);
                   }
-                  console.log(string);
                 }
               );
             });
