@@ -378,21 +378,16 @@ class Controller {
             let result = "";
             for (let i = 0; i < 5; i++) {
               let song = this.playlist[i];
-              result +=
-                "Song " +
-                (i + 1) +
-                ": " +
-                song.title +
-                ", Duration: " +
-                song.duration +
-                ", URL: " +
-                "<" +
-                song.url +
-                ">\n";
+              let song_title = song.title;
+              let song_duration = song.duration;
+              let song_url = song.url;
+              result += "Song " + (i + 1) + ": " + song_title + ", Duration: " + 
+                song_duration + ", URL: " + "<" + song_url + ">\n";
             }
             result += this.playlist.length + "songs in queue";
             msg.channel.send(result);
           } catch (err) {
+            console.log(err);
             msg.channel.send("Sorry, please wait a few seconds and try again.");
           }
         }
