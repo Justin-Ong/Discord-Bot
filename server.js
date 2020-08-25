@@ -378,14 +378,14 @@ class Controller {
             let result = "";
             for (let i = 0; i < 5; i++) {
               let song = this.playlist[i];
+              if (song == undefined) {
+                break;
+              }
               let song_title = song.title;
               let song_duration = song.duration;
-              let song_url = song.url;
-              result += "Song " + (i + 1) + ": " + song_title + ", Duration: " + 
-                song_duration + ", URL: " + "<" + song_url + ">\n";
+              result += "Song " + (i + 1) + ": " + song_title + ", Duration: " + song_duration + "\n";
             }
-            result += this.playlist.length + "songs in queue";
-            console.log(result);
+            result += this.playlist.length + " songs in queue";
             msg.channel.send(result);
           } catch (err) {
             console.log(err);
