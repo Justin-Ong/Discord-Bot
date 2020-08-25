@@ -385,10 +385,11 @@ class Controller {
                 song_duration + ", URL: " + "<" + song_url + ">\n";
             }
             result += this.playlist.length + "songs in queue";
+            console.log(result);
             msg.channel.send(result);
           } catch (err) {
             console.log(err);
-            msg.channel.send("Sorry, please wait a few seconds and try again.");
+            msg.channel.send("Sorry, an error occurred.");
           }
         }
         break;
