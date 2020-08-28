@@ -248,7 +248,7 @@ class Controller {
       console.log(this.playlist.length + " songs in queue");
 
       this.dispatcher = this.currConnection
-        .play(ytdl(this.playlist[0].url, { filter: "audioonly" }))
+        .play(ytdl(this.playlist[0].url, { filter: "audioonly", quality: "highestaudio" }))
         .on("finish", () => {
           if (this.playlist.length > 0) {
             if (this.isLoopingList == true) {
