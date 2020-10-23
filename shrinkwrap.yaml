@@ -1,11 +1,11 @@
 dependencies:
-  booru: 2.3.2
-  discord.js: 12.3.1
+  booru: 2.3.3
+  discord.js: 12.4.0
   express: 4.17.1
   node-opus: 0.3.3
-  node-os-utils: 1.3.0
+  node-os-utils: 1.3.2
   simple-youtube-api: 5.2.1
-  ytdl-core: 3.2.2
+  ytdl-core: 3.4.2
   ytpl: 0.2.4
   ytsr: 0.1.21
 packages:
@@ -76,15 +76,15 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-dhEPs72UPbDnAQJ9ZKMNTP6ptJaionhP5cBb541nXPlW60Jepo9RV/a4fX4XWW9CuFNK22krhrj1+rgzifNCsw==
-  /booru/2.3.2:
+  /booru/2.3.3:
     dependencies:
       fast-xml-parser: 3.17.4
-      node-fetch: 2.6.0
+      node-fetch: 2.6.1
     dev: false
     engines:
       node: '>=10.0.0'
     resolution:
-      integrity: sha512-2sC55ecqNu6mUm1Bb1AxylIVTzCCmlyLLCYykP8jNosbLkr7VvN6VA5CmQA3mEe2ctoV0fMbYfblM/5bUl2UwA==
+      integrity: sha512-iiUF0i4U1UR8W/nEa6jSeBmJMj1wN9gdnyiWQbxgoBVmOPs5g7/Ltl45Q+bad8TKuLnqLeAovJTNqmRX5RLNRw==
   /bytes/3.1.0:
     dev: false
     engines:
@@ -149,12 +149,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
-  /discord.js/12.3.1:
+  /discord.js/12.4.0:
     dependencies:
       '@discordjs/collection': 0.1.6
       '@discordjs/form-data': 3.0.1
       abort-controller: 3.0.0
-      node-fetch: 2.6.0
+      node-fetch: 2.6.1
       prism-media: 1.2.2
       setimmediate: 1.0.5
       tweetnacl: 1.0.3
@@ -163,7 +163,7 @@ packages:
     engines:
       node: '>=12.0.0'
     resolution:
-      integrity: sha512-mSFyV/mbvzH12UXdS4zadmeUf8IMQOo/YdunubG1wWt1xjWvtaJz/s9CGsFD2B5pTw1W/LXxxUbrQjIZ/xlUdw==
+      integrity: sha512-Lc+/vKzih1DPEya/0MO0BAp4Ru/4+MfDsOJkfbyzGoyIlFqiWSQ78RdyRk4tqAtabl6d5QR4Ygo0Ub0TGEsXBg==
   /ee-first/1.1.1:
     dev: false
     resolution:
@@ -384,22 +384,22 @@ packages:
     dev: false
     resolution:
       integrity: sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==
-  /nan/2.14.1:
+  /nan/2.14.2:
     dev: false
     resolution:
-      integrity: sha512-isWHgVjnFjh2x2yuJ/tj3JbwoHu3UC2dX5G/88Cm24yB6YopVgxvBObDY7n5xW6ExmFhJpSEQqFPvq9zaXc8Jw==
+      integrity: sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
   /negotiator/0.6.2:
     dev: false
     engines:
       node: '>= 0.6'
     resolution:
       integrity: sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==
-  /node-fetch/2.6.0:
+  /node-fetch/2.6.1:
     dev: false
     engines:
       node: 4.x || >=6.0.0
     resolution:
-      integrity: sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+      integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
   /node-opus/0.3.3:
     cpu:
       - x64
@@ -409,7 +409,7 @@ packages:
     dependencies:
       bindings: 1.2.1
       commander: 2.20.3
-      nan: 2.14.1
+      nan: 2.14.2
     deprecated: This project is unmaintained. See @discordjs/opus for an alternative.
     dev: false
     engines:
@@ -425,10 +425,10 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha512-ZQniA8iJ6y/qOTmW6eyzM9m8odt4CIGV0NM9/U03/pYLhGyxy18QXO25WfrWd8XsUYx57tnxll2xxj54CN08uQ==
-  /node-os-utils/1.3.0:
+  /node-os-utils/1.3.2:
     dev: false
     resolution:
-      integrity: sha512-1nA/jJ7JIT94BD/zCDFnU7GKbtSGJ7Cpbk/hCZcHLWTsERRtR8osnbnDZdT3Z8ZV7ugP38iYls6eGZfyA8M98A==
+      integrity: sha512-wUo/q6u77y9+DBaXkn57IDyJlQuN7xP6VU9h6yeIGhKocc9rDQPyc3WmLgX+x5jf4WmbLcEaA3raM05+v5jW3g==
   /ogg-packet/1.0.1:
     dependencies:
       ref-struct: 1.1.0
@@ -507,7 +507,7 @@ packages:
     dependencies:
       bindings: 1.5.0
       debug: 2.6.9
-      nan: 2.14.1
+      nan: 2.14.2
     dev: false
     optional: true
     requiresBuild: true
@@ -567,7 +567,7 @@ packages:
   /simple-youtube-api/5.2.1:
     dependencies:
       iso8601-duration: 1.2.0
-      node-fetch: 2.6.0
+      node-fetch: 2.6.1
     dev: false
     resolution:
       integrity: sha512-vmndP9Bkh35tifn2OwY+th2imSsfYtmDqczgdOW5yEARFzvSoR8VSQFsivJnctfV5QHQUL6VrOpNdbmDRLh9Bg==
@@ -623,7 +623,7 @@ packages:
       utf-8-validate: ^5.0.2
     resolution:
       integrity: sha512-D3RuNkynyHmEJIpD2qrgVkc9DQ23OrN/moAwZX4L8DfvszsJxpjQuUq3LMx6HoYji9fbIOBY18XWBsAux1ZZUA==
-  /ytdl-core/3.2.2:
+  /ytdl-core/3.4.2:
     dependencies:
       html-entities: 1.3.1
       m3u8stream: 0.7.1
@@ -633,7 +633,7 @@ packages:
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-DVE7uhk4WYB2Op742QQVGE/b9G7cr9kSB3ZDpDXmyRPhO55h9u8gwORlDIHWKucWVmCsdsdKzNP89QylpJEgiw==
+      integrity: sha512-R6m1XZQK+iXxb9Q9Wo14/K8mti1r4HnKv4zKrbp5FvMG/jDbeV0xQHUHqqDLk+uiDy/VU6fVATm5x2ms0QaF5w==
   /ytpl/0.2.4:
     dependencies:
       html-entities: 1.3.1
