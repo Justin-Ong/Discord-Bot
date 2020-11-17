@@ -522,6 +522,12 @@ class Controller {
         this.playlist.length = 0;
         client.login(process.env.SECRET).then(loginSuccess, loginFailure);
         break;
+      case "reset":
+      case "reboot":
+        console.log("Restarting...");
+        client.destroy();
+        client.login(process.env.SECRET).then(loginSuccess, loginFailure);
+        break;
       case "logout":
         console.log("Logging out...");
         client.destroy();
