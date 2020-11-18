@@ -48,6 +48,7 @@ class Controller {
     this.currInput = "";
     this.searchStartTime = null;
     this.channelTimeoutValue = 1200000;
+    this.sauceList = [];
   }
 
   //Initial reading of input
@@ -279,6 +280,10 @@ class Controller {
       .then(posts => {
         var imageUrl = posts[0].fileUrl;
         console.log("Sending neko: " + imageUrl + " at " + Date());
+        this.sauceList.unshift(imageUrl);
+        if (this.sauceList. {
+          
+        }
         msg.channel
           .send({
             files: [imageUrl]
