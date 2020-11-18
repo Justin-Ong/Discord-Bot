@@ -426,12 +426,13 @@ class Controller {
         msg.channel.send("Looping has been stopped.");
         break;
       case "sauce":
+        let result = ""
         if (!this.sauceList.length) {
-          msg.reply("No images in source list");
+          msg.reply("no images in source list");
         } else {
-          let result = "5 most recent image sources:\n"; 
+          result += "5 most recent image sources:\n"; 
           for (let i = 1; i < this.sauceList.length + 1; i++) {
-            result += i + ": <" + this.sauceList[i] + ">\n";
+            result += i + ": <" + this.sauceList[i - 1] + ">\n";
           }
         }
         msg.channel.send(result);
