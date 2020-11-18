@@ -281,8 +281,8 @@ class Controller {
         var imageUrl = posts[0].fileUrl;
         console.log("Sending neko: " + imageUrl + " at " + Date());
         this.sauceList.unshift(imageUrl);
-        if (this.sauceList. {
-          
+        if (this.sauceList.length > 5) {
+          this.sauceList.pop()
         }
         msg.channel
           .send({
@@ -292,6 +292,7 @@ class Controller {
             var error = err;
             console.log("Error sending image from: " + imageUrl);
             console.log(error);
+            this.sauceList.shift(imageUrl);
             console.log("retrying...");
             fs.readFile("neko_log.json", function(err, data) {
               if (err) {
@@ -424,6 +425,17 @@ class Controller {
         console.log("looping off");
         msg.channel.send("Looping has been stopped.");
         break;
+      case "sauce":
+        if (!this.sauceList.length) {
+          msg.reply("No images in source list");
+        } else {
+          let result = "5 most recent image sources:\n"; 
+          for (let i = 1; i < this.sauceList.length + 1; i++) {
+            result += i + ": <" + this.sauceList[i] + ">\n";
+          }
+        }
+        msg.channel.send(result);
+        break;
       case "ping":
         msg.reply("pong!");
         break;
@@ -522,15 +534,12 @@ class Controller {
         msg.channel.send(string);
         break;
       case "destroy":
-        console.log("Resetting...");
-        client.destroy();
-        this.playlist.length = 0;
-        client.login(process.env.SECRET).then(loginSuccess, loginFailure);
-        break;
       case "reset":
       case "reboot":
         console.log("Restarting...");
         client.destroy();
+        this.playlist.length = 0;
+        this.sauceList.length = 0;
         client.login(process.env.SECRET).then(loginSuccess, loginFailure);
         break;
       case "logout":
