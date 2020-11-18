@@ -334,8 +334,8 @@ class Controller {
       case "help":
         msg.reply(
           "The following commands are valid: roll, play (YT videos, playlists or search), pause, resume, stop, skip, " +
-            "ping, pong, sleepysparks, sparksshine, rindouyay, jesus, thisisfine, butwhy, diabetes, " +
-            "2meirl4meirl, thinking, pingtest, logout"
+            "loop one, loop all, loop off, ping, pong, sleepysparks, sparksshine, rindouyay, jesus, thisisfine, " +
+            "butwhy, diabetes, 2meirl4meirl, thinking, pingtest, neko, sauce, reset, logout"
         );
         break;
       case "pause":
