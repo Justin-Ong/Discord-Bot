@@ -135,7 +135,7 @@ class Controller {
       }
     }
   }
-
+ 
   parseInput(msg, song) {
     let _this = this;
     return new Promise(function(resolve, reject) {
@@ -541,6 +541,7 @@ class Controller {
         client.destroy();
         this.playlist.length = 0;
         this.sauceList.length = 0;
+        this.currConnection = null;
         client.login(process.env.SECRET).then(loginSuccess, loginFailure);
         break;
       case "logout":
