@@ -539,9 +539,19 @@ class Controller {
       case "reboot":
         console.log("Restarting...");
         client.destroy();
-        this.playlist.length = 0;
-        this.sauceList.length = 0;
+        this.playlist = []; //reset all variables
+        this.searchList = [];
         this.currConnection = null;
+        this.currChannel = null;
+        this.dispatcher = null;
+        this.isPaused = false;
+        this.isLoopingSingle = false;
+        this.isLoopingList = false;
+        this.isSearching = false;
+        this.currInput = "";
+        this.searchStartTime = null;
+        this.channelTimeoutValue = 1200000;
+        this.sauceList = [];
         client.login(process.env.SECRET).then(loginSuccess, loginFailure);
         break;
       case "logout":
