@@ -426,6 +426,7 @@ class Controller {
         msg.channel.send("Looping has been stopped.");
         break;
       case "sauce":
+      case "source":
         let result = ""
         if (!this.sauceList.length) {
           msg.reply("no images in source list");
