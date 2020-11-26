@@ -4,11 +4,13 @@
 //TODO: Refactor code, possibly split into various files?
 
 //Express server for keeping project alive with pings
+/*
 const express = require("express");
 
 const expressApp = express();
 expressApp.get("/", (req, res) => res.json("OK"));
 expressApp.listen(process.env.PORT);
+*/
 
 //Monitoring setup
 const fs = require("fs");
