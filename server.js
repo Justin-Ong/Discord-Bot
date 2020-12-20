@@ -131,7 +131,7 @@ class Controller {
       msg.reply("You need to join a voice channel first!");
     } else {
       if (this.currConnection == null) {
-        this.getConnection(msg).then(() => this.parseInput(msg, song));
+        this.getConnection(msg).then(() => this.parseInput(msg, song)).catch(console.log);
       } else {
         this.parseInput(msg, song);
       }
