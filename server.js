@@ -142,9 +142,10 @@ class Controller {
     let _this = this;
     return new Promise(function(resolve, reject) {
       try {
-        let id = song.split("watch?v=")[1];
+        let playlist_id = song.split("?list=")[1];
+        let video_id = song.split("watch?v=")[1];
         console.log(song);
-        if (ytpl.validateID(id)) {
+        if (ytpl.validateID(playlist_id)) {
           console.log("a");
           youtube.getPlaylist(song)
             .then(playlist => {
@@ -154,7 +155,7 @@ class Controller {
                  })
                  .catch(console.log);
             });
-        } else if (ytdl.validateID(song)) {
+        } else if (ytdl.validateID(video_id)) {
           console.log("b");
           _this.addSongToQueue(song);
         } else {
