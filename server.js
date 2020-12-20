@@ -142,7 +142,7 @@ class Controller {
     let _this = this;
     return new Promise(function(resolve, reject) {
       try {
-        if (ytpl.validateURL(song)) {
+        if (ytpl.validateID(song)) {
           youtube.getPlaylist(song)
             .then(playlist => {
                playlist.getVideos()
@@ -151,7 +151,7 @@ class Controller {
                  })
                  .catch(console.log);
             });
-        } else if (ytdl.validateURL(song)) {
+        } else if (ytdl.validateID(song)) {
           _this.addSongToQueue(song);
         } else {
           ytsr(song, { limit: 10 }, function(err, result) {

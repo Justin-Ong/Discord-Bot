@@ -9,10 +9,10 @@
   "dependencies": {
     "booru": "^2.4.0",
     "discord.js": "^12.5.0",
-    "ytdl-core": "^3.2.2",
+    "ytdl-core": "^4.2.1",
     "@discordjs/opus": "^0.3.2",
-    "ytpl": "^0.2.4",
-    "ytsr": "^0.1.21",
+    "ytpl": "^2.0.3",
+    "ytsr": "^3.0.0",
     "simple-youtube-api": "^5.2.1"
   },
   "engines": {
