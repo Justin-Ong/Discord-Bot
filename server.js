@@ -138,11 +138,13 @@ class Controller {
     }
   }
  
-  parseInput(msg, song) {
+  async parseInput(msg, song) {
     let _this = this;
     return new Promise(function(resolve, reject) {
       try {
+        console.log(song);
         if (ytpl.validateID(song)) {
+          console.log("a");
           youtube.getPlaylist(song)
             .then(playlist => {
                playlist.getVideos()
@@ -152,17 +154,26 @@ class Controller {
                  .catch(console.log);
             });
         } else if (ytdl.validateID(song)) {
+          console.log("b");
           _this.addSongToQueue(song);
         } else {
+          console.log("c");
+          var a = await ytsr(song, { limit: 10 });
+          
           ytsr(song, { limit: 10 }, function(err, result) {
+            console.log("wat");
             if (err) {
               throw err;
             } else {
+              console.log("d");
               if (_this.isSearching) {
+                console.log("e");
                 if (new Date() - _this.searchStartTime > 10000) {
+                  console.log("f");
                   _this.searchList.length = 0;
                   _this.isSearching = false;
                 } else if (song in searchChoices) {
+                  console.log("g");
                   song = song / 1 - 1;
                   _this.addSongToQueue(_this.searchList[song].URL);
                   _this.searchList.length = 0;
@@ -171,8 +182,10 @@ class Controller {
                   msg.channel.send("Only one search at a time, please!");
                 }
               } else {
+                console.log("h");
                 let string = "";
                 for (let i = 0; i < result.items.length; i++) {
+                  console.log(result.items);
                   if (
                     result.items[i].type === "video" &&
                     _this.searchList.length < searchChoices.length
@@ -194,7 +207,7 @@ class Controller {
                 });
               }
             }
-          });
+          }).catch(console.log);
         }
         resolve();
       } catch (err) {
