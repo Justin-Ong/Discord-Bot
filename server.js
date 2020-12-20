@@ -138,10 +138,11 @@ class Controller {
     }
   }
  
-  async parseInput(msg, song) {
+  parseInput(msg, song) {
     let _this = this;
     return new Promise(function(resolve, reject) {
       try {
+        let id = song.watch?v=
         console.log(song);
         if (ytpl.validateID(song)) {
           console.log("a");
@@ -158,8 +159,6 @@ class Controller {
           _this.addSongToQueue(song);
         } else {
           console.log("c");
-          var a = await ytsr(song, { limit: 10 });
-          
           ytsr(song, { limit: 10 }, function(err, result) {
             console.log("wat");
             if (err) {
