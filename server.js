@@ -146,7 +146,6 @@ class Controller {
         let video_id = song.split("watch?v=")[1];
         console.log(song);
         if (ytpl.validateID(playlist_id)) {
-          console.log("a");
           youtube.getPlaylist(song)
             .then(playlist => {
                playlist.getVideos()
@@ -156,10 +155,8 @@ class Controller {
                  .catch(console.log);
             });
         } else if (ytdl.validateID(video_id)) {
-          console.log("b");
           _this.addSongToQueue(song);
         } else {
-          console.log("c");
           ytsr(song, { limit: 10 }, function(err, result) {
             console.log("wat");
             if (err) {
@@ -236,24 +233,20 @@ class Controller {
     });
   }
 
-  addSongToQueue(song) {
+  async addSongToQueue(song) {
     let _this = this;
-    ytdl.getInfo(song, function(err, info) {
-      if (err) {
-        console.log(err);
-      }
-      console.log(info);
-      let title = info.title;
-      let duration = new Date(info.length_seconds * 1000)
-        .toISOString()
-        .substr(11, 8);
-      _this.playlist.push({ url: song, title: title, duration: duration });
-      console.log("Added " + title + " to queue");
-      console.log(_this.playlist.length + " songs in queue");
-      if (_this.playlist.length == 1) {
-        _this.playMusic();
-      }
-    });
+    const info = await ytdl.getInfo(song);
+    console.log(info);
+    let title = info.title;
+    let duration = new Date(info.length_seconds * 1000)
+      .toISOString()
+      .substr(11, 8);
+    _this.playlist.push({ url: song, title: title, duration: duration });
+    console.log("Added " + title + " to queue");
+    console.log(_this.playlist.length + " songs in queue");
+    if (_this.playlist.length == 1) {
+      _this.playMusic();
+    }
   }
 
   addListToQueue(list) {
