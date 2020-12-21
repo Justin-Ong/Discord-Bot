@@ -3,6 +3,7 @@ Update ytsr, ytpl, ytdl-core to latest version (3.0.0, 2.0.3, 4.2.1 respectively
 Limit search to only return videos and not channels
 Update search message on search completion to show chosen song
 Remove network and OS monitoring
+Remove counter
 
 1.7.3:
 Add source feature for neko

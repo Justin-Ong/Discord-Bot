@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.7.2
+//Version: 1.7.4
 //TODO: Refactor code, possibly split into various files?
 
 //Express server for keeping project alive with pings
@@ -24,7 +24,6 @@ const ytsr = require("ytsr");
 const YouTube = require("simple-youtube-api");
 const youtube = new YouTube(process.env.YT_API_KEY);
 const config = require("./config.json");
-const counter = require("./counter.json");
 const neko_log = require("./neko_log.json");
 const startup_log = require("./startup_log.json");
 const client = new Discord.Client();
@@ -338,7 +337,6 @@ class Controller {
   //Other commands, emoji, pingpong, debugging
   cmdHandler(msg) {
     let cmd = msg.content.slice(1);
-    let count = parseInt(counter.count, 10);
     let string = "";
     switch (cmd) {
       case "help":
@@ -514,36 +512,6 @@ class Controller {
             "Took " + `${sent.createdTimestamp - msg.createdTimestamp}` + " ms"
           );
         });
-        break;
-      case "count":
-        count++;
-        counter.count = count;
-        fs.writeFile("counter.json", JSON.stringify(counter, null, 2), function(
-          err
-        ) {
-          if (err) return console.log(err);
-          console.log(JSON.stringify(counter));
-          console.log("writing to " + "counter.json");
-        });
-        string = "Current Kick Count: " + counter.count;
-        msg.channel.send(string);
-        break;
-      case "currcount":
-        count = parseInt(counter.count, 10);
-        string = "Current Kick Count: " + count;
-        msg.channel.send(string);
-        break;
-      case "resetcount":
-        counter.count = 0;
-        fs.writeFile("counter.json", JSON.stringify(counter, null, 2), function(
-          err
-        ) {
-          if (err) return console.log(err);
-          console.log(JSON.stringify(counter));
-          console.log("writing to " + "counter.json");
-        });
-        string = "Current Kick Count: " + counter.count;
-        msg.channel.send(string);
         break;
       case "destroy":
       case "reset":
