@@ -170,18 +170,21 @@ class Controller {
   async search(msg, song) {
     let _this = this;
     if (new Date() - _this.searchStartTime > 10000) {
-        _this.searchList.length = 0;
-        _this.isSearching = false;
-    if (_this.isSearching) {
-
-      if (song in searchChoices) {
-        song = song / 1 - 1;
-        _this.addSongToQueue(_this.searchList[song].URL);
-        _this.searchList.length = 0;
-        _this.isSearching = false;
-    } else {
-      msg.channel.send("Only one search at a time, please!");
+      _this.searchList.length = 0;
+      _this.isSearching = false;
+      _this.searchMessage = null;
     }
+    if (_this.isSearching) {
+      if (song in searchChoices) {
+        let songNum = song / 1 - 1;
+        _this.addSongToQueue(_this.searchList[songNum].URL);
+        _this.searchMessage.edit("Selected " + song + ": " + _this.searchList[songNum].title);
+        _this.searchList.length = 0;
+        _this.isSearching = false;
+        _this.searchMessage = null;
+      } else {
+        msg.channel.send("Invalid choice!");
+      }
     } else {
       const filters = await ytsr.getFilters(song);
       const filter = filters.get('Type').get('Video');
