@@ -236,7 +236,9 @@ class Controller {
     let _this = this;
     const info = await ytdl.getInfo(song);
     let title = info.videoDetails.title;
-    let duration = new Date(info.videoDetails.lengthSeconds);
+    let duration = new Date(info.videoDetails.lengthSeconds * 1000)
+      .toISOString()
+      .substr(11, 8);
     _this.playlist.push({ url: song, title: title, duration: duration });
     console.log("Added " + title + " to queue");
     console.log(_this.playlist.length + " songs in queue");
