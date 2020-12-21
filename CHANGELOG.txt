@@ -1,5 +1,6 @@
 1.7.4:
 Update ytsr, ytpl, ytdl-core to latest version (3.0.0, 2.0.3, 4.2.1 respectively)
+Limit search to only return videos and not channels
 Remove network and OS monitoring
 
 1.7.3:

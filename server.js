@@ -51,6 +51,7 @@ class Controller {
     this.searchStartTime = null;
     this.channelTimeoutValue = 1200000;
     this.sauceList = [];
+    this.searchMessage = null;
   }
 
   //Initial reading of input
@@ -168,18 +169,19 @@ class Controller {
   
   async search(msg, song) {
     let _this = this;
-    if (_this.isSearching) {
-      if (new Date() - _this.searchStartTime > 10000) {
+    if (new Date() - _this.searchStartTime > 10000) {
         _this.searchList.length = 0;
         _this.isSearching = false;
-      } else if (song in searchChoices) {
+    if (_this.isSearching) {
+
+      if (song in searchChoices) {
         song = song / 1 - 1;
         _this.addSongToQueue(_this.searchList[song].URL);
         _this.searchList.length = 0;
         _this.isSearching = false;
-      } else {
-        msg.channel.send("Only one search at a time, please!");
-      }
+    } else {
+      msg.channel.send("Only one search at a time, please!");
+    }
     } else {
       const filters = await ytsr.getFilters(song);
       const filter = filters.get('Type').get('Video');
@@ -201,10 +203,9 @@ class Controller {
             "\n";
         }
       }
-      msg.channel.send(string).then(() => {
-        _this.searchStartTime = new Date();
-        _this.isSearching = true;
-      });
+      msg.channel.send(string).then(message => _this.searchMessage = message).catch(err => console.log(err));
+      _this.searchStartTime = new Date();
+      _this.isSearching = true;
     }
   }
 
