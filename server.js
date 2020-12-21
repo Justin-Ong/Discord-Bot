@@ -239,6 +239,10 @@ class Controller {
   addSongToQueue(song) {
     let _this = this;
     ytdl.getInfo(song, function(err, info) {
+      if (err) {
+        console.log(err);
+      }
+      console.log(info);
       let title = info.title;
       let duration = new Date(info.length_seconds * 1000)
         .toISOString()
