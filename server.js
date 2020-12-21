@@ -144,7 +144,6 @@ class Controller {
       try {
         let playlist_id = song.split("?list=")[1];
         let video_id = song.split("watch?v=")[1];
-        console.log(song);
         if (ytpl.validateID(playlist_id)) {
           youtube.getPlaylist(song)
             .then(playlist => {
@@ -169,7 +168,6 @@ class Controller {
   
   async search(msg, song) {
     let _this = this;
-    const result = await ytsr(song, { limit: 10 });
     if (_this.isSearching) {
       if (new Date() - _this.searchStartTime > 10000) {
         _this.searchList.length = 0;
@@ -183,6 +181,9 @@ class Controller {
         msg.channel.send("Only one search at a time, please!");
       }
     } else {
+      const filters = await ytsr.getFilters(song);
+      const filter = filters.get('Type').get('Video');
+      const result = await ytsr(filter.url, { limit: 5 });
       let string = "";
       for (let i = 0; i < result.items.length; i++) {
         if (
@@ -191,7 +192,7 @@ class Controller {
         ) {
           _this.searchList.push({
             title: result.items[i].title,
-            URL: result.items[i].link
+            URL: result.items[i].url
           });
           string +=
             _this.searchList.length +
