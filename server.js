@@ -146,86 +146,65 @@ class Controller {
         let video_id = song.split("watch?v=")[1];
         console.log(song);
         if (ytpl.validateID(playlist_id)) {
-          console.log("a");
           youtube.getPlaylist(song)
             .then(playlist => {
-                console.log(`The playlist's title is ${playlist.title}`);
                 playlist.getVideos()
                     .then(videos => {
-                        console.log(`This playlist has ${videos.length === 50 ? '50+' : videos.length} videos.`);
+                        _this.addListToQueue(videos);
                     })
                     .catch(console.log);
             })
             .catch(console.log);
-          /*
-          youtube.getPlaylist(song)
-            .then(playlist => {
-                console.log("b");
-               playlist.getVideos()
-                 .then(videos => {
-                   console.log("c");
-                   _this.addListToQueue(videos);
-                 })
-                 .catch(console.log);
-            });
-            */
         } else if (ytdl.validateID(video_id)) {
           _this.addSongToQueue(song);
         } else {
-          ytsr(song, { limit: 10 }, function(err, result) {
-            console.log("wat");
-            if (err) {
-              throw err;
-            } else {
-              console.log("d");
-              if (_this.isSearching) {
-                console.log("e");
-                if (new Date() - _this.searchStartTime > 10000) {
-                  console.log("f");
-                  _this.searchList.length = 0;
-                  _this.isSearching = false;
-                } else if (song in searchChoices) {
-                  console.log("g");
-                  song = song / 1 - 1;
-                  _this.addSongToQueue(_this.searchList[song].URL);
-                  _this.searchList.length = 0;
-                  _this.isSearching = false;
-                } else {
-                  msg.channel.send("Only one search at a time, please!");
-                }
-              } else {
-                console.log("h");
-                let string = "";
-                for (let i = 0; i < result.items.length; i++) {
-                  console.log(result.items);
-                  if (
-                    result.items[i].type === "video" &&
-                    _this.searchList.length < searchChoices.length
-                  ) {
-                    _this.searchList.push({
-                      title: result.items[i].title,
-                      URL: result.items[i].link
-                    });
-                    string +=
-                      _this.searchList.length +
-                      ": " +
-                      result.items[i].title +
-                      "\n";
-                  }
-                }
-                msg.channel.send(string).then(() => {
-                  _this.searchStartTime = new Date();
-                  _this.isSearching = true;
-                });
-              }
-            }
-          }).catch(console.log);
+          _this.search(msg, song);
         }
         resolve();
       } catch (err) {
         reject(err);
       }
     });
+  }
+  
+  async search(msg, song) {
+    let _this = this;
+    const result = await ytsr(song, { limit: 10 });
+    if (_this.isSearching) {
+      if (new Date() - _this.searchStartTime > 10000) {
+        _this.searchList.length = 0;
+        _this.isSearching = false;
+      } else if (song in searchChoices) {
+        song = song / 1 - 1;
+        _this.addSongToQueue(_this.searchList[song].URL);
+        _this.searchList.length = 0;
+        _this.isSearching = false;
+      } else {
+        msg.channel.send("Only one search at a time, please!");
+      }
+    } else {
+      let string = "";
+      for (let i = 0; i < result.items.length; i++) {
+        if (
+          result.items[i].type === "video" &&
+          _this.searchList.length < searchChoices.length
+        ) {
+          _this.searchList.push({
+            title: result.items[i].title,
+            URL: result.items[i].link
+          });
+          string +=
+            _this.searchList.length +
+            ": " +
+            result.items[i].title +
+            "\n";
+        }
+      }
+      msg.channel.send(string).then(() => {
+        _this.searchStartTime = new Date();
+        _this.isSearching = true;
+      });
+    }
   }
 
   getConnection(msg) {
