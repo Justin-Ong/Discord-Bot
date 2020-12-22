@@ -46,8 +46,7 @@ class Controller {
   readInput(msg) {
     let cmd = msg.content.slice(1); //remove prefix
     let initialSplit = cmd.split(" ");
-    let firstWord = initialSplit[0]
-      .toLowerCase(); //workaround because startswith() is for some reason not supported
+    let firstWord = initialSplit[0].toLowerCase();
 
     if (firstWord === "roll") {
       this.diceRoller(msg);
@@ -105,8 +104,7 @@ class Controller {
     let tempResults = rollResults.join(", ");
     let tempFlavour = rollFlavour.split(/([+\-\*\/])/).join(" ");
 
-    let ans = "[" + tempResults + "] " + tempFlavour + ", Total Sum is: " +
-      sum;
+    let ans = "[" + tempResults + "] " + tempFlavour + ", Total Sum is: " + sum;
 
     if (ans.length > 2000) {
       //stay within 2000 character limit
@@ -122,7 +120,8 @@ class Controller {
     } else {
       if (this.currConnection == null) {
         this.getConnection(msg)
-          .then(() => this.parseInput(msg, song)).catch(console.log);
+          .then(() => this.parseInput(msg, song))
+          .catch(console.log);
       } else {
         this.parseInput(msg, song);
       }
@@ -136,7 +135,8 @@ class Controller {
         let playlist_id = song.split("?list=")[1];
         let video_id = song.split("watch?v=")[1];
         if (ytpl.validateID(playlist_id)) {
-          ytpl(song).then(playlist => {
+          ytpl(song)
+            .then((playlist) => {
               _this.addListToQueue(playlist);
             })
             .catch(console.log);
@@ -163,8 +163,9 @@ class Controller {
       if (song in searchChoices) {
         let songNum = song / 1 - 1;
         _this.addSongToQueue(_this.searchList[songNum].URL);
-        _this.searchMessage.edit("Selected " + song + ": " + _this.searchList[
-          songNum].title);
+        _this.searchMessage.edit(
+          "Selected " + song + ": " + _this.searchList[songNum].title
+        );
         _this.searchList.length = 0;
         _this.isSearching = false;
         _this.searchMessage = null;
@@ -173,9 +174,9 @@ class Controller {
       }
     } else {
       const filters = await ytsr.getFilters(song);
-      const filter = filters.get('Type').get('Video');
+      const filter = filters.get("Type").get("Video");
       const result = await ytsr(filter.url, {
-        limit: 5
+        limit: 5,
       });
       let string = "";
       for (let i = 0; i < result.items.length; i++) {
@@ -185,17 +186,16 @@ class Controller {
         ) {
           _this.searchList.push({
             title: result.items[i].title,
-            URL: result.items[i].url
+            URL: result.items[i].url,
           });
           string +=
-            _this.searchList.length +
-            ": " +
-            result.items[i].title +
-            "\n";
+            _this.searchList.length + ": " + result.items[i].title + "\n";
         }
       }
-      msg.channel.send(string).then(message => _this.searchMessage = message)
-        .catch(err => console.log(err));
+      msg.channel
+        .send(string)
+        .then((message) => (_this.searchMessage = message))
+        .catch((err) => console.log(err));
       _this.searchStartTime = new Date();
       _this.isSearching = true;
     }
@@ -209,7 +209,7 @@ class Controller {
         try {
           _this.currChannel
             .join()
-            .then(connection => {
+            .then((connection) => {
               _this.currConnection = connection;
               resolve();
             })
@@ -230,7 +230,7 @@ class Controller {
     this.playlist.push({
       url: song,
       title: title,
-      duration: duration
+      duration: duration,
     });
     console.log("Added " + title + " to queue");
     console.log(this.playlist.length + " songs in queue");
@@ -251,10 +251,12 @@ class Controller {
       console.log(this.playlist.length + " songs in queue");
 
       this.dispatcher = this.currConnection
-        .play(ytdl(this.playlist[0].url, {
-          quality: 'highestaudio',
-          highWaterMark: 1 << 25
-        }))
+        .play(
+          ytdl(this.playlist[0].url, {
+            quality: "highestaudio",
+            highWaterMark: 1 << 25,
+          })
+        )
         .on("finish", () => {
           if (this.playlist.length > 0) {
             if (this.isLoopingList == true) {
@@ -278,21 +280,21 @@ class Controller {
     let siteArray = config.sites;
     let site = siteArray[Math.floor(Math.random() * siteArray.length)];
     Booru.search(site, ["nekomimi", "rating:safe", "-comic", "-text"], {
-        limit: 1,
-        random: true
-      })
-      .then(posts => {
+      limit: 1,
+      random: true,
+    })
+      .then((posts) => {
         var imageUrl = posts[0].fileUrl;
         console.log("Sending neko: " + imageUrl + " at " + Date());
         this.sauceList.unshift(imageUrl);
         if (this.sauceList.length > 5) {
-          this.sauceList.pop()
+          this.sauceList.pop();
         }
         msg.channel
           .send({
-            files: [imageUrl]
+            files: [imageUrl],
           })
-          .catch(err => {
+          .catch((err) => {
             var error = err;
             console.log("Error sending image from: " + imageUrl);
             console.log(error);
@@ -318,7 +320,7 @@ class Controller {
             this.neko(msg);
           });
       })
-      .catch(err => {
+      .catch((err) => {
         if (err.name === "booruError") {
           console.log(err.message);
         } else {
@@ -334,227 +336,233 @@ class Controller {
     let cmd = msg.content.slice(1);
     let string = "";
     switch (cmd) {
-    case "help":
-      msg.reply(
-        "The following commands are valid: roll, play (YT videos, playlists or search), pause, resume, stop, skip, " +
-        "loop one, loop all, loop off, ping, pong, sleepysparks, sparksshine, rindouyay, jesus, thisisfine, " +
-        "butwhy, diabetes, 2meirl4meirl, thinking, pingtest, neko, sauce, reset, logout"
-      );
-      break;
-    case "pause":
-      if (!this.playlist.length) {
-        msg.reply("there are no songs in the queue!");
-      } else if (this.isPaused) {
-        msg.reply("the player is already paused!");
-      } else {
-        msg.reply("the player has been paused.");
-        this.isPaused = true;
-        this.dispatcher.pause();
-      }
-      break;
-    case "resume":
-      if (!this.isPaused || !this.playlist.length) {
-        msg.reply("nothing is paused!");
-      } else {
-        this.isPaused = false;
-        this.dispatcher.resume();
-      }
-      break;
-    case "skip":
-    case "s":
-      if (!this.playlist.length) {
-        msg.reply("there are no songs in the queue!");
-      } else {
-        msg.reply(this.playlist[0].title + " has been skipped.");
-        this.dispatcher.end();
-      }
-      break;
-    case "stop":
-      if (!this.playlist.length) {
-        msg.reply("nothing is playing!");
-      } else {
-        msg.reply("the player has been stopped.");
-        this.playlist.length = 0;
-        this.dispatcher.end();
-      }
-      break;
-    case "list":
-    case "l":
-      if (!this.playlist.length) {
-        msg.reply("there are no songs in the queue!");
-      } else {
-        try {
-          let result = "";
-          for (let i = 0; i < 5; i++) {
-            let song = this.playlist[i];
-            if (song == undefined) {
-              break;
-            }
-            let song_title = song.title;
-            let song_duration = song.duration;
-            result += "Song " + (i + 1) + ": " + song_title + ", Duration: " +
-              song_duration + "\n";
-          }
-          result += this.playlist.length + " songs in queue";
-          msg.channel.send(result);
-        } catch (err) {
-          console.log(err);
-          msg.channel.send("Sorry, an error occurred.");
-        }
-      }
-      break;
-    case "loop one":
-      if (!this.playlist.length) {
-        msg.reply("there are no songs in the queue!");
-      } else {
-        this.isLoopingList = false;
-        this.isLoopingSingle = true;
-        console.log("looping: " + this.playlist[0].title);
-        msg.channel.send("Now looping: " + this.playlist[0].title);
-      }
-      break;
-    case "loop all":
-      if (!this.playlist.length) {
-        msg.reply("there are no songs in the queue!");
-      } else {
-        this.isLoopingSingle = false;
-        this.isLoopingList = true;
-        console.log("looping songs in current playlist");
-        msg.channel.send("Now looping songs in current playlist.");
-      }
-      break;
-    case "loop off":
-      this.isLoopingSingle = false;
-      this.isLoopingList = false;
-      console.log("looping off");
-      msg.channel.send("Looping has been stopped.");
-      break;
-    case "sauce":
-    case "source":
-      let result = ""
-      if (!this.sauceList.length) {
-        msg.reply("no images in source list");
-      } else {
-        result += "5 most recent image sources:\n";
-        for (let i = 1; i < this.sauceList.length + 1; i++) {
-          result += i + ": <" + this.sauceList[i - 1] + ">\n";
-        }
-      }
-      msg.channel.send(result);
-      break;
-    case "ping":
-      msg.reply("pong!");
-      break;
-    case "pong":
-      msg.reply("ping!");
-      break;
-    case "sleepysparks":
-      var embed = new Discord.MessageEmbed().setImage(
-        "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FSleepySparks.gif?v=1571569391112"
-      );
-      msg.channel.send({
-        embed
-      });
-      break;
-    case "sparksshine":
-      var embed = new Discord.MessageEmbed().setImage(
-        "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FSparksShine.gif?v=1571569401801"
-      );
-      msg.channel.send({
-        embed
-      });
-      break;
-    case "rindouyay":
-      var embed = new Discord.MessageEmbed().setImage(
-        "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FRindouYay.gif?v=1571569402211"
-      );
-      msg.channel.send({
-        embed
-      });
-      break;
-    case "jesus":
-      var embed = new Discord.MessageEmbed().setImage(
-        "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FJCKid.gif?v=1571569403502"
-      );
-      msg.channel.send({
-        embed
-      });
-      break;
-    case "thisisfine":
-      var embed = new Discord.MessageEmbed().setImage(
-        "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FThisIsFine.gif?v=1571569445819"
-      );
-      msg.channel.send({
-        embed
-      });
-      break;
-    case "butwhy":
-      var embed = new Discord.MessageEmbed().setImage(
-        "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FButWhy.gif?v=1571569461101"
-      );
-      msg.channel.send({
-        embed
-      });
-      break;
-    case "diabetes":
-      var embed = new Discord.MessageEmbed().setImage(
-        "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FDiabetes.gif?v=1571569404078"
-      );
-      msg.channel.send({
-        embed
-      });
-      break;
-    case "2meirl4meirl":
-      var embed = new Discord.MessageEmbed().setImage(
-        "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2F2meirl4meirl.gif?v=1571569377639"
-      );
-      msg.channel.send({
-        embed
-      });
-      break;
-    case "thinking":
-      var embed = new Discord.MessageEmbed().setImage(
-        "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FThinkingEmoji.gif?v=1571569423231"
-      );
-      msg.channel.send({
-        embed
-      });
-      break;
-    case "pingtest":
-      msg.channel.send("Pinging...").then(sent => {
-        sent.edit(
-          "Took " + `${sent.createdTimestamp - msg.createdTimestamp}` +
-          " ms"
+      case "help":
+        msg.reply(
+          "The following commands are valid: roll, play (YT videos, playlists, search), " +
+            " pause, resume, stop, skip, loop one, loop all, loop off, ping, pong, " +
+            "sleepysparks, sparksshine, rindouyay, jesus, thisisfine, butwhy, diabetes, " +
+            "2meirl4meirl, thinking, pingtest, neko, sauce, reset, logout"
         );
-      });
-      break;
-    case "destroy":
-    case "reset":
-    case "reboot":
-      console.log("Restarting...");
-      client.destroy();
-      this.playlist = []; //reset all variables
-      this.searchList = [];
-      this.currConnection = null;
-      this.currChannel = null;
-      this.dispatcher = null;
-      this.isPaused = false;
-      this.isLoopingSingle = false;
-      this.isLoopingList = false;
-      this.isSearching = false;
-      this.currInput = "";
-      this.searchStartTime = null;
-      this.channelTimeoutValue = 1200000;
-      this.sauceList = [];
-      client.login(process.env.SECRET).then(loginSuccess, loginFailure);
-      break;
-    case "logout":
-      console.log("Logging out...");
-      client.destroy();
-      console.log("Logged out!");
-      break;
-    default:
-      msg.reply("No such command!");
+        break;
+      case "pause":
+        if (!this.playlist.length) {
+          msg.reply("there are no songs in the queue!");
+        } else if (this.isPaused) {
+          msg.reply("the player is already paused!");
+        } else {
+          msg.reply("the player has been paused.");
+          this.isPaused = true;
+          this.dispatcher.pause();
+        }
+        break;
+      case "resume":
+        if (!this.isPaused || !this.playlist.length) {
+          msg.reply("nothing is paused!");
+        } else {
+          this.isPaused = false;
+          this.dispatcher.resume();
+        }
+        break;
+      case "skip":
+      case "s":
+        if (!this.playlist.length) {
+          msg.reply("there are no songs in the queue!");
+        } else {
+          msg.reply(this.playlist[0].title + " has been skipped.");
+          this.dispatcher.end();
+        }
+        break;
+      case "stop":
+        if (!this.playlist.length) {
+          msg.reply("nothing is playing!");
+        } else {
+          msg.reply("the player has been stopped.");
+          this.playlist.length = 0;
+          this.dispatcher.end();
+        }
+        break;
+      case "list":
+      case "l":
+        if (!this.playlist.length) {
+          msg.reply("there are no songs in the queue!");
+        } else {
+          try {
+            let result = "";
+            for (let i = 0; i < 5; i++) {
+              let song = this.playlist[i];
+              if (song == undefined) {
+                break;
+              }
+              let song_title = song.title;
+              let song_duration = song.duration;
+              result +=
+                "Song " +
+                (i + 1) +
+                ": " +
+                song_title +
+                ", Duration: " +
+                song_duration +
+                "\n";
+            }
+            result += this.playlist.length + " songs in queue";
+            msg.channel.send(result);
+          } catch (err) {
+            console.log(err);
+            msg.channel.send("Sorry, an error occurred.");
+          }
+        }
+        break;
+      case "loop one":
+        if (!this.playlist.length) {
+          msg.reply("there are no songs in the queue!");
+        } else {
+          this.isLoopingList = false;
+          this.isLoopingSingle = true;
+          console.log("looping: " + this.playlist[0].title);
+          msg.channel.send("Now looping: " + this.playlist[0].title);
+        }
+        break;
+      case "loop all":
+        if (!this.playlist.length) {
+          msg.reply("there are no songs in the queue!");
+        } else {
+          this.isLoopingSingle = false;
+          this.isLoopingList = true;
+          console.log("looping songs in current playlist");
+          msg.channel.send("Now looping songs in current playlist.");
+        }
+        break;
+      case "loop off":
+        this.isLoopingSingle = false;
+        this.isLoopingList = false;
+        console.log("looping off");
+        msg.channel.send("Looping has been stopped.");
+        break;
+      case "sauce":
+      case "source":
+        let result = "";
+        if (!this.sauceList.length) {
+          msg.reply("no images in source list");
+        } else {
+          result += "5 most recent image sources:\n";
+          for (let i = 1; i < this.sauceList.length + 1; i++) {
+            result += i + ": <" + this.sauceList[i - 1] + ">\n";
+          }
+        }
+        msg.channel.send(result);
+        break;
+      case "ping":
+        msg.reply("pong!");
+        break;
+      case "pong":
+        msg.reply("ping!");
+        break;
+      case "sleepysparks":
+        var embed = new Discord.MessageEmbed().setImage(
+          "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FSleepySparks.gif?v=1571569391112"
+        );
+        msg.channel.send({
+          embed,
+        });
+        break;
+      case "sparksshine":
+        var embed = new Discord.MessageEmbed().setImage(
+          "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FSparksShine.gif?v=1571569401801"
+        );
+        msg.channel.send({
+          embed,
+        });
+        break;
+      case "rindouyay":
+        var embed = new Discord.MessageEmbed().setImage(
+          "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FRindouYay.gif?v=1571569402211"
+        );
+        msg.channel.send({
+          embed,
+        });
+        break;
+      case "jesus":
+        var embed = new Discord.MessageEmbed().setImage(
+          "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FJCKid.gif?v=1571569403502"
+        );
+        msg.channel.send({
+          embed,
+        });
+        break;
+      case "thisisfine":
+        var embed = new Discord.MessageEmbed().setImage(
+          "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FThisIsFine.gif?v=1571569445819"
+        );
+        msg.channel.send({
+          embed,
+        });
+        break;
+      case "butwhy":
+        var embed = new Discord.MessageEmbed().setImage(
+          "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FButWhy.gif?v=1571569461101"
+        );
+        msg.channel.send({
+          embed,
+        });
+        break;
+      case "diabetes":
+        var embed = new Discord.MessageEmbed().setImage(
+          "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FDiabetes.gif?v=1571569404078"
+        );
+        msg.channel.send({
+          embed,
+        });
+        break;
+      case "2meirl4meirl":
+        var embed = new Discord.MessageEmbed().setImage(
+          "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2F2meirl4meirl.gif?v=1571569377639"
+        );
+        msg.channel.send({
+          embed,
+        });
+        break;
+      case "thinking":
+        var embed = new Discord.MessageEmbed().setImage(
+          "https://cdn.glitch.com/2998cee4-c4b7-47b9-a4a1-c6e9a9bdad8c%2FThinkingEmoji.gif?v=1571569423231"
+        );
+        msg.channel.send({
+          embed,
+        });
+        break;
+      case "pingtest":
+        msg.channel.send("Pinging...").then((sent) => {
+          sent.edit(
+            "Took " + `${sent.createdTimestamp - msg.createdTimestamp}` + " ms"
+          );
+        });
+        break;
+      case "destroy":
+      case "reset":
+      case "reboot":
+        console.log("Restarting...");
+        client.destroy();
+        this.playlist = []; //reset all variables
+        this.searchList = [];
+        this.currConnection = null;
+        this.currChannel = null;
+        this.dispatcher = null;
+        this.isPaused = false;
+        this.isLoopingSingle = false;
+        this.isLoopingList = false;
+        this.isSearching = false;
+        this.currInput = "";
+        this.searchStartTime = null;
+        this.channelTimeoutValue = 1200000;
+        this.sauceList = [];
+        client.login(process.env.SECRET).then(loginSuccess, loginFailure);
+        break;
+      case "logout":
+        console.log("Logging out...");
+        client.destroy();
+        console.log("Logged out!");
+        break;
+      default:
+        msg.reply("No such command!");
     }
   }
 }
@@ -566,7 +574,7 @@ client.on("ready", () => {
   client.user.setActivity(config.prefix + "help");
 });
 
-client.on("message", msg => {
+client.on("message", (msg) => {
   //check for prefix and ID of caller to prevent loops and accidental calls
   if (msg.content[0] != config.prefix || msg.author.bot) {
     return;
