@@ -1,5 +1,6 @@
 1.7.5:
 Remove simple-youtube-api, use ytpl for playlist processing instead
+Follow Google JS style guide
 
 1.7.4:
 Update code to conform to updated ytsr, ytpl, ytdl-core (3.0.0, 2.0.3, 4.2.1 respectively)
