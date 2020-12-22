@@ -1,16 +1,7 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.7.4
+//Version: 1.7.5
 //TODO: Refactor code, possibly split into various files?
-
-//Express server for keeping project alive with pings
-/*
-const express = require("express");
-
-const expressApp = express();
-expressApp.get("/", (req, res) => res.json("OK"));
-expressApp.listen(process.env.PORT);
-*/
 
 //Monitoring setup
 const fs = require("fs");
@@ -21,8 +12,6 @@ const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
-const YouTube = require("simple-youtube-api");
-const youtube = new YouTube(process.env.YT_API_KEY);
 const config = require("./config.json");
 const neko_log = require("./neko_log.json");
 const startup_log = require("./startup_log.json");
@@ -227,23 +216,22 @@ class Controller {
   }
 
   async addSongToQueue(song) {
-    let _this = this;
     const info = await ytdl.getInfo(song);
     let title = info.videoDetails.title;
     let duration = new Date(info.videoDetails.lengthSeconds * 1000)
       .toISOString()
       .substr(11, 8);
-    _this.playlist.push({ url: song, title: title, duration: duration });
+    this.playlist.push({ url: song, title: title, duration: duration });
     console.log("Added " + title + " to queue");
-    console.log(_this.playlist.length + " songs in queue");
-    if (_this.playlist.length == 1) {
-      _this.playMusic();
+    console.log(this.playlist.length + " songs in queue");
+    if (this.playlist.length == 1) {
+      this.playMusic();
     }
   }
 
-  addListToQueue(list) {
-    for (let i = 0; i < list.length; i++) {
-      this.addSongToQueue(list[i].id);
+  addListToQueue(playlist) {
+    for (let i = 0; i < playlist.items.length; i++) {
+      this.addSongToQueue(playlist.items[i].shortUrl);
     }
   }
 
