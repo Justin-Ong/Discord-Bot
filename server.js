@@ -145,15 +145,9 @@ class Controller {
         let playlist_id = song.split("?list=")[1];
         let video_id = song.split("watch?v=")[1];
         if (ytpl.validateID(playlist_id)) {
-          youtube.getPlaylist(song)
-            .then(playlist => {
-                playlist.getVideos()
-                    .then(videos => {
-                        _this.addListToQueue(videos);
-                    })
-                    .catch(console.log);
-            })
-            .catch(console.log);
+          ytpl(song).then(playlist => {
+            _this.addListToQueue(playlist); 
+          }).catch(console.log);
         } else if (ytdl.validateID(video_id)) {
           _this.addSongToQueue(song);
         } else {
@@ -161,6 +155,7 @@ class Controller {
         }
         resolve();
       } catch (err) {
+        msg.
         reject(err);
       }
     });
