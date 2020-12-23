@@ -64,7 +64,7 @@ class Controller {
 
     let _this = this;
     let idleTimer = setTimeout(function () {
-      if (_this.playlist.length == 0 && _this.currChannel != null) {
+      if (_this.playlist.length === 0 && _this.currChannel != null) {
         _this.currChannel.leave();
         _this.currChannel = null;
       } else {
@@ -118,7 +118,7 @@ class Controller {
     if (!msg.member.voice.channel) {
       msg.reply("You need to join a voice channel first!");
     } else {
-      if (this.currConnection == null) {
+      if (this.currConnection === null) {
         this.getConnection(msg)
           .then(() => this.parseInput(msg, song))
           .catch(console.log);
@@ -205,7 +205,7 @@ class Controller {
     let _this = this;
     return new Promise(function (resolve, reject) {
       _this.currChannel = msg.member.voice.channel;
-      if (_this.currConnection == null) {
+      if (_this.currConnection === null) {
         try {
           _this.currChannel
             .join()
@@ -234,7 +234,7 @@ class Controller {
     });
     console.log("Added " + title + " to queue");
     console.log(this.playlist.length + " songs in queue");
-    if (this.playlist.length == 1) {
+    if (this.playlist.length === 1) {
       this.playMusic();
     }
   }
@@ -259,9 +259,9 @@ class Controller {
         )
         .on("finish", () => {
           if (this.playlist.length > 0) {
-            if (this.isLoopingList == true) {
+            if (this.isLoopingList === true) {
               this.playlist.push(this.playlist.shift());
-            } else if (this.isLoopingSingle == true) {
+            } else if (this.isLoopingSingle === true) {
               //do nothing
             } else {
               this.playlist.shift();
@@ -305,7 +305,7 @@ class Controller {
                 throw "Could not log neko error because: " + err;
               }
 
-              startup_log.reason = error;
+              neko_log.reason = error;
 
               fs.writeFile(
                 "neko_log.json",
@@ -390,7 +390,7 @@ class Controller {
             let result = "";
             for (let i = 0; i < 5; i++) {
               let song = this.playlist[i];
-              if (song == undefined) {
+              if (song === undefined) {
                 break;
               }
               let song_title = song.title;

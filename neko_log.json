@@ -1,3 +1,10 @@
 {
-  "reason": ""
+  "reason": {
+    "name": "DiscordAPIError",
+    "message": "Request entity too large",
+    "method": "post",
+    "path": "/channels/488670343624392705/messages",
+    "code": 40005,
+    "httpStatus": 413
+  }
 }
