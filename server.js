@@ -306,6 +306,7 @@ class Controller {
               }
 
               neko_log.reason = error;
+              neko_log.time = Date();
 
               fs.writeFile(
                 "neko_log.json",
