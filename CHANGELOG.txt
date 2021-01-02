@@ -1,3 +1,8 @@
+1.7.6:
+Change addSongToQueue to simply store urls instead of getting video data - only get video data when actually playing the song
+Pros: Makes adding playlists and songs much faster
+Cons: Makes the list function work slower as have to get video data on current and next 4 songs
+
 1.7.5:
 Remove simple-youtube-api, use ytpl for playlist processing instead
 Follow Google JS style guide

@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.7.5
+//Version: 1.7.6
 //TODO: Refactor code, possibly split into various files?
 
 //Monitoring setup
@@ -222,23 +222,6 @@ class Controller {
   }
 
   async addSongToQueue(song) {
-    /*
-    const info = await ytdl.getInfo(song);
-    let title = info.videoDetails.title;
-    let duration = new Date(info.videoDetails.lengthSeconds * 1000)
-      .toISOString()
-      .substr(11, 8);
-    this.videoInfoList.push({
-      url: song,
-      title: title,
-      duration: duration,
-    });
-    console.log("Added " + title + " to queue");
-    console.log(this.playlist.length + " songs in queue");
-    if (this.playlist.length === 1) {
-      this.playMusic();
-    }
-    */
     this.playlist.push(song);
     if (this.playlist.length === 1) {
       this.playMusic();
@@ -249,6 +232,7 @@ class Controller {
     for (let i = 0; i < playlist.items.length; i++) {
       this.addSongToQueue(playlist.items[i].shortUrl);
     }
+    console.log("Added playlist " + playlist + " to queue");
   }
 
   async playMusic() {
@@ -376,7 +360,7 @@ class Controller {
         if (!this.playlist.length) {
           msg.reply("there are no songs in the queue!");
         } else {
-          msg.reply(this.playlist[0].title + " has been skipped.");
+          msg.reply("Current song has been skipped.");
           this.dispatcher.end();
         }
         break;
