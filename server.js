@@ -222,6 +222,7 @@ class Controller {
   }
 
   async addSongToQueue(song) {
+    /*
     const info = await ytdl.getInfo(song);
     let title = info.videoDetails.title;
     let duration = new Date(info.videoDetails.lengthSeconds * 1000)
@@ -237,6 +238,11 @@ class Controller {
     if (this.playlist.length === 1) {
       this.playMusic();
     }
+    */
+    this.playlist.push(song);
+    if (this.playlist.length === 1) {
+      this.playMusic();
+    }
   }
 
   addListToQueue(playlist) {
@@ -245,9 +251,10 @@ class Controller {
     }
   }
 
-  playMusic() {
+  async playMusic() {
     if (this.playlist.length > 0) {
-      console.log("Playing " + this.playlist[0].title);
+      const info = await ytdl.getInfo(this.playlist[0]);
+      console.log("Playing " + info.videoDetails.title);
       console.log(this.playlist.length + " songs in queue");
 
       this.dispatcher = this.currConnection
