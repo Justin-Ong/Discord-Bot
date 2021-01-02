@@ -135,7 +135,7 @@ class Controller {
         let playlist_id = song.split("?list=")[1];
         let video_id = song.split("watch?v=")[1];
         if (ytpl.validateID(playlist_id)) {
-          ytpl(song)
+          ytpl(song, {limit: Infinity})
             .then((playlist) => {
               _this.addListToQueue(playlist);
             })

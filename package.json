@@ -9,10 +9,10 @@
   "dependencies": {
     "booru": "^2.4.0",
     "discord.js": "^12.5.0",
-    "ytdl-core": "^4.2.1",
+    "ytdl-core": "^4.3.0",
     "@discordjs/opus": "^0.3.2",
-    "ytpl": "^2.0.3",
-    "ytsr": "^3.2.0"
+    "ytpl": "^2.0.4",
+    "ytsr": "^3.2.1"
   },
   "engines": {
     "node": "12.x"
