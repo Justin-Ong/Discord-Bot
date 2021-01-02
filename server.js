@@ -413,8 +413,8 @@ class Controller {
         } else {
           this.isLoopingList = false;
           this.isLoopingSingle = true;
-          console.log("looping: " + this.playlist[0].title);
-          msg.channel.send("Now looping: " + this.playlist[0].title);
+          console.log("looping current song");
+          msg.channel.send("Now looping current song.");
         }
         break;
       case "loop all":
