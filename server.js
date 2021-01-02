@@ -228,7 +228,7 @@ class Controller {
     let duration = new Date(info.videoDetails.lengthSeconds * 1000)
       .toISOString()
       .substr(11, 8);
-    this.playlist.push({
+    this.videoInfoList.push({
       url: song,
       title: title,
       duration: duration,
@@ -253,13 +253,13 @@ class Controller {
 
   async playMusic() {
     if (this.playlist.length > 0) {
-      const info = await ytdl.getInfo(this.playlist[0]);
+      let info = await ytdl.getInfo(this.playlist[0]);
       console.log("Playing " + info.videoDetails.title);
       console.log(this.playlist.length + " songs in queue");
 
       this.dispatcher = this.currConnection
         .play(
-          ytdl(this.playlist[0].url, {
+          ytdl(this.playlist[0], {
             quality: "highestaudio",
             highWaterMark: 1 << 25,
           })
@@ -340,7 +340,7 @@ class Controller {
   }
 
   //Other commands, emoji, pingpong, debugging
-  cmdHandler(msg) {
+  async cmdHandler(msg) {
     let cmd = msg.content.slice(1);
     let string = "";
     switch (cmd) {
@@ -401,8 +401,11 @@ class Controller {
               if (song === undefined) {
                 break;
               }
-              let song_title = song.title;
-              let song_duration = song.duration;
+              let info = await ytdl.getInfo(song);
+              let song_title = info.videoDetails.title;
+              let song_duration = new Date(info.videoDetails.lengthSeconds * 1000)
+                .toISOString()
+                .substr(11, 8);
               result +=
                 "Song " +
                 (i + 1) +
