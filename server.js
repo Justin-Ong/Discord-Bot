@@ -270,7 +270,7 @@ class Controller {
   neko(msg) {
     let siteArray = config.sites;
     let site = siteArray[Math.floor(Math.random() * siteArray.length)];
-    Booru.search(site, ["nekomimi", "rating:safe", "-comic", "-text", "-absurd_res"], {
+    Booru.search(site, ["nekomimi", "rating:safe", "-comic", "-text", "-high_res"], {
       limit: 1,
       random: true,
     })
