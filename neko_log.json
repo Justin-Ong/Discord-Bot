@@ -1,9 +1,9 @@
 {
   "reason": {
-    "name": "AbortError",
+    "name": "FetchError",
     "code": 500,
     "method": "post",
     "path": "/channels/488670343624392705/messages"
   },
-  "time": "Thu Apr 22 2021 09:54:36 GMT+0000 (Coordinated Universal Time)"
+  "time": "Thu Apr 22 2021 13:19:39 GMT+0000 (Coordinated Universal Time)"
 }
