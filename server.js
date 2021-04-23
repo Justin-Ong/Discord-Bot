@@ -92,8 +92,6 @@ class Controller {
     if (values === null) {
       return msg.reply("Invalid Input!");
     }
-    
-    console.log(values);
 
     let sum = 0;
     let tempResults = [];
