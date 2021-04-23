@@ -78,7 +78,7 @@ class Controller {
     let input = msg.content.slice(5);
     input = input.replace(/\s+/g, ""); //remove any whitespace
     
-    if (input.match(/([a-ce-z])/g)) {
+    if (input.match(/([a-ce-z])|(d{2,})|([!@#$%^&*()_\=\[\]{};':"\\|,.<>\/?])/g)) {
       return msg.reply("Invalid Input!");
     }
 
@@ -107,6 +107,9 @@ class Controller {
       }
       else {
         for (let j = 0; j < values[i].split("d")[0] / 1; j++) {
+          if (values[i].split("d")[0] / 1) {
+            
+          }
           let randomValue = Math.floor(Math.random() * values[i].split("d")[1]) + 1;
           if (operators != null && operators[opIndex] == "-") {
             randomValue *= -1;
