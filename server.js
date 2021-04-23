@@ -85,10 +85,9 @@ class Controller {
 
     let diceRolls = temp.match(/\d*d\d*/g);
     temp = temp.split(/\d*d\d*/g).join("");
-    //temp = temp.replaceAll(/(\d*)(d)(\d*)/g, "");  Not available yet?
     let operators = temp.match(/[\+\-]/g);
+    operators.unshift("+");
     temp = temp.split(/[\+\-]/g).join("");
-    //temp = temp.replaceAll(/[\+\-]/g, "");  Not available yet?
     let flavour = temp.match(/(\d)/g);
     
     if (mainRoll === null) {
@@ -97,28 +96,28 @@ class Controller {
     }
 
     let sum = 0;
-    let tempResults = []; //store rolls in an array
+    let tempResults = [];
     let result = [];
     let opIndex = 0;
     for (let i = 0; i < diceRolls.length; i++) {
       for (let j = 0; j < diceRolls[i].split("d")[0] / 1; j++) {
         let randomValue = Math.floor(Math.random() * diceRolls[i].split("d")[1]) + 1;
+        if (operators[opIndex] == "-") {
+          randomValue *= -1;
+        }
+        sum += randomValue;
         tempResults.push(randomValue);
-        if (operators[opIndex] == "+") {
-          sum += randomValue;
-        }
-        else {
-          sum -= randomValue;
-        }
       }
       opIndex++;
       result.push("[" + tempResults.join(", ") + "]");
       tempResults = [];
     }
     
-    
-    
-    let ans = "[" + result + "]" + ", Total Sum is: " + sum;
+    for () {
+      
+    }
+
+    let ans = "[" + result.join(", ") + "], Total Sum is: " + sum;
 
     if (ans.length > 2000) {
       //stay within 2000 character limit
