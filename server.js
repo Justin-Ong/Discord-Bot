@@ -101,18 +101,18 @@ class Controller {
       return;
     }
 
-    let rolls = mainRoll[1] / 1;
-    let sides = mainRoll[3] / 1;
     let sum = 0;
-
     let rollResults = []; //store rolls in an array
 
-    for (let i = 0; i < rolls; i++) {
-      rollResults.push(Math.floor(Math.random() * sides) + 1);
-      sum += rollResults[i];
+    for (let i = 0; i < diceRolls.length; i++) {
+      for (let j = 0; j < diceRolls[0].split("d")[0] / 1; j++) {
+        let randomValue = Math.floor(Math.random() * diceRolls[0].split("d")[1]) + 1;
+        rollResults.push(randomValue);
+        sum += randomValue;
+      }
     }
 
-    sum = eval(sum + rollFlavour);
+    //sum = eval(sum + rollFlavour);
 
     let tempResults = rollResults.join(", ");
     let tempFlavour = rollFlavour.split(/([+\-\*\/])/).join(" ");
