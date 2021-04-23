@@ -44,9 +44,9 @@ class Controller {
 
   //Initial reading of input
   readInput(msg) {
-    let cmd = msg.content.slice(1); //remove prefix
+    let cmd = msg.content.slice(1).toLowerCase(); //remove prefix
     let initialSplit = cmd.split(" ");
-    let firstWord = initialSplit[0].toLowerCase();
+    let firstWord = initialSplit[0];
 
     if (firstWord === "roll") {
       this.diceRoller(msg);
@@ -55,7 +55,7 @@ class Controller {
       let initialSplit = cmd.trim();
       let song = initialSplit || "";
 
-      this.musicPlayer(msg, song);
+    this.musicPlayer(msg, song);
     } else if (firstWord === "neko") {
       this.neko(msg);
     } else {
@@ -75,7 +75,7 @@ class Controller {
 
   //Dice roller
   diceRoller(msg) {
-    let input = msg.content.slice(5);
+    let input = msg.content.slice(5).toLowerCase();
     input = input.replace(/\s+/g, ""); //remove any whitespace
     
     if (input.match(/([a-ce-z])|(d{2,})|([!@#$%^&*()_\=\[\]{};':"\\|,.<>\/?])/g)) {
@@ -92,6 +92,8 @@ class Controller {
     if (values === null) {
       return msg.reply("Invalid Input!");
     }
+    
+    console.log(values);
 
     let sum = 0;
     let tempResults = [];
@@ -107,12 +109,12 @@ class Controller {
       }
       else {
         for (let j = 0; j < values[i].split("d")[0] / 1; j++) {
-          if (values[i].split("d")[0] / 1) {
-            
-          }
-          let randomValue = Math.floor(Math.random() * values[i].split("d")[1]) + 1;
-          if (operators != null && operators[opIndex] == "-") {
-            randomValue *= -1;
+          let randomValue = 0;
+          if (values[i].split("d")[1] != "0") {
+            randomValue = Math.floor(Math.random() * values[i].split("d")[1]) + 1;
+            if (operators != null && operators[opIndex] == "-") {
+              randomValue *= -1;
+            }
           }
           sum += randomValue;
           tempResults.push(randomValue);
