@@ -74,11 +74,14 @@ class Controller {
   }
 
   //Dice roller
-  //TODO: Use custom parser instead of eval()
   diceRoller(msg) {
     let input = msg.content.slice(1);
     let text = input.replace(/\s+/g, ""); //remove any whitespace
     let temp = text.slice(4); //remove "roll"
+    
+    if (temp.match(/^[a-c]*[e-z]*/g)) {
+      return msg.reply("Invalid Input!");
+    }
 
     let values = temp.match(/(\d*d\d*)|(\d*)/g);
     temp = temp.split(/(\d*d\d*)|(\d)/g).join("");
