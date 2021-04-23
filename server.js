@@ -91,33 +91,34 @@ class Controller {
     //temp = temp.replaceAll(/[\+\-]/g, "");  Not available yet?
     let flavour = temp.match(/(\d)/g);
     
-    console.log(temp);
-    console.log(diceRolls);
-    console.log(operators);
-    console.log(flavour);
-    
     if (mainRoll === null) {
       msg.reply("Invalid Input!");
       return;
     }
 
     let sum = 0;
-    let rollResults = []; //store rolls in an array
-
+    let tempResults = []; //store rolls in an array
+    let result = [];
+    let opIndex = 0;
     for (let i = 0; i < diceRolls.length; i++) {
-      for (let j = 0; j < diceRolls[0].split("d")[0] / 1; j++) {
-        let randomValue = Math.floor(Math.random() * diceRolls[0].split("d")[1]) + 1;
-        rollResults.push(randomValue);
-        sum += randomValue;
+      for (let j = 0; j < diceRolls[i].split("d")[0] / 1; j++) {
+        let randomValue = Math.floor(Math.random() * diceRolls[i].split("d")[1]) + 1;
+        tempResults.push(randomValue);
+        if (operators[opIndex] == "+") {
+          sum += randomValue;
+        }
+        else {
+          sum -= randomValue;
+        }
       }
+      opIndex++;
+      result.push("[" + tempResults.join(", ") + "]");
+      tempResults = [];
     }
-
-    //sum = eval(sum + rollFlavour);
-
-    let tempResults = rollResults.join(", ");
-    let tempFlavour = rollFlavour.split(/([+\-\*\/])/).join(" ");
-
-    let ans = "[" + tempResults + "] " + tempFlavour + ", Total Sum is: " + sum;
+    
+    
+    
+    let ans = "[" + result + "]" + ", Total Sum is: " + sum;
 
     if (ans.length > 2000) {
       //stay within 2000 character limit
