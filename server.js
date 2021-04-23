@@ -83,13 +83,15 @@ class Controller {
     let mainRoll = format.exec(temp);
     let rollFlavour = temp.slice(mainRoll[0].length);
 
-    let diceRolls = temp.match(/(\d*)(d)(\d*)/g);
-    temp = temp.split(/(\d*)(d)(\d*)/g).join("");
-    //temp = temp.replaceAll(/(\d*)(d)(\d*)/g, "");
+    let diceRolls = temp.match(/\d*d\d*/g);
+    temp = temp.split(/\d*d\d*/g).join("");
+    //temp = temp.replaceAll(/(\d*)(d)(\d*)/g, "");  Not available yet?
     let operators = temp.match(/[\+\-]/g);
-    //temp = temp.replaceAll(/[\+\-]/g, "");
+    temp = temp.split(/[\+\-]/g).join("");
+    //temp = temp.replaceAll(/[\+\-]/g, "");  Not available yet?
     let flavour = temp.match(/(\d)/g);
     
+    console.log(temp);
     console.log(diceRolls);
     console.log(operators);
     console.log(flavour);
