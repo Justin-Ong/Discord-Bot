@@ -83,14 +83,12 @@ class Controller {
     let mainRoll = format.exec(temp);
     let rollFlavour = temp.slice(mainRoll[0].length);
 
-    let diceRolls = temp.match(/\d*d\d*/g);
-    temp = temp.split(/\d*d\d*/g).join("");
+    let values = temp.match(/(\d*d\d*)|(\d)/g);
+    temp = temp.split(/(\d*d\d*)|(\d)/g).join("");
     let operators = temp.match(/[\+\-]/g);
     operators.unshift("+");
-    temp = temp.split(/[\+\-]/g).join("");
-    let flavour = temp.match(/(\d)/g);
     
-    if (mainRoll === null) {
+    if (values === null) {
       msg.reply("Invalid Input!");
       return;
     }
@@ -99,22 +97,27 @@ class Controller {
     let tempResults = [];
     let result = [];
     let opIndex = 0;
-    for (let i = 0; i < diceRolls.length; i++) {
-      for (let j = 0; j < diceRolls[i].split("d")[0] / 1; j++) {
-        let randomValue = Math.floor(Math.random() * diceRolls[i].split("d")[1]) + 1;
-        if (operators[opIndex] == "-") {
-          randomValue *= -1;
+    for (let i = 0; i < values.length; i++) {
+      if ((values[i]) % 1 === 0) {
+          if (operators[opIndex] == "-") {
+            values[i] *= -1;
+          }
+          sum += values[i];
+          tempResults.push(values[i]);
+      }
+      else {
+        for (let j = 0; j < values[i].split("d")[0] / 1; j++) {
+          let randomValue = Math.floor(Math.random() * values[i].split("d")[1]) + 1;
+          if (operators[opIndex] == "-") {
+            randomValue *= -1;
+          }
+          sum += randomValue;
+          tempResults.push(randomValue);
         }
-        sum += randomValue;
-        tempResults.push(randomValue);
       }
       opIndex++;
       result.push("[" + tempResults.join(", ") + "]");
       tempResults = [];
-    }
-    
-    for () {
-      
     }
 
     let ans = "[" + result.join(", ") + "], Total Sum is: " + sum;
