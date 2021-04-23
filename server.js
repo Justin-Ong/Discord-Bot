@@ -83,6 +83,14 @@ class Controller {
     let mainRoll = format.exec(temp);
     let rollFlavour = temp.slice(mainRoll[0].length);
 
+    
+    let diceRolls = temp.match(/(\d*)(d)(\d*)/g);
+    let operators = temp.match(/(\+*)(\-*)(\/*)(\**)/g);
+    
+    console.log(diceRolls);
+    console.log(operators);
+    
+    
     if (mainRoll === null) {
       msg.reply("Invalid Input!");
       return;
