@@ -75,24 +75,22 @@ class Controller {
 
   //Dice roller
   diceRoller(msg) {
-    let input = msg.content.slice(1);
-    let text = input.replace(/\s+/g, ""); //remove any whitespace
-    let temp = text.slice(4); //remove "roll"
+    let input = msg.content.slice(5);
+    input = input.replace(/\s+/g, ""); //remove any whitespace
     
-    if (temp.match(/^[a-c]*[e-z]*/g)) {
+    if (input.match(/([a-ce-z])/g)) {
       return msg.reply("Invalid Input!");
     }
 
-    let values = temp.match(/(\d*d\d*)|(\d*)/g);
-    temp = temp.split(/(\d*d\d*)|(\d)/g).join("");
-    let operators = temp.match(/[\+\-]/g);
+    let values = input.match(/(\d+d\d+)|(\d+)/g);
+    input = input.split(/(\d+d\d+)|(\d+)/g).join("");
+    let operators = input.match(/[\+\-]/g);
     if (operators != null) {
       operators.unshift("+");
     }
     
     if (values === null) {
-      msg.reply("Invalid Input!");
-      return;
+      return msg.reply("Invalid Input!");
     }
 
     let sum = 0;
