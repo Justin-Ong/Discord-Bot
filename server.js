@@ -79,14 +79,13 @@ class Controller {
     let input = msg.content.slice(1);
     let text = input.replace(/\s+/g, ""); //remove any whitespace
     let temp = text.slice(4); //remove "roll"
-    let format = RegExp(/(\d*)(d)(\d*)/); //find XdY
-    let mainRoll = format.exec(temp);
-    let rollFlavour = temp.slice(mainRoll[0].length);
 
-    let values = temp.match(/(\d*d\d*)|(\d)/g);
+    let values = temp.match(/(\d*d\d*)|(\d*)/g);
     temp = temp.split(/(\d*d\d*)|(\d)/g).join("");
     let operators = temp.match(/[\+\-]/g);
-    operators.unshift("+");
+    if (operators != null) {
+      operators.unshift("+");
+    }
     
     if (values === null) {
       msg.reply("Invalid Input!");
@@ -99,16 +98,16 @@ class Controller {
     let opIndex = 0;
     for (let i = 0; i < values.length; i++) {
       if ((values[i]) % 1 === 0) {
-          if (operators[opIndex] == "-") {
-            values[i] *= -1;
-          }
-          sum += values[i];
-          tempResults.push(values[i]);
+        if (operators != null && operators[opIndex] == "-") {
+          values[i] *= -1;
+        }
+        sum += values[i]/1;
+        tempResults.push(values[i]);
       }
       else {
         for (let j = 0; j < values[i].split("d")[0] / 1; j++) {
           let randomValue = Math.floor(Math.random() * values[i].split("d")[1]) + 1;
-          if (operators[opIndex] == "-") {
+          if (operators != null && operators[opIndex] == "-") {
             randomValue *= -1;
           }
           sum += randomValue;
