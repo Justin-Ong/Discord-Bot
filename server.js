@@ -76,8 +76,8 @@ class Controller {
   //Dice roller
   diceRoller(msg) {
     let input = msg.content.slice(5).toLowerCase();
-    input = input.replace(/\s+/g, ""); //remove any whitespace
-    
+    input = input.replace(/\s/g, ""); //remove any whitespace
+
     if (input.match(/([a-ce-z])|(d{2,})|([!@#$%^&*()_\=\[\]{};':"\\|,.<>\/?])/g)) {
       return msg.reply("Invalid Input!");
     }
@@ -88,6 +88,8 @@ class Controller {
     if (operators != null) {
       operators.unshift("+");
     }
+    
+    console.log(values);
     
     if (values === null) {
       return msg.reply("Invalid Input!");
