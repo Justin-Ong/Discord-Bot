@@ -1,4 +1,5 @@
 {
 	"prefix":"$",
-	"sites":["e621.net", "e926.net", "konachan.com", "konachan.net", "safebooru.org"]
+	"sites":["e621.net", "e926.net", "konachan.com", "konachan.net", "safebooru.org"],
+  "since_id":"1"
 }
