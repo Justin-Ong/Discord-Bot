@@ -12,9 +12,11 @@ const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
+const { TwitterApi } = require('twitter-api-v2');
 const config = require("./config.json");
 const neko_log = require("./neko_log.json");
 const startup_log = require("./startup_log.json");
+const twitter_client = new TwitterApi(process.env.TWITTER_BEARER_TOKEN);
 const client = new Discord.Client();
 const searchChoices = [1, 2, 3, 4, 5];
 
