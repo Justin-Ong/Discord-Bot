@@ -89,9 +89,7 @@ class Controller {
         if (operators != null) {
             operators.unshift("+");
         }
-
-        console.log(values);
-
+      
         if (values === null) {
             return msg.reply("Invalid Input!");
         }
@@ -602,6 +600,8 @@ client.on("message", (msg) => {
 
 //Twitter stuff
 function GetRecentTweets() {
+  var users = require('./config.json');
+  console.log(users);
   fs.readFile("config.json", 'utf-8', function(err, data) {
     console.log(data);
     var now = Date();
