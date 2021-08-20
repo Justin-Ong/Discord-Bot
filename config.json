@@ -1,5 +1,4 @@
 {
 	"prefix":"$",
-	"sites":["e621.net", "e926.net", "konachan.com", "konachan.net", "safebooru.org"],
-  "pso_retweet_channel":"pso2-uq-announcement"
+	"sites":["e621.net", "e926.net", "konachan.com", "konachan.net", "safebooru.org"]
 }
