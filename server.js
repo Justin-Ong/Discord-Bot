@@ -13,42 +13,11 @@ const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
-const { TwitterApi } = require('twitter-api-v2');
 const config = require("./config.json");
 const neko_log = require("./neko_log.json");
 const startup_log = require("./startup_log.json");
-const twitter_client = new TwitterApi(process.env.TWITTER_BEARER_TOKEN);
 const client = new Discord.Client();
 const searchChoices = [1, 2, 3, 4, 5];
-
-//Twitter shit
-var options = {
-  'method': 'GET',
-  'hostname': 'api.twitter.com',
-  'path': '/2/users//tweets',
-  'headers': {
-  },
-  'maxRedirects': 20
-};
-
-var req = https.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function (chunk) {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-
-  res.on("error", function (error) {
-    console.error(error);
-  });
-});
-
-req.end();
 
 //login using token
 client.login(process.env.SECRET).then(loginSuccess, loginFailure);
@@ -630,6 +599,38 @@ client.on("message", (msg) => {
     }
     controller.readInput(msg);
 });
+
+//Twitter stuff
+function GetRecentTweets() {
+  var options = {
+    'method': 'GET',
+    'hostname': 'api.twitter.com',
+    'path': '/2/users//tweets',
+    'headers': {
+    },
+    'maxRedirects': 20
+  };
+
+  var req = https.request(options, function (res) {
+    var chunks = [];
+
+    res.on("data", function (chunk) {
+      chunks.push(chunk);
+    });
+
+    res.on("end", function (chunk) {
+      var body = Buffer.concat(chunks);
+      console.log(body.toString());
+    });
+
+    res.on("error", function (error) {
+      console.error(error);
+    });
+  });
+
+  req.end();
+}
+
 
 function loginSuccess(result) {
     let now = Date();
