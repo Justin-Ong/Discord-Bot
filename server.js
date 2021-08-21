@@ -589,7 +589,8 @@ var controller = new Controller();
 client.on("ready", () => {
     client.user.setActivity(config.prefix + "help");
 
-    setInterval(GetRecentTweets, 60000);  //Check for new tweets every 
+    GetRecentTweets();
+    setInterval(GetRecentTweets, 60000);  //Check for new tweets every 1 min
 });
 
 client.on("message", (msg) => {
@@ -640,9 +641,11 @@ function GetRecentTweets() {
             );*/
             //delete require.cache[require.resolve('./config.json')]
             //config = require('./config.json')
-            
             for (let i =  0; i < data.length; i++) {
-                console.log(data[i]['entities']['urls']['url']);
+                console.log(data[i]);
+                if (typeof data[i]['entities']['urls'] != 'undefined') {
+                    //console.log(data[i]['entities']['urls'][0]['url']);//[i]['entities']['urls']['url']);
+                }
                 //client.channels.get(config.channel_id).send(body['data'][i]['entities']['urls']['url']);
             }
         });
