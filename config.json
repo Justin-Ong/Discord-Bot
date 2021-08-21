@@ -1,6 +1,12 @@
 {
-	"prefix":"$",
-	"sites":["e621.net", "e926.net", "konachan.com", "konachan.net", "safebooru.org"],
-  "since_id":"1",
-  "channel_id":"877581416450387969"
+  "prefix": "$",
+  "sites": [
+    "e621.net",
+    "e926.net",
+    "konachan.com",
+    "konachan.net",
+    "safebooru.org"
+  ],
+  "since_id": "1428699588203061252",
+  "channel_id": "877581416450387969"
 }

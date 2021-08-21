@@ -624,29 +624,29 @@ function GetRecentTweets() {
 
         res.on("end", function(chunk) {
             var body = Buffer.concat(chunks);
-            body = JSON.parse(body.toString());
+            if (typeof body != 'undefined') {
+                body = JSON.parse(body.toString());
             
-            config.since_id = body['meta']['newest_id'];
-            var data = body['data'];
+                config.since_id = body['meta']['newest_id'];
+                var data = body['data'];
 
-            /*
-            fs.writeFile(
-                "config.json",
-                JSON.stringify(config, null, 2),
-                function(err) {
-                    if (err) {
-                        return console.log(err);
+                if (typeof data != 'undefined') {
+                    fs.writeFile(
+                        "config.json",
+                        JSON.stringify(config, null, 2),
+                        function(err) {
+                            if (err) {
+                                return console.log(err);
+                            }
+                        }
+                    );
+
+                    for (let i =  0; i < data.length; i++) {
+                        if (typeof data[i]['entities']['urls'] != 'undefined') {
+                            client.channels.cache.get(config.channel_id).send(data[i]['entities']['urls'][0]['url']);
+                        }
                     }
                 }
-            );*/
-            //delete require.cache[require.resolve('./config.json')]
-            //config = require('./config.json')
-            for (let i =  0; i < data.length; i++) {
-                console.log(data[i]);
-                if (typeof data[i]['entities']['urls'] != 'undefined') {
-                    //console.log(data[i]['entities']['urls'][0]['url']);//[i]['entities']['urls']['url']);
-                }
-                //client.channels.get(config.channel_id).send(body['data'][i]['entities']['urls']['url']);
             }
         });
 
