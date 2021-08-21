@@ -1,6 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.7.6
+//Version: 1.8.0
 //TODO: Refactor code, possibly split into various files?
 
 //Monitoring setup

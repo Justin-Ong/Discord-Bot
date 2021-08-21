@@ -1,3 +1,6 @@
+1.8.0:
+Add twitter integration to repost tweets from @RappyBurst to Discord.
+
 1.7.6:
 Change addSongToQueue to simply store urls instead of getting video data - only get video data when actually playing the song
 Pros: Makes adding playlists and songs much faster
