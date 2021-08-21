@@ -602,14 +602,13 @@ client.on("message", (msg) => {
 function GetRecentTweets() {
   fs.readFile("config.json", 'utf-8', function(err, data) {
     let test = JSON.parse(data);
-    console.log(test["since_id"]);
-  });
 
   let id = '1366409897567469574'; //RappyBurst id
+  let tweet_id = test["since_id"];
   let options = {
     'method': 'GET',
     'hostname': 'api.twitter.com',
-    'path': '/2/users/' + id + '/tweets?max_results=5&tweet.fields=entities',
+    'path': '/2/users/' + id + '/tweets?max_results=5&since_id=' + tweet_id + '&tweet.fields=entities',
     'headers': {
       'Authorization': 'Bearer ' + process.env.TWITTER_BEARER_TOKEN,
     },
@@ -634,8 +633,8 @@ function GetRecentTweets() {
   });
 
   req.end();
-  
-  let now = Date();
+  console.log('a');
+  console.log(req);
   fs.writeFile(
       "startup_log.json",
       JSON.stringify(startup_log, null, 2),
@@ -645,6 +644,7 @@ function GetRecentTweets() {
           }
       }
   );
+  });
 }
 setTimeout(GetRecentTweets, 2000);
 
