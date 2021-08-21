@@ -600,35 +600,24 @@ client.on("message", (msg) => {
 
 //Twitter stuff
 function GetRecentTweets() {
-  var users = require('./config.json');
-  console.log(users);
   fs.readFile("config.json", 'utf-8', function(err, data) {
-    console.log(data);
-    var now = Date();
-    fs.writeFile(
-        "startup_log.json",
-        JSON.stringify(startup_log, null, 2),
-        function(err) {
-            if (err) {
-                return console.log(err);
-            }
-        }
-    );
+    let test = JSON.parse(data);
+    console.log(test["since_id"]);
   });
-  
-  var id = '1366409897567469574';
-  var options = {
+
+  let id = '1366409897567469574'; //RappyBurst id
+  let options = {
     'method': 'GET',
     'hostname': 'api.twitter.com',
-    'path': '/2/users/' + id + '/tweets?max_results=5',
+    'path': '/2/users/' + id + '/tweets?max_results=5&tweet.fields=entities',
     'headers': {
       'Authorization': 'Bearer ' + process.env.TWITTER_BEARER_TOKEN,
     },
     'maxRedirects': 20
   };
 
-  var req = https.request(options, function (res) {
-    var chunks = [];
+  let req = https.request(options, function (res) {
+    let chunks = [];
 
     res.on("data", function (chunk) {
       chunks.push(chunk);
@@ -645,6 +634,17 @@ function GetRecentTweets() {
   });
 
   req.end();
+  
+  let now = Date();
+  fs.writeFile(
+      "startup_log.json",
+      JSON.stringify(startup_log, null, 2),
+      function(err) {
+          if (err) {
+              return console.log(err);
+          }
+      }
+  );
 }
 setTimeout(GetRecentTweets, 2000);
 
