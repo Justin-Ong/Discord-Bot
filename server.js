@@ -641,9 +641,7 @@ function GetRecentTweets() {
                 );
 
                 for (let i =  0; i < data.length; i++) {
-                    if (typeof data[i]['entities']['urls'] != 'undefined') {
-                        client.channels.cache.get(config.channel_id).send(data[i]['entities']['urls'][0]['url']);
-                    }
+                    client.channels.cache.get(config.channel_id).send('https://twitter.com/twitter/status/' + data[i]['id']);
                 }
             }
         });
