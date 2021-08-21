@@ -588,7 +588,6 @@ var controller = new Controller();
 
 client.on("ready", () => {
     client.user.setActivity(config.prefix + "help");
-    var stopwatch = 0;
 
     setInterval(GetRecentTweets, 60000);  //Check for new tweets every 
 });
@@ -627,7 +626,9 @@ function GetRecentTweets() {
             body = JSON.parse(body.toString());
             
             config.since_id = body['meta']['newest_id'];
-            
+            console.log(body['meta']['newest_id']);
+            console.log(config.since_id);
+            /*
             fs.writeFile(
                 "config.json",
                 JSON.stringify(config, null, 2),
@@ -636,12 +637,12 @@ function GetRecentTweets() {
                         return console.log(err);
                     }
                 }
-            );
+            );*/
             //delete require.cache[require.resolve('./config.json')]
             //config = require('./config.json')
             
             for (let i =  0; i < body['data'].length; i++) {
-                console.log(body['data'][i]['entities']['urls']['url']);
+                //console.log(body['data'][i]['entities']['urls']['url']);
                 //client.channels.get(config.channel_id).send(body['data'][i]['entities']['urls']['url']);
             }
         });
