@@ -588,6 +588,9 @@ var controller = new Controller();
 
 client.on("ready", () => {
     client.user.setActivity(config.prefix + "help");
+    var stopwatch = 0;
+
+    setInterval(GetRecentTweets, 60000);  //Check for new tweets every 
 });
 
 client.on("message", (msg) => {
@@ -600,44 +603,56 @@ client.on("message", (msg) => {
 
 //Twitter stuff
 function GetRecentTweets() {
-  fs.readFile("config.json", 'utf-8', function(err, data) {
-    let test = JSON.parse(data);
-
-  let id = '1366409897567469574'; //RappyBurst id
-  let tweet_id = '1428676341096984579';//test["since_id"];
-  let options = {
-    'method': 'GET',
-    'hostname': 'api.twitter.com',
-    'path': '/2/users/' + id + '/tweets?max_results=5&since_id=' + tweet_id + '&tweet.fields=entities',
-    'headers': {
-      'Authorization': 'Bearer ' + process.env.TWITTER_BEARER_TOKEN,
-    },
-    'maxRedirects': 20
-  };
-
-  let req = https.request(options, function (res) {
-    let chunks = [];
-
-    res.on("data", function (chunk) {
-      chunks.push(chunk);
-    });
-
-    res.on("end", function (chunk) {
-      var body = Buffer.concat(chunks);
-      body = JSON.parse(body.toString());
-      console.log(body['meta']['newest_id']);
-    });
-
-    res.on("error", function (error) {
-      console.error(error);
-    });
-  });
-
-  req.end();
+    let id = '1366409897567469574'; //RappyBurst id
     
-  });
+    let options = {
+        'method': 'GET',
+        'hostname': 'api.twitter.com',
+        'path': '/2/users/' + id + '/tweets?max_results=5&since_id=' + config.since_id + '&tweet.fields=entities',
+        'headers': {
+            'Authorization': 'Bearer ' + process.env.TWITTER_BEARER_TOKEN,
+        },
+        'maxRedirects': 20
+    };
+
+    let req = https.request(options, function(res) {
+        let chunks = [];
+
+        res.on("data", function(chunk) {
+            chunks.push(chunk);
+        });
+
+        res.on("end", function(chunk) {
+            let body = Buffer.concat(chunks);
+            body = JSON.parse(body.toString());
+            
+            config.since_id = body['meta']['newest_id'];
+            
+            fs.writeFile(
+                "config.json",
+                JSON.stringify(config, null, 2),
+                function(err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                }
+            );
+            //delete require.cache[require.resolve('./config.json')]
+            //config = require('./config.json')
+            
+            for (let i =  0; i < body['data'].length; i++) {
+                console.log(body['data'][i]['entities']['urls']['url']);
+                //client.channels.get(config.channel_id).send(body['data'][i]['entities']['urls']['url']);
+            }
+        });
+
+        res.on("error", function(error) {
+            console.error(error);
+        });
+    });
+
+    req.end();
 }
-setTimeout(GetRecentTweets, 2000);
 
 function loginSuccess(result) {
     let now = Date();
