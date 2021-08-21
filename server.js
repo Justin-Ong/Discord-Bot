@@ -625,6 +625,15 @@ function GetRecentTweets() {
     res.on("end", function (chunk) {
       var body = Buffer.concat(chunks);
       console.log(body.toString());
+      fs.writeFile(
+        "startup_log.json",
+        JSON.stringify(startup_log, null, 2),
+        function(err) {
+            if (err) {
+                return console.log(err);
+            }
+        }
+      );
     });
 
     res.on("error", function (error) {
@@ -633,17 +642,7 @@ function GetRecentTweets() {
   });
 
   req.end();
-  console.log('a');
-  console.log(req);
-  fs.writeFile(
-      "startup_log.json",
-      JSON.stringify(startup_log, null, 2),
-      function(err) {
-          if (err) {
-              return console.log(err);
-          }
-      }
-  );
+    
   });
 }
 setTimeout(GetRecentTweets, 2000);
