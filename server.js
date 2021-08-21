@@ -620,8 +620,9 @@ function GetRecentTweets() {
   var options = {
     'method': 'GET',
     'hostname': 'api.twitter.com',
-    'path': '/2/users/:' + id + '/tweets?max_results=5&since_id=' + '1428676341096984579',
+    'path': '/2/users/' + id + '/tweets?max_results=5',
     'headers': {
+      'Authorization': 'Bearer ' + process.env.TWITTER_BEARER_TOKEN,
     },
     'maxRedirects': 20
   };
@@ -645,7 +646,7 @@ function GetRecentTweets() {
 
   req.end();
 }
-GetRecentTweets();
+setTimeout(GetRecentTweets, 2000);
 
 function loginSuccess(result) {
     let now = Date();
