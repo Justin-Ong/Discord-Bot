@@ -604,7 +604,7 @@ function GetRecentTweets() {
     let test = JSON.parse(data);
 
   let id = '1366409897567469574'; //RappyBurst id
-  let tweet_id = test["since_id"];
+  let tweet_id = '1428676341096984579';//test["since_id"];
   let options = {
     'method': 'GET',
     'hostname': 'api.twitter.com',
@@ -624,16 +624,8 @@ function GetRecentTweets() {
 
     res.on("end", function (chunk) {
       var body = Buffer.concat(chunks);
-      console.log(body.toString());
-      fs.writeFile(
-        "startup_log.json",
-        JSON.stringify(startup_log, null, 2),
-        function(err) {
-            if (err) {
-                return console.log(err);
-            }
-        }
-      );
+      body = JSON.parse(body.toString());
+      console.log(body['meta']['newest_id']);
     });
 
     res.on("error", function (error) {

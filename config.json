@@ -1,5 +1,6 @@
 {
 	"prefix":"$",
 	"sites":["e621.net", "e926.net", "konachan.com", "konachan.net", "safebooru.org"],
-  "since_id":"1"
+  "since_id":"1",
+  "channel_id":"877581416450387969"
 }
