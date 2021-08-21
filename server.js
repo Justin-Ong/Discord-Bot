@@ -622,12 +622,12 @@ function GetRecentTweets() {
         });
 
         res.on("end", function(chunk) {
-            let body = Buffer.concat(chunks);
+            var body = Buffer.concat(chunks);
             body = JSON.parse(body.toString());
             
             config.since_id = body['meta']['newest_id'];
-            console.log(body['meta']['newest_id']);
-            console.log(config.since_id);
+            var data = body['data'];
+
             /*
             fs.writeFile(
                 "config.json",
@@ -641,8 +641,8 @@ function GetRecentTweets() {
             //delete require.cache[require.resolve('./config.json')]
             //config = require('./config.json')
             
-            for (let i =  0; i < body['data'].length; i++) {
-                //console.log(body['data'][i]['entities']['urls']['url']);
+            for (let i =  0; i < data.length; i++) {
+                console.log(data[i]['entities']['urls']['url']);
                 //client.channels.get(config.channel_id).send(body['data'][i]['entities']['urls']['url']);
             }
         });
