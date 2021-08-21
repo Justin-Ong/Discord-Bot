@@ -624,27 +624,25 @@ function GetRecentTweets() {
 
         res.on("end", function(chunk) {
             var body = Buffer.concat(chunks);
-            if (typeof body != 'undefined') {
-                body = JSON.parse(body.toString());
-            
+            body = JSON.parse(body.toString());
+
+            if (typeof body['data'] != 'undefined') {
                 config.since_id = body['meta']['newest_id'];
                 var data = body['data'];
 
-                if (typeof data != 'undefined') {
-                    fs.writeFile(
-                        "config.json",
-                        JSON.stringify(config, null, 2),
-                        function(err) {
-                            if (err) {
-                                return console.log(err);
-                            }
+                fs.writeFile(
+                    "config.json",
+                    JSON.stringify(config, null, 2),
+                    function(err) {
+                        if (err) {
+                            return console.log(err);
                         }
-                    );
+                    }
+                );
 
-                    for (let i =  0; i < data.length; i++) {
-                        if (typeof data[i]['entities']['urls'] != 'undefined') {
-                            client.channels.cache.get(config.channel_id).send(data[i]['entities']['urls'][0]['url']);
-                        }
+                for (let i =  0; i < data.length; i++) {
+                    if (typeof data[i]['entities']['urls'] != 'undefined') {
+                        client.channels.cache.get(config.channel_id).send(data[i]['entities']['urls'][0]['url']);
                     }
                 }
             }
