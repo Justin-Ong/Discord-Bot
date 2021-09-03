@@ -1,11 +1,9 @@
 {
   "reason": {
-    "name": "DiscordAPIError",
-    "message": "Request entity too large",
+    "name": "AbortError",
+    "code": 500,
     "method": "post",
-    "path": "/channels/488670343624392705/messages",
-    "code": 40005,
-    "httpStatus": 413
+    "path": "/channels/488670343624392705/messages"
   },
-  "time": "Thu Sep 02 2021 06:55:08 GMT+0000 (Coordinated Universal Time)"
+  "time": "Fri Sep 03 2021 13:59:33 GMT+0000 (Coordinated Universal Time)"
 }
