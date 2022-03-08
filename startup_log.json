@@ -1,6 +1,6 @@
 {
   "curr_success": "Logged in as GeneralGrievous at Tue Mar 08 2022 06:24:18 GMT+0000 (Coordinated Universal Time)",
   "prev_success": "Logged in as GeneralGrievous at Mon Mar 07 2022 18:23:18 GMT+0000 (Coordinated Universal Time)",
-  "curr_failure": "Failed to log in at Tue Mar 08 2022 19:00:18 GMT+0000 (Coordinated Universal Time) due to: Response: Service Unavailable",
-  "prev_failure": "Failed to log in at Tue Mar 08 2022 19:00:08 GMT+0000 (Coordinated Universal Time) due to: Response: Service Unavailable"
+  "curr_failure": "Failed to log in at Tue Mar 08 2022 19:12:21 GMT+0000 (Coordinated Universal Time) due to: Response: Bad Gateway",
+  "prev_failure": "Failed to log in at Tue Mar 08 2022 19:12:11 GMT+0000 (Coordinated Universal Time) due to: Response: Bad Gateway"
 }
