@@ -244,17 +244,16 @@ class Controller {
 
     async addSongToQueue(song) {
         this.playlist.push(song);
-        console.log("Adding song " + song + " to queue");
         if (this.playlist.length === 1) {
             this.playMusic();
         }
     }
 
     addListToQueue(playlist) {
-        console.log("Adding playlist " + playlist + " to queue");
         for (let i = 0; i < playlist.items.length; i++) {
             this.addSongToQueue(playlist.items[i].shortUrl);
         }
+        console.log("Added playlist " + playlist + " to queue");
     }
 
     async playMusic() {
