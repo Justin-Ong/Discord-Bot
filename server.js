@@ -16,7 +16,7 @@ const ytsr = require("ytsr");
 const config = require("./config.json");
 const neko_log = require("./neko_log.json");
 const startup_log = require("./startup_log.json");
-const client = new Discord.Client();
+const client = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const searchChoices = [1, 2, 3, 4, 5];
 
 //login using token
@@ -589,8 +589,8 @@ var controller = new Controller();
 client.on("ready", () => {
     client.user.setActivity(config.prefix + "help");
 
-    GetRecentTweets();
-    setInterval(GetRecentTweets, 60000);  //Check for new tweets every 1 min
+    //GetRecentTweets();
+    //setInterval(GetRecentTweets, 60000);  //Check for new tweets every 1 min
 });
 
 client.on("message", (msg) => {
