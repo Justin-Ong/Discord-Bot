@@ -7,10 +7,10 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "booru": "^2.4.0",
+    "booru": "^2.5.3",
     "discord.js": "^12.5.2",
     "ytdl-core": "^4.11.0",
-    "@discordjs/opus": "^0.5.0",
+    "@discordjs/opus": "^0.7.0",
     "ytpl": "^2.3.0",
     "ytsr": "^3.6.0",
     "follow-redirects": "^1.14.9"
