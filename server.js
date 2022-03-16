@@ -9,7 +9,7 @@ const fs = require("fs");
 //Various inits
 const https = require('follow-redirects').https;
 const Booru = require("booru");
-const { Client, Intents } = require('discord.js');
+import { Client, VoiceChannel, Intents } from 'discord.js';
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
@@ -18,6 +18,17 @@ const neko_log = require("./neko_log.json");
 const startup_log = require("./startup_log.json");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.DIRECT_MESSAGES ] });
 const searchChoices = [1, 2, 3, 4, 5];
+
+import {
+	joinVoiceChannel,
+	createAudioPlayer,
+	createAudioResource,
+	entersState,
+	StreamType,
+	AudioPlayerStatus,
+	VoiceConnectionStatus,
+} from '@discordjs/voice';
+import { createDiscordJSAdapter } from './adapter';
 
 //login using token
 client.login(process.env.SECRET).then(loginSuccess, loginFailure);
@@ -224,22 +235,32 @@ class Controller {
 
     getConnection(msg) {
         let _this = this;
-        return new Promise(function(resolve, reject) {
+        return new Promise(async function(resolve, reject) {
             _this.currChannel = msg.member.voice.channel;
             if (_this.currConnection === null) {
                 try {
-                    _this.currChannel
-                        .join()
-                        .then((connection) => {
-                            _this.currConnection = connection;
-                            resolve();
-                        })
-                        .catch(console.log);
+                    const connection = await connectToChannel(msg.channel);
                 } catch (err) {
                     reject(err);
                 }
             }
         });
+    }
+  
+    async connectToChannel(channel) {
+        const connection = joinVoiceChannel({
+            channelId: channel.id,
+            guildId: channel.guild.id,
+            adapterCreator: createDiscordJSAdapter(channel),
+        });
+
+        try {
+            await entersState(connection, VoiceConnectionStatus.Ready, 30e3);
+            return connection;
+        } catch (error) {
+            connection.destroy();
+            throw error;
+        }
     }
 
     async addSongToQueue(song) {

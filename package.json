@@ -19,6 +19,7 @@
     "node": "16.x"
   },
   "license": "MIT",
+  "type": "module",
   "keywords": [
     "node",
     "Discord"
