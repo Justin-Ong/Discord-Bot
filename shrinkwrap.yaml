@@ -3,9 +3,9 @@ dependencies:
   booru: 2.4.0
   discord.js: 12.5.3
   follow-redirects: 1.14.2
-  ytdl-core: 4.5.0
-  ytpl: 2.1.0
-  ytsr: 3.4.0
+  ytdl-core: 4.11.0
+  ytpl: 2.3.0
+  ytsr: 3.6.0
 packages:
   /@discordjs/collection/0.1.6:
     dev: false
@@ -296,15 +296,15 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
-  /m3u8stream/0.8.3:
+  /m3u8stream/0.8.6:
     dependencies:
-      miniget: 4.2.0
+      miniget: 4.2.2
       sax: 1.2.4
     dev: false
     engines:
-      node: '>=10'
+      node: '>=12'
     resolution:
-      integrity: sha512-0nAcdrF8YJKUkb6PzWdvGftTPyCVWgoiot1AkNVbPKTeIGsWs6DrOjifrJ0Zi8WQfQmD2SuVCjkYIOip12igng==
+      integrity: sha512-LZj8kIVf9KCphiHmH7sbFQTVe4tOemb202fWwvJwR9W5ENW/1hxJN6ksAWGhQgSBSa3jyWhnjKU1Fw1GaOdbyA==
   /make-dir/3.1.0:
     dependencies:
       semver: 6.3.0
@@ -327,12 +327,12 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha512-crmjA4bLtR8m9qLpHvgxSChT+XoSlZi8J4n/aIdn3z92e/U47Z0V/yl+Wh9W046GgFVAmoNR/fmdbZYcSSIUeg==
-  /miniget/4.2.0:
+  /miniget/4.2.2:
     dev: false
     engines:
-      node: '>=10'
+      node: '>=12'
     resolution:
-      integrity: sha512-IzTOaNgBw/qEpzkPTE7X2cUVXQfSKbG8w52Emi93zb+Zya2ZFrbmavpixzebuDJD9Ku4ecbaFlC7Y1cEESzQtQ==
+      integrity: sha512-a7voNL1N5lDMxvTMExOkg+Fq89jM2vY8pAi9ZEWzZtfNmdfP6RXkvUtFnCAXoCv2T9k1v/fUJVaAEuepGcvLYA==
   /minimatch/3.0.4:
     dependencies:
       brace-expansion: 1.1.11
@@ -570,32 +570,32 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
-  /ytdl-core/4.5.0:
+  /ytdl-core/4.11.0:
     dependencies:
-      m3u8stream: 0.8.3
-      miniget: 4.2.0
+      m3u8stream: 0.8.6
+      miniget: 4.2.2
       sax: 1.2.4
     dev: false
     engines:
-      node: '>=10'
+      node: '>=12'
     resolution:
-      integrity: sha512-e8r6skrakWNixsVlNPBMoRM1HrdW1swE97If9nenDUjF65uogYk4DvxIuqlmqRfBWKe+6aIZwqedNxUU9XLYJA==
-  /ytpl/2.1.0:
+      integrity: sha512-Q3hCLiUA9AOGQXzPvno14GN+HgF9wsO1ZBHlj0COTcyxjIyFpWvMfii0UC4/cAbVaIjEdbWB71GdcGuc4J1Lmw==
+  /ytpl/2.3.0:
     dependencies:
-      miniget: 4.2.0
+      miniget: 4.2.2
     dev: false
     engines:
       node: '>=8'
     resolution:
-      integrity: sha512-N99XwwK55NYkNi8tfVqNVUpRn1XfedLrdUIn/uGaiVMfHMqy5YJZrDHP1Jk35rya72qw8TkNKZCD4JJOwD9vsQ==
-  /ytsr/3.4.0:
+      integrity: sha512-Cfw2rxq3PFK6qgWr2Z8gsRefVahEzbn9XEuiJldqdXHE6GhO7kTfEvbZKdfXing1SmgW635uJ/UL2g8r0fvu2Q==
+  /ytsr/3.6.0:
     dependencies:
-      miniget: 4.2.0
+      miniget: 4.2.2
     dev: false
     engines:
       node: '>=8'
     resolution:
-      integrity: sha512-/Ygk7lf+ZGI9fqp7us2PAyVtmNc5aGblQhtizOvU5L63L/9W7J9PQRoTq7XvGOMT/NWpYT6qhGFEror0UMw4FQ==
+      integrity: sha512-3fN8lxL+JHtp2xEZoAK3AeTjNm5WB4MH6n2OxHNxP06xQtuO5khbLwh6IJGiZRNi/v3de+jYYbctp2pUqNT/Qw==
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
@@ -604,6 +604,6 @@ specifiers:
   booru: ^2.4.0
   discord.js: ^12.5.2
   follow-redirects: ^1.14.2
-  ytdl-core: ^4.4.5
-  ytpl: ^2.0.5
-  ytsr: ^3.4.0
+  ytdl-core: ^4.11.0
+  ytpl: ^2.3.0
+  ytsr: ^3.6.0
