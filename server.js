@@ -1,7 +1,6 @@
 //Program: Discord Bot
 //Author: Justin Ong
-//Version: 1.8.0
-//TODO: Refactor code, possibly split into various files?
+//Version: 1.8.1
 
 //Monitoring setup
 const fs = require("fs");
@@ -589,8 +588,8 @@ var controller = new Controller();
 client.on("ready", () => {
     client.user.setActivity(config.prefix + "help");
 
-    GetRecentTweets();
-    setInterval(GetRecentTweets, 60000);  //Check for new tweets every 1 min
+    //GetRecentTweets();
+    //setInterval(GetRecentTweets, 60000);  //Check for new tweets every 1 min
 });
 
 client.on("message", (msg) => {

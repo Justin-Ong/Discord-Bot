@@ -1,5 +1,9 @@
+1.8.1:
+Remove twitter integration as it is no longer required
+Update Node version to 16.x and update packages accordingly
+
 1.8.0:
-Add twitter integration to repost tweets from @RappyBurst to Discord.
+Add twitter integration to repost tweets from @RappyBurst to Discord
 
 1.7.6:
 Change addSongToQueue to simply store urls instead of getting video data - only get video data when actually playing the song
