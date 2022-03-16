@@ -1,11 +1,11 @@
 dependencies:
   '@discordjs/opus': 0.5.0
-  booru: 2.5.3
+  booru: 2.4.0
   discord.js: 12.5.3
   follow-redirects: 1.14.2
-  ytdl-core: 4.11.0
-  ytpl: 2.3.0
-  ytsr: 3.6.0
+  ytdl-core: 4.5.0
+  ytpl: 2.1.0
+  ytsr: 3.4.0
 packages:
   /@discordjs/collection/0.1.6:
     dev: false
@@ -103,15 +103,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
-  /booru/2.5.3:
+  /booru/2.4.0:
     dependencies:
-      fast-xml-parser: 3.21.1
-      node-fetch: 2.6.7
+      fast-xml-parser: 3.17.4
+      node-fetch: 2.6.1
     dev: false
     engines:
       node: '>=10.0.0'
     resolution:
-      integrity: sha512-eze5/6fH514y/LnBH++yqhkfMlWFLIdDOx2Q6AxGNE8Y0ETrFmgu+G//3zY4jzDolEaioF1hw3purfHr3yCxRQ==
+      integrity: sha512-CYawPyAd4l7JA5tq4HmTbu9xAB146aFyQ2xfhU+lHvg28+fsIP8XD2Al/VY9rgQqdE78EvaR2Lvc1AhbsSdSbA==
   /brace-expansion/1.1.11:
     dependencies:
       balanced-match: 1.0.2
@@ -197,13 +197,12 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
-  /fast-xml-parser/3.21.1:
-    dependencies:
-      strnum: 1.0.5
+  /fast-xml-parser/3.17.4:
     dev: false
     hasBin: true
+    requiresBuild: true
     resolution:
-      integrity: sha512-FTFVjYoBOZTJekiUsawGsSYV9QL0A+zDYCRj7y34IO6Jg+2IMYEtQa+bbictpdpV8dHxXywqU7C0gRDEOFtBFg==
+      integrity: sha512-qudnQuyYBgnvzf5Lj/yxMcf4L9NcVWihXJg7CiU1L+oUCq8MUnFEfH2/nXR/W5uq+yvUN1h7z6s7vs2v1WkL1A==
   /follow-redirects/1.14.2:
     dev: false
     engines:
@@ -297,15 +296,15 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
-  /m3u8stream/0.8.6:
+  /m3u8stream/0.8.3:
     dependencies:
-      miniget: 4.2.2
+      miniget: 4.2.0
       sax: 1.2.4
     dev: false
     engines:
-      node: '>=12'
+      node: '>=10'
     resolution:
-      integrity: sha512-LZj8kIVf9KCphiHmH7sbFQTVe4tOemb202fWwvJwR9W5ENW/1hxJN6ksAWGhQgSBSa3jyWhnjKU1Fw1GaOdbyA==
+      integrity: sha512-0nAcdrF8YJKUkb6PzWdvGftTPyCVWgoiot1AkNVbPKTeIGsWs6DrOjifrJ0Zi8WQfQmD2SuVCjkYIOip12igng==
   /make-dir/3.1.0:
     dependencies:
       semver: 6.3.0
@@ -328,12 +327,12 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha512-crmjA4bLtR8m9qLpHvgxSChT+XoSlZi8J4n/aIdn3z92e/U47Z0V/yl+Wh9W046GgFVAmoNR/fmdbZYcSSIUeg==
-  /miniget/4.2.2:
+  /miniget/4.2.0:
     dev: false
     engines:
-      node: '>=12'
+      node: '>=10'
     resolution:
-      integrity: sha512-a7voNL1N5lDMxvTMExOkg+Fq89jM2vY8pAi9ZEWzZtfNmdfP6RXkvUtFnCAXoCv2T9k1v/fUJVaAEuepGcvLYA==
+      integrity: sha512-IzTOaNgBw/qEpzkPTE7X2cUVXQfSKbG8w52Emi93zb+Zya2ZFrbmavpixzebuDJD9Ku4ecbaFlC7Y1cEESzQtQ==
   /minimatch/3.0.4:
     dependencies:
       brace-expansion: 1.1.11
@@ -378,16 +377,6 @@ packages:
       node: 4.x || >=6.0.0
     resolution:
       integrity: sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
-  /node-fetch/2.6.7:
-    dependencies:
-      whatwg-url: 5.0.0
-    dev: false
-    engines:
-      node: 4.x || >=6.0.0
-    peerDependencies:
-      encoding: ^0.1.0
-    resolution:
-      integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
   /nopt/5.0.0:
     dependencies:
       abbrev: 1.1.1
@@ -537,10 +526,6 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-qEeQIusaw2iocTibY1JixQXuNo8=
-  /strnum/1.0.5:
-    dev: false
-    resolution:
-      integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==
   /tar/6.1.0:
     dependencies:
       chownr: 2.0.0
@@ -554,10 +539,6 @@ packages:
       node: '>= 10'
     resolution:
       integrity: sha512-DUCttfhsnLCjwoDoFcI+B2iJgYa93vBnDUATYEeRx6sntCTdN01VnqsIuTlALXla/LWooNg0yEGeB+Y8WdFxGA==
-  /tr46/0.0.3:
-    dev: false
-    resolution:
-      integrity: sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=
   /tweetnacl/1.0.3:
     dev: false
     resolution:
@@ -566,17 +547,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-  /webidl-conversions/3.0.1:
-    dev: false
-    resolution:
-      integrity: sha1-JFNCdeKnvGvnvIZhHMFq4KVlSHE=
-  /whatwg-url/5.0.0:
-    dependencies:
-      tr46: 0.0.3
-      webidl-conversions: 3.0.1
-    dev: false
-    resolution:
-      integrity: sha1-lmRU6HZUYuN2RNNib2dCzotwll0=
   /wide-align/1.1.3:
     dependencies:
       string-width: 2.1.1
@@ -600,32 +570,32 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
-  /ytdl-core/4.11.0:
+  /ytdl-core/4.5.0:
     dependencies:
-      m3u8stream: 0.8.6
-      miniget: 4.2.2
+      m3u8stream: 0.8.3
+      miniget: 4.2.0
       sax: 1.2.4
     dev: false
     engines:
-      node: '>=12'
+      node: '>=10'
     resolution:
-      integrity: sha512-Q3hCLiUA9AOGQXzPvno14GN+HgF9wsO1ZBHlj0COTcyxjIyFpWvMfii0UC4/cAbVaIjEdbWB71GdcGuc4J1Lmw==
-  /ytpl/2.3.0:
+      integrity: sha512-e8r6skrakWNixsVlNPBMoRM1HrdW1swE97If9nenDUjF65uogYk4DvxIuqlmqRfBWKe+6aIZwqedNxUU9XLYJA==
+  /ytpl/2.1.0:
     dependencies:
-      miniget: 4.2.2
+      miniget: 4.2.0
     dev: false
     engines:
       node: '>=8'
     resolution:
-      integrity: sha512-Cfw2rxq3PFK6qgWr2Z8gsRefVahEzbn9XEuiJldqdXHE6GhO7kTfEvbZKdfXing1SmgW635uJ/UL2g8r0fvu2Q==
-  /ytsr/3.6.0:
+      integrity: sha512-N99XwwK55NYkNi8tfVqNVUpRn1XfedLrdUIn/uGaiVMfHMqy5YJZrDHP1Jk35rya72qw8TkNKZCD4JJOwD9vsQ==
+  /ytsr/3.4.0:
     dependencies:
-      miniget: 4.2.2
+      miniget: 4.2.0
     dev: false
     engines:
       node: '>=8'
     resolution:
-      integrity: sha512-3fN8lxL+JHtp2xEZoAK3AeTjNm5WB4MH6n2OxHNxP06xQtuO5khbLwh6IJGiZRNi/v3de+jYYbctp2pUqNT/Qw==
+      integrity: sha512-/Ygk7lf+ZGI9fqp7us2PAyVtmNc5aGblQhtizOvU5L63L/9W7J9PQRoTq7XvGOMT/NWpYT6qhGFEror0UMw4FQ==
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
@@ -634,6 +604,6 @@ specifiers:
   booru: ^2.4.0
   discord.js: ^12.5.2
   follow-redirects: ^1.14.2
-  ytdl-core: ^4.11.0
-  ytpl: ^2.3.0
-  ytsr: ^3.6.0
+  ytdl-core: ^4.4.5
+  ytpl: ^2.0.5
+  ytsr: ^3.4.0
