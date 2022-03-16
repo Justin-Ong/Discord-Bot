@@ -9,14 +9,14 @@ const fs = require("fs");
 //Various inits
 const https = require('follow-redirects').https;
 const Booru = require("booru");
-const Discord = require("discord.js");
+const { Client, Intents } = require('discord.js');
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
 const config = require("./config.json");
 const neko_log = require("./neko_log.json");
 const startup_log = require("./startup_log.json");
-const client = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.DIRECT_MESSAGES ] });
 const searchChoices = [1, 2, 3, 4, 5];
 
 //login using token

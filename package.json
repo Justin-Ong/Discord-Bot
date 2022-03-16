@@ -7,7 +7,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "booru": "^2.4.0",
+    "booru": "^2.5.3",
     "discord.js": "^13.6.0",
     "ytdl-core": "^4.11.0",
     "@discordjs/opus": "^0.7.0",
