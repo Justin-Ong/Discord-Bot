@@ -9,25 +9,15 @@ const fs = require("fs");
 //Various inits
 const https = require('follow-redirects').https;
 const Booru = require("booru");
-const { Client, VoiceChannel, Intents } = require('discord.js');
+const Discord = require("discord.js");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
 const config = require("./config.json");
 const neko_log = require("./neko_log.json");
 const startup_log = require("./startup_log.json");
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.DIRECT_MESSAGES ] });
+const client = new Discord.Client();
 const searchChoices = [1, 2, 3, 4, 5];
-
-const {
-	joinVoiceChannel,
-	createAudioPlayer,
-	createAudioResource,
-	entersState,
-	StreamType,
-	AudioPlayerStatus,
-	VoiceConnectionStatus,
-} = require('@discordjs/voice');
 
 //login using token
 client.login(process.env.SECRET).then(loginSuccess, loginFailure);
@@ -234,33 +224,22 @@ class Controller {
 
     getConnection(msg) {
         let _this = this;
-        return new Promise(async function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             _this.currChannel = msg.member.voice.channel;
             if (_this.currConnection === null) {
                 try {
-                    console.log("Attempting to join voice channel");
-                    const connection = await _this.connectToChannel(msg.channel);
+                    _this.currChannel
+                        .join()
+                        .then((connection) => {
+                            _this.currConnection = connection;
+                            resolve();
+                        })
+                        .catch(console.log);
                 } catch (err) {
                     reject(err);
                 }
             }
         });
-    }
-  
-    async connectToChannel(channel) {
-        const connection = joinVoiceChannel({
-            channelId: channel.id,
-            guildId: channel.guild.id,
-            adapterCreator: channel.guild.voiceAdapterCreator,
-        });
-
-        try {
-            await entersState(connection, VoiceConnectionStatus.Ready, 30e3);
-            return connection;
-        } catch (error) {
-            connection.destroy();
-            throw error;
-        }
     }
 
     async addSongToQueue(song) {
@@ -610,8 +589,8 @@ var controller = new Controller();
 client.on("ready", () => {
     client.user.setActivity(config.prefix + "help");
 
-    //GetRecentTweets();
-    //setInterval(GetRecentTweets, 60000);  //Check for new tweets every 1 min
+    GetRecentTweets();
+    setInterval(GetRecentTweets, 60000);  //Check for new tweets every 1 min
 });
 
 client.on("message", (msg) => {
