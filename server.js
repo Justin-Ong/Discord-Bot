@@ -150,7 +150,7 @@ class Controller {
         let _this = this;
         return new Promise(function(resolve, reject) {
             try {
-                let playlist_id = song.split("?list=")[1];
+                let playlist_id = song.split("list=")[1];
                 let video_id = song.split("watch?v=")[1];
                 if (ytpl.validateID(playlist_id)) {
                     ytpl(song, {
