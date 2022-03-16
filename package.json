@@ -11,6 +11,7 @@
     "discord.js": "^13.6.0",
     "ytdl-core": "^4.11.0",
     "@discordjs/opus": "^0.7.0",
+    "@discordjs/voice": "^0.8.0",
     "ytpl": "^2.3.0",
     "ytsr": "^3.6.0",
     "follow-redirects": "^1.14.9"
@@ -19,7 +20,6 @@
     "node": "16.x"
   },
   "license": "MIT",
-  "type": "module",
   "keywords": [
     "node",
     "Discord"

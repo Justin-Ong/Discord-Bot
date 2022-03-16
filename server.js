@@ -9,7 +9,7 @@ const fs = require("fs");
 //Various inits
 const https = require('follow-redirects').https;
 const Booru = require("booru");
-import { Client, VoiceChannel, Intents } from 'discord.js';
+const { Client, VoiceChannel, Intents } = require('discord.js');
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
@@ -19,7 +19,7 @@ const startup_log = require("./startup_log.json");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.DIRECT_MESSAGES ] });
 const searchChoices = [1, 2, 3, 4, 5];
 
-import {
+const {
 	joinVoiceChannel,
 	createAudioPlayer,
 	createAudioResource,
@@ -27,8 +27,7 @@ import {
 	StreamType,
 	AudioPlayerStatus,
 	VoiceConnectionStatus,
-} from '@discordjs/voice';
-import { createDiscordJSAdapter } from './adapter';
+} = require('@discordjs/voice');
 
 //login using token
 client.login(process.env.SECRET).then(loginSuccess, loginFailure);
@@ -239,7 +238,8 @@ class Controller {
             _this.currChannel = msg.member.voice.channel;
             if (_this.currConnection === null) {
                 try {
-                    const connection = await connectToChannel(msg.channel);
+                    console.log("Attempting to join voice channel");
+                    const connection = await _this.connectToChannel(msg.channel);
                 } catch (err) {
                     reject(err);
                 }
@@ -251,7 +251,7 @@ class Controller {
         const connection = joinVoiceChannel({
             channelId: channel.id,
             guildId: channel.guild.id,
-            adapterCreator: createDiscordJSAdapter(channel),
+            adapterCreator: channel.guild.voiceAdapterCreator,
         });
 
         try {
