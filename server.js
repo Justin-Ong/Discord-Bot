@@ -54,7 +54,6 @@ class Controller {
             let cmd = msg.content.slice(1 + firstWord.length);
             let initialSplit = cmd.trim();
             let song = initialSplit || "";
-
             this.musicPlayer(msg, song);
         } else if (firstWord === "neko") {
             this.neko(msg);
@@ -151,7 +150,7 @@ class Controller {
         return new Promise(function(resolve, reject) {
             try {
                 let playlist_id = song.split("list=")[1];
-                let video_id = song.split("watch?v=")[1];
+                let video_id = song.split("&")[0].split("watch?v=")[1];
                 if (ytpl.validateID(playlist_id)) {
                     ytpl(song, {
                             limit: Infinity
