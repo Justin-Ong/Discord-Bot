@@ -168,7 +168,7 @@ class Controller {
                 }
                 resolve();
             } catch (err) {
-              console.log
+                console.log(err);
                 msg.channel.send("Sorry, an error occurred!");
             }
         });
