@@ -1,3 +1,6 @@
+1.8.2:
+Update ytdl
+
 1.8.1:
 Remove twitter integration as it is no longer required
 Update Node version to 16.x and update packages accordingly
