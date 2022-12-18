@@ -1,11 +1,9 @@
 {
   "reason": {
-    "name": "DiscordAPIError",
-    "message": "Request entity too large",
+    "name": "FetchError",
+    "code": 500,
     "method": "post",
-    "path": "/channels/488670343624392705/messages",
-    "code": 40005,
-    "httpStatus": 413
+    "path": "/channels/488670343624392705/messages"
   },
-  "time": "Thu Dec 15 2022 13:01:26 GMT+0000 (Coordinated Universal Time)"
+  "time": "Sun Dec 18 2022 06:47:08 GMT+0000 (Coordinated Universal Time)"
 }
