@@ -8,15 +8,26 @@ const fs = require("fs");
 //Various inits
 const https = require('follow-redirects').https;
 const Booru = require("booru");
-const Discord = require("discord.js");
+const { Discord, Client, GatewayIntentBits } = require('discord.js');
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
 const config = require("./config.json");
 const neko_log = require("./neko_log.json");
 const startup_log = require("./startup_log.json");
-const client = new Discord.Client();
 const searchChoices = [1, 2, 3, 4, 5];
+
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildEmojisAndStickers,
+	],
+});
 
 //login using token
 client.login(process.env.SECRET).then(loginSuccess, loginFailure);

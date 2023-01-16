@@ -1,6 +1,6 @@
 {
-  "curr_success": "Logged in as GeneralGrievous at Mon Jan 16 2023 05:58:17 GMT+0000 (Coordinated Universal Time)",
-  "prev_success": "Logged in as GeneralGrievous at Sun Jan 15 2023 17:57:16 GMT+0000 (Coordinated Universal Time)",
-  "curr_failure": "Failed to log in at Tue Mar 08 2022 19:28:02 GMT+0000 (Coordinated Universal Time) due to: DiscordAPIError",
-  "prev_failure": "Failed to log in at Tue Mar 08 2022 19:27:51 GMT+0000 (Coordinated Universal Time) due to: DiscordAPIError"
+  "curr_success": "Logged in as GeneralGrievous at Mon Jan 16 2023 13:52:51 GMT+0000 (Coordinated Universal Time)",
+  "prev_success": "Logged in as GeneralGrievous at Mon Jan 16 2023 13:51:55 GMT+0000 (Coordinated Universal Time)",
+  "curr_failure": "Failed to log in at Mon Jan 16 2023 14:02:41 GMT+0000 (Coordinated Universal Time) due to: Error [DisallowedIntents]: Privileged intent provided is not enabled or whitelisted.",
+  "prev_failure": "Failed to log in at Mon Jan 16 2023 14:02:32 GMT+0000 (Coordinated Universal Time) due to: Error [DisallowedIntents]: Privileged intent provided is not enabled or whitelisted."
 }

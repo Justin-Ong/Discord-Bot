@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "booru": "^2.5.3",
-    "discord.js": "^12.5.2",
+    "discord.js": "^14.7.0",
     "ytdl-core": "^4.11.2",
     "@discordjs/opus": "^0.7.0",
     "ytpl": "^2.3.0",
