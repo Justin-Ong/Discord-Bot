@@ -8,7 +8,7 @@ const fs = require("fs");
 //Various inits
 const https = require('follow-redirects').https;
 const Booru = require("booru");
-const { Discord, Client, GatewayIntentBits } = require('discord.js');
+const { Discord, Events, Client, SlashCommandBuilder, GatewayIntentBits } = require('discord.js');
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
@@ -33,6 +33,16 @@ const client = new Client({
 client.login(process.env.SECRET).then(loginSuccess, loginFailure);
 
 console.log("Starting...");
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('server')
+		.setDescription('Provides information about the server.'),
+	async execute(interaction) {
+		// interaction.guild is the object representing the Guild in which the command was run
+		await interaction.reply(`This server is ${interaction.guild.name} and has ${interaction.guild.memberCount} members.`);
+	},
+};
 
 //defining Controller class to handle user input
 class Controller {
@@ -598,8 +608,8 @@ class Controller {
 //create Controller
 var controller = new Controller();
 
-client.on("ready", () => {
-    client.user.setActivity(config.prefix + "help");
+client.once(Events.ClientReady, c => {
+    client.user.setActivity("/help");
 
     //GetRecentTweets();
     //setInterval(GetRecentTweets, 60000);  //Check for new tweets every 1 min
