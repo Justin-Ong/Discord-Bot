@@ -6,9 +6,10 @@
 const fs = require("fs");
 
 //Various inits
+const path = require('path');
 const https = require('follow-redirects').https;
 const Booru = require("booru");
-const { Discord, Events, Client, SlashCommandBuilder, GatewayIntentBits } = require('discord.js');
+const { Discord, Events, Client, Collection, GatewayIntentBits } = require('discord.js');
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
@@ -33,16 +34,6 @@ const client = new Client({
 client.login(process.env.SECRET).then(loginSuccess, loginFailure);
 
 console.log("Starting...");
-
-module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('server')
-		.setDescription('Provides information about the server.'),
-	async execute(interaction) {
-		// interaction.guild is the object representing the Guild in which the command was run
-		await interaction.reply(`This server is ${interaction.guild.name} and has ${interaction.guild.memberCount} members.`);
-	},
-};
 
 //defining Controller class to handle user input
 class Controller {
@@ -610,7 +601,8 @@ var controller = new Controller();
 
 client.once(Events.ClientReady, c => {
     client.user.setActivity("/help");
-
+    client.commands = new Collection();
+    InitCommands();
     //GetRecentTweets();
     //setInterval(GetRecentTweets, 60000);  //Check for new tweets every 1 min
 });
@@ -622,6 +614,23 @@ client.on("message", (msg) => {
     }
     controller.readInput(msg);
 });
+
+//Init Bot slash commands
+function InitCommands() {
+    const commandsPath = path.join(__dirname);
+    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+    for (const file of commandFiles) {
+        const filePath = path.join(commandsPath, file);
+        const command = require(filePath);
+        // Set a new item in the Collection with the key as the command name and the value as the exported module
+        if ('data' in command && 'execute' in command) {
+            client.commands.set(command.data.name, command);
+        } else {
+            console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+        }
+    }
+}
 
 //Twitter stuff
 function GetRecentTweets() {
