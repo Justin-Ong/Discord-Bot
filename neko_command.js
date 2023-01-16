@@ -5,6 +5,6 @@ module.exports = {
 		.setName('neko')
 		.setDescription('Replies with a neko'),
 	async execute(interaction) {
-		await interaction.reply('Pong!');
+		await interaction.reply('neko');
 	},
 };
