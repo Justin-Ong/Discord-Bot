@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require('path');
 
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, REST, Routes } = require('discord.js');
 
 const startup_log = require("./startup_log.json");
 
@@ -16,6 +16,44 @@ const client = new Client({
     GatewayIntentBits.GuildEmojisAndStickers,
 	],
 });
+
+client.commands = new Collection();
+
+const commandsPath = path.join(__dirname);
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+const commands = [];
+for (const file of commandFiles) {
+    if (file.includes("server")) {
+        continue;
+    }
+    const filePath = path.join(commandsPath, file);
+    const command = require(filePath);
+    // Set a new item in the Collection with the key as the command name and the value as the exported module
+    if ('data' in command && 'execute' in command) {
+        client.commands.set(command.data.name, command);
+    } else {
+        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+    }
+  
+    commands.push(command.data.toJSON());
+}
+
+const rest = new REST({ version: '10' }).setToken(process.env.SECRET);
+(async () => {
+  try {
+    console.log(`Started refreshing ${commands.length} application (/) commands.`);
+
+    const data = await rest.put(
+      Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
+      { body: commands },
+    );
+
+    console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+  } catch (error) {
+    console.error(error);
+  }
+})();
 
 client.once(Events.ClientReady, () => {
 	console.log('Ready!');
