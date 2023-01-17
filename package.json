@@ -1,19 +1,19 @@
 {
   "name": "Discord-Bot",
-  "version": "1.8.1",
+  "version": "2.0.0",
   "description": "A simple Discord bot built with Node.js",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "booru": "^2.5.3",
+    "booru": "^2.6.3",
     "discord.js": "^14.7.0",
     "ytdl-core": "^4.11.2",
-    "@discordjs/opus": "^0.7.0",
+    "@discordjs/opus": "^0.9.0",
     "ytpl": "^2.3.0",
-    "ytsr": "^3.6.0",
-    "follow-redirects": "^1.14.9",
+    "ytsr": "^3.8.0",
+    "follow-redirects": "^1.15.2",
     "path": "^0.12.7"
   },
   "engines": {
