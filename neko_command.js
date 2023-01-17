@@ -10,7 +10,10 @@ module.exports = {
 		.setName('neko')
 		.setDescription('Replies with a neko'),
 	async execute(interaction) {
-    neko(interaction)
+    await interaction.deferReply();
+    const result = await neko(interaction);
+    await interaction.editReply(result);
+    
 	},
 };
 
@@ -28,7 +31,7 @@ function neko(interaction) {
                 const file = new AttachmentBuilder(imageUrl);
                 const imageEmbed = new EmbedBuilder().setImage(imageUrl);
 
-                interaction.send({ embeds: [imageEmbed], files: [file] });
+                interaction.reply({ files: [file] });
             })
             .catch((err) => {
                 if (err.name === "booruError") {
