@@ -1,10 +1,12 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { getVoiceConnection, joinVoiceChannel, VoiceConnectionStatus } = require("@discordjs/voice");
+const { createAudioPlayer, getVoiceConnection, joinVoiceChannel, VoiceConnectionStatus } = require("@discordjs/voice");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
 
 var connection = undefined;
+var audioPlayer = createAudioPlayer();
+const subscription = undefined;
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -19,12 +21,11 @@ module.exports = {
   async execute(interaction) {
     const input = interaction.options.getString("input");
     await interaction.deferReply();
-    await getConnection(interaction);
-    await parseSongInput(interaction, input);
+    await getConnection(interaction, input);
   },
 };
 
-function getConnection(interaction) {
+function getConnection(interaction, input) {
   let channel = interaction.member.voice.channel;
   if (!interaction.member.voice.channel) {
     interaction.editReply("You need to join a voice channel first!");
@@ -37,13 +38,17 @@ function getConnection(interaction) {
         adapterCreator: channel.guild.voiceAdapterCreator,
       });
     }
+    
+    parseSongInput(input);
   }
 }
 
-function parseSongInput(interaction, input) {
+function parseSongInput(input) {
   connection.on(VoiceConnectionStatus.Ready, () => {
     console.log(
       "The connection has entered the Ready state - ready to play audio!"
     );
   });
+  
+  connection.subscribe(audioPlayer);
 }
