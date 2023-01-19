@@ -64,11 +64,11 @@ function diceRoller(interaction, msg) {
     tempResults = [];
   }
 
-  let ans = "Rolled " + input + ": [" + result.join(", ") + "], Total Sum is: " + sum;
+  let ans = "Rolled " + input + ": [" + result.join(", ") + "], Total Sum: " + sum;
 
   if (ans.length > 2000) {
     //stay within 2000 character limit
-    interaction.editReply("Too many dice to display, Total Sum is: " + sum);
+    interaction.editReply("Too many dice to display, Total Sum: " + sum);
   }
   interaction.editReply(ans);
 }
