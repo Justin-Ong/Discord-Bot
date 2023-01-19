@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, VoiceConnectionStatus } = require("discord.js");
-const { getVoiceConnection, joinVoiceChannel } = require("@discordjs/voice");
+const { SlashCommandBuilder } = require("discord.js");
+const { getVoiceConnection, joinVoiceChannel, VoiceConnectionStatus } = require("@discordjs/voice");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
@@ -29,11 +29,8 @@ function getConnection(interaction) {
   if (!interaction.member.voice.channel) {
     interaction.editReply("You need to join a voice channel first!");
   } else {
-    console.log("a");
     connection = getVoiceConnection(channel.guild.id);
-    console.log(connection);
     if (connection === undefined) {
-      console.log(connection);
       connection = joinVoiceChannel({
         channelId: channel.id,
         guildId: channel.guild.id,
