@@ -1,4 +1,5 @@
-const { getVoiceConnection, joinVoiceChannel, SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, VoiceConnectionStatus } = require("discord.js");
+const { getVoiceConnection, joinVoiceChannel } = require("@discordjs/voice");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
@@ -26,6 +27,21 @@ function musicPlayer(interaction, msg) {
   if (!interaction.member.voice.channel) {
     interaction.editReply("You need to join a voice channel first!");
   } else {
+    console.log("a");
     const connection = getVoiceConnection(channel.guild.id);
+    console.log(connection);
+    if (connection === null) {
+      console.log(connection);
+      connection = joinVoiceChannel({
+        channelId: channel.id,
+        guildId: channel.guild.id,
+        adapterCreator: channel.guild.voiceAdapterCreator,
+      });
+      connection.on(VoiceConnectionStatus.Ready, () => {
+        console.log(
+          "The connection has entered the Ready state - ready to play audio!"
+        );
+      });
+    }
   }
 }
