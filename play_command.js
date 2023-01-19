@@ -1,9 +1,7 @@
-const { joinVoiceChannel, SlashCommandBuilder } = require("discord.js");
+const { getVoiceConnection, joinVoiceChannel, SlashCommandBuilder } = require("discord.js");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
-
-const currConnection = null;
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -24,18 +22,10 @@ module.exports = {
 
 function musicPlayer(interaction, msg) {
   console.log(msg);
-  console.log(interaction.member.voice.channel);
+  let channel = interaction.member.voice.channel;
   if (!interaction.member.voice.channel) {
     interaction.editReply("You need to join a voice channel first!");
   } else {
-    if (this.currConnection === null) {
-      currConnection = joinVoiceChannel({
-        channelId: channel.id,
-        guildId: channel.guild.id,
-        adapterCreator: channel.guild.voiceAdapterCreator,
-      });
-    } else {
-      //this.parseInput(msg, song);
-    }
+    const connection = getVoiceConnection(channel.guild.id);
   }
 }
