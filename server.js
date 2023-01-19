@@ -6,6 +6,7 @@ const {
   Collection,
   Events,
   GatewayIntentBits,
+  GuildVoiceStates,
   REST,
   Routes,
 } = require("discord.js");
