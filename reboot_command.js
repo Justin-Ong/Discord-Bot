@@ -6,6 +6,8 @@ module.exports = {
     .setDescription("Reboots the bot"),
   async execute(interaction) {
     await interaction.reply("Rebooting...");
+    let channel = interaction.member.voice.channel;
+    connection = getVoiceConnection(channel.guild.id);
     process.exit();
   },
 };
