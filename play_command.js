@@ -14,7 +14,7 @@ var connection = undefined;
 var audioPlayer = createAudioPlayer();
 var playlist = [];
 var searchList = [];
-var searchStartTime = null;
+var searchStartTime = Date();
 var isSearching = false;
 var searchText = "";
 
