@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
+const { getVoiceConnection } = require("@discordjs/voice");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -7,7 +8,8 @@ module.exports = {
   async execute(interaction) {
     await interaction.reply("Rebooting...");
     let channel = interaction.member.voice.channel;
-    connection = getVoiceConnection(channel.guild.id);
+    let connection = getVoiceConnection(channel.guild.id);
+    connection.destroy();
     process.exit();
   },
 };
