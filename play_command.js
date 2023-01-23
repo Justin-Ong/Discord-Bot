@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const {
   createAudioPlayer,
+  createAudioResource,
   getVoiceConnection,
   joinVoiceChannel,
   VoiceConnectionStatus,
@@ -102,9 +103,7 @@ async function search(msg, song) {
     if (song in searchChoices) {
       let songNum = song / 1 - 1;
       addSongToQueue(searchList[songNum].URL);
-      searchText.edit(
-        "Selected " + song + ": " + searchList[songNum].title
-      );
+      searchText.edit("Selected " + song + ": " + searchList[songNum].title);
       searchList.length = 0;
       isSearching = false;
       searchText = null;
@@ -139,33 +138,27 @@ async function search(msg, song) {
   }
 }
 
-function playSong() {
-          if (this.playlist.length > 0) {
-            let info = await ytdl.getInfo(this.playlist[0]);
-            console.log("Playing " + info.videoDetails.title);
-            console.log(this.playlist.length + " songs in queue");
+async function playSong() {
+  if (playlist.length > 0) {
+    let info = await ytdl.getInfo(playlist[0]);
+    console.log("Playing " + info.videoDetails.title);
+    console.log(playlist.length + " songs in queue");
 
-            this.dispatcher = this.currConnection
-                .play(
-                    ytdl(this.playlist[0], {
-                        quality: "highestaudio",
-                        highWaterMark: 1 << 25,
-                    })
-                )
-                .on("finish", () => {
-                    if (this.playlist.length > 0) {
-                        if (this.isLoopingList === true) {
-                            this.playlist.push(this.playlist.shift());
-                        } else if (this.isLoopingSingle === true) {
-                            //do nothing
-                        } else {
-                            this.playlist.shift();
-                        }
-                        this.playMusic();
-                    }
-                })
-                .on("error", console.error);
-        } else {
-            console.log("Queue is empty!");
-        }
+    audioPlayer.play(
+      createAudioResource(
+        ytdl(playlist[0], {
+          //quality: "highestaudio",
+          //highWaterMark: 1 << 25,
+        })
+      )
+    );
+    audioPlayer.on("error", (error) => {
+      console.error(
+        `Error: ${error.message} with resource ${error.resource.metadata.title}`
+      );
+      playSong();
+    });
+  } else {
+    console.log("Queue is empty!");
+  }
 }

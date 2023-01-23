@@ -15,7 +15,8 @@
     "ytsr": "^3.8.0",
     "follow-redirects": "^1.15.2",
     "path": "^0.12.7",
-    "@discordjs/voice": "^0.14.0"
+    "@discordjs/voice": "^0.14.0",
+    "libsodium-wrappers": "^0.7.10"
   },
   "engines": {
     "node": "16.x"
