@@ -10,6 +10,7 @@ const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
 
+var currAudioResource = null;
 var connection = undefined;
 var audioPlayer = createAudioPlayer();
 var playlist = [];
@@ -53,10 +54,6 @@ function getConnection(interaction, input) {
     }
 
     connection.subscribe(audioPlayer);
-    connection.on(VoiceConnectionStatus.Ready, () => {
-      playSong();
-    });
-
     parseSongInput(input);
   }
 }
@@ -144,14 +141,13 @@ async function playSong() {
     console.log("Playing " + info.videoDetails.title);
     console.log(playlist.length + " songs in queue");
 
-    audioPlayer.play(
-      createAudioResource(
-        ytdl(playlist[0], {
-          //quality: "highestaudio",
-          //highWaterMark: 1 << 25,
-        })
-      )
+    currAudioResource = createAudioResource(
+      ytdl(playlist[0], {
+        quality: "lowestaudio",
+      })
     );
+
+    audioPlayer.play(currAudioResource);
     audioPlayer.on("error", (error) => {
       console.error(
         `Error: ${error.message} with resource ${error.resource.metadata.title}`

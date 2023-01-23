@@ -3,15 +3,14 @@ const { getVoiceConnection } = require("@discordjs/voice");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("reboot")
-    .setDescription("Reboots the bot"),
+    .setName("stop")
+    .setDescription("Stops playback and disconnects from VC"),
   async execute(interaction) {
-    await interaction.reply("Rebooting...");
+    await interaction.reply("Stopping playback");
     let channel = interaction.member.voice.channel;
     let connection = getVoiceConnection(channel.guild.id);
     if (connection) {
       connection.destroy();
     }
-    process.exit();
   },
 };
