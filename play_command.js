@@ -10,7 +10,6 @@ const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
 
-var currAudioResource = null;
 var connection = undefined;
 var audioPlayer = createAudioPlayer();
 var playlist = [];
@@ -54,14 +53,14 @@ function getConnection(interaction, input) {
     }
 
     connection.subscribe(audioPlayer);
-    parseSongInput(input);
+    parseSongInput(interaction, input);
   }
 }
 
-function parseSongInput(input) {
+function parseSongInput(interaction, input) {
   let playlist_id = input.split("list=")[1];
   let video_id = input.split("&")[0].split("watch?v=")[1];
-  if (ytpl.validateID(playlist_id)) {
+  if (playlist_id && ytpl.validateID(playlist_id)) {
     ytpl(input, {
       limit: Infinity,
     })
@@ -69,17 +68,17 @@ function parseSongInput(input) {
         addListToQueue(playlist);
       })
       .catch(console.log);
-  } else if (ytdl.validateID(video_id)) {
-    addSongToQueue(input);
+  } else if (video_id && ytdl.validateID(video_id)) {
+    addSongToQueue(interaction, input);
   } else {
-    search(input);
+    search(interaction, input);
   }
 }
 
-function addSongToQueue(song) {
+function addSongToQueue(interaction, song) {
   playlist.push(song);
   if (playlist.length === 1) {
-    playSong();
+    playSong(interaction);
   }
 }
 
@@ -90,7 +89,7 @@ function addListToQueue(playlist) {
   console.log("Added playlist " + playlist.title + " to queue");
 }
 
-async function search(msg, song) {
+async function search(interaction, song) {
   if (new Date() - searchStartTime > 10000) {
     searchList.length = 0;
     isSearching = false;
@@ -105,7 +104,7 @@ async function search(msg, song) {
       isSearching = false;
       searchText = null;
     } else {
-      msg.channel.send("Invalid choice!");
+      interaction.editReply("Invalid choice!");
     }
   } else {
     const filters = await ytsr.getFilters(song);
@@ -126,8 +125,8 @@ async function search(msg, song) {
         string += searchList.length + ": " + result.items[i].title + "\n";
       }
     }
-    msg.channel
-      .send(string)
+    interaction
+      .editReply(string)
       .then((message) => (searchText = message))
       .catch((err) => console.log(err));
     searchStartTime = new Date();
@@ -135,19 +134,20 @@ async function search(msg, song) {
   }
 }
 
-async function playSong() {
+async function playSong(interaction) {
   if (playlist.length > 0) {
-    currAudioResource = createAudioResource(
-      ytdl(playlist[0], {
-        quality: "lowestaudio",
-      })
-    );
-
     let info = await ytdl.getInfo(playlist[0]);
     console.log("Playing " + info.videoDetails.title);
     console.log(playlist.length + " songs in queue");
 
-    audioPlayer.play(currAudioResource);
+    interaction.editReply("Playing " + info.videoDetails.title);
+    audioPlayer.play(
+      createAudioResource(
+        ytdl(playlist[0], {
+          quality: "lowestaudio",
+        })
+      )
+    );
     audioPlayer.on("error", (error) => {
       console.error(
         `Error: ${error.message} with resource ${error.resource.metadata.title}`
