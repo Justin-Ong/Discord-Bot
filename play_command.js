@@ -137,15 +137,15 @@ async function search(msg, song) {
 
 async function playSong() {
   if (playlist.length > 0) {
-    let info = await ytdl.getInfo(playlist[0]);
-    console.log("Playing " + info.videoDetails.title);
-    console.log(playlist.length + " songs in queue");
-
     currAudioResource = createAudioResource(
       ytdl(playlist[0], {
         quality: "lowestaudio",
       })
     );
+
+    let info = await ytdl.getInfo(playlist[0]);
+    console.log("Playing " + info.videoDetails.title);
+    console.log(playlist.length + " songs in queue");
 
     audioPlayer.play(currAudioResource);
     audioPlayer.on("error", (error) => {

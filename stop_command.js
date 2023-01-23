@@ -12,5 +12,6 @@ module.exports = {
     if (connection) {
       connection.destroy();
     }
+    this.playlist = [];
   },
 };
