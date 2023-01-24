@@ -37,6 +37,8 @@ module.exports = {
     await interaction.deferReply();
     await getConnection(interaction, input);
   },
+  playlist: playlist,
+  playSong: playSong(),
 };
 
 function getConnection(interaction, input) {
@@ -164,5 +166,3 @@ async function playSong() {
     console.log("Queue is empty!");
   }
 }
-
-export { playlist, playSong };
