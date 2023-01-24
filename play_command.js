@@ -149,6 +149,9 @@ async function playSong() {
         })
       )
     );
+    audioPlayer.on(AudioPlayerStatus.Idle, () => {
+	console.log('The audio player has started playing!');
+});
     audioPlayer.on("error", (error) => {
       console.error(
         `Error: ${error.message} with resource ${error.resource.metadata.title}`
