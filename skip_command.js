@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
 
+var playlist = require("./play_command.js");
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("stop")
@@ -8,9 +10,9 @@ module.exports = {
   async execute(interaction) {
     await interaction.reply("Stopping playback");
     let channel = interaction.member.voice.channel;
-    let connection = getVoiceConnection(channel.guild.id);
-    if (connection) {
-      connection.destroy();
+    if (playlist.length > 1) {
+      
     }
+    
   },
 };

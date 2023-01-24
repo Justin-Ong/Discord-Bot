@@ -66,7 +66,7 @@ function parseSongInput(interaction, input) {
       limit: Infinity,
     })
       .then((playlist) => {
-        addListToQueue(playlist);
+        addListToQueue(interaction, playlist);
       })
       .catch(console.log);
   } else if (video_id && ytdl.validateID(video_id)) {
@@ -87,9 +87,9 @@ async function addSongToQueue(interaction, song) {
   }
 }
 
-function addListToQueue(playlist) {
+function addListToQueue(interaction, playlist) {
   for (let i = 0; i < playlist.items.length; i++) {
-    addSongToQueue(playlist.items[i].shortUrl);
+    addSongToQueue(interaction, playlist.items[i].shortUrl);
   }
   console.log("Added playlist " + playlist.title + " to queue");
 }
