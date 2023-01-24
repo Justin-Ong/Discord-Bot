@@ -18,6 +18,7 @@ var searchList = [];
 var searchStartTime = Date();
 var isSearching = false;
 var searchText = "";
+var isLoopingOne
 
 const searchChoices = [1, 2, 3, 4, 5];
 const subscription = undefined;
