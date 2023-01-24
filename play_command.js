@@ -22,8 +22,6 @@ var searchText = "";
 const searchChoices = [1, 2, 3, 4, 5];
 const subscription = undefined;
 
-module.exports.playlist = playlist;
-
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("play")
@@ -166,3 +164,5 @@ async function playSong() {
     console.log("Queue is empty!");
   }
 }
+
+export { playlist, playSong };

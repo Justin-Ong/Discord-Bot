@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
 
-var pc = require("./play_command");
+const pc = require("./play_command");
 
 module.exports = {
   data: new SlashCommandBuilder()
