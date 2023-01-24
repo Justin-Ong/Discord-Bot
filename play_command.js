@@ -76,6 +76,7 @@ function parseSongInput(interaction, input) {
 }
 
 function addSongToQueue(interaction, song) {
+  console.log("addSongToQueue " + song);
   playlist.push(song);
   if (playlist.length === 1) {
     playSong(interaction);
@@ -98,6 +99,9 @@ async function search(interaction, song) {
   if (isSearching) {
     if (song in searchChoices) {
       let songNum = song / 1 - 1;
+      console.log(searchList);
+      console.log(songNum);
+      console.log(searchList);
       addSongToQueue(searchList[songNum].URL);
       interaction.editReply("Selected " + song + ": " + searchList[songNum].title);
       searchList.length = 0;
@@ -136,6 +140,7 @@ async function search(interaction, song) {
 
 async function playSong(interaction) {
   if (playlist.length > 0) {
+    console.log("playSong " + playlist[0]);
     let info = await ytdl.getInfo(playlist[0]);
     console.log("Playing " + info.videoDetails.title);
     console.log(playlist.length + " songs in queue");
