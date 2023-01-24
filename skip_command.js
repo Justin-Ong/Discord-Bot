@@ -1,18 +1,18 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
 
-var playlist = require("./play_command.js");
+var pc = require("./play_command");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("stop")
-    .setDescription("Stops playback and disconnects from VC"),
+    .setName("skip")
+    .setDescription("Skips current song"),
   async execute(interaction) {
-    await interaction.reply("Stopping playback");
+    await interaction.reply("Skipping current song");
     let channel = interaction.member.voice.channel;
-    if (playlist.length > 1) {
-      
+    if (pc.playlist.length > 1) {
+      pc.playlist.shift();
+      pc.playSong();
     }
-    
   },
 };
