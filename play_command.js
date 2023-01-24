@@ -99,7 +99,7 @@ async function search(interaction, song) {
     if (song in searchChoices) {
       let songNum = song / 1 - 1;
       addSongToQueue(searchList[songNum].URL);
-      searchText.edit("Selected " + song + ": " + searchList[songNum].title);
+      interaction.editReply("Selected " + song + ": " + searchList[songNum].title);
       searchList.length = 0;
       isSearching = false;
       searchText = null;
@@ -139,8 +139,8 @@ async function playSong(interaction) {
     let info = await ytdl.getInfo(playlist[0]);
     console.log("Playing " + info.videoDetails.title);
     console.log(playlist.length + " songs in queue");
-
     interaction.editReply("Playing " + info.videoDetails.title);
+    
     audioPlayer.play(
       createAudioResource(
         ytdl(playlist[0], {
