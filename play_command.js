@@ -75,10 +75,14 @@ function parseSongInput(interaction, input) {
   }
 }
 
-function addSongToQueue(interaction, song) {
+async function addSongToQueue(interaction, song) {
+  let info = await ytdl.getInfo(song);
   playlist.push(song);
+  console.log(playlist.length + " songs in queue");
   if (playlist.length === 1) {
     playSong(interaction);
+    console.log("Playing " + info.videoDetails.title);
+    interaction.editReply("Playing " + info.videoDetails.title);
   }
 }
 
@@ -98,7 +102,9 @@ async function search(interaction, song) {
   if (isSearching) {
     if (song in searchChoices) {
       let songNum = song / 1 - 1;
-      interaction.editReply("Selected " + song + ": " + searchList[songNum].title);
+      interaction.editReply(
+        "Selected " + song + ": " + searchList[songNum].title
+      );
       addSongToQueue(interaction, searchList[songNum].URL);
       searchList.length = 0;
       isSearching = false;
@@ -134,13 +140,8 @@ async function search(interaction, song) {
   }
 }
 
-async function playSong(interaction) {
+async function playSong() {
   if (playlist.length > 0) {
-    let info = await ytdl.getInfo(playlist[0]);
-    console.log("Playing " + info.videoDetails.title);
-    console.log(playlist.length + " songs in queue");
-    interaction.editReply("Playing " + info.videoDetails.title);
-    
     audioPlayer.play(
       createAudioResource(
         ytdl(playlist[0], {
