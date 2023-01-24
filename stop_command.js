@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { getVoiceConnection } = require("@discordjs/voice");
 
+const pc = require("./play_command");
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("stop")
@@ -12,5 +14,7 @@ module.exports = {
     if (connection) {
       connection.destroy();
     }
+    pc.playlist = [];
+    pc.playSong();
   },
 };
