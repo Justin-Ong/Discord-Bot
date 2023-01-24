@@ -87,6 +87,9 @@ async function addSongToQueue(interaction, song) {
     console.log("Playing " + info.videoDetails.title);
     interaction.editReply("Playing " + info.videoDetails.title);
   }
+  else {
+    interaction.editReply("Added " + info.videoDetails.title + " to queue");    
+  }
 }
 
 function addListToQueue(interaction, playlist) {

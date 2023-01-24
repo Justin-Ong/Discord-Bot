@@ -7,7 +7,7 @@ const pc = require("./play_command");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("list")
-    .setDescription("Lists current playlist"),
+    .setDescription("Lists the first five songs in the current playlist"),
   async execute(interaction) {
     await interaction.deferReply();
     await getList(interaction);
@@ -16,7 +16,7 @@ module.exports = {
 
 async function getList(interaction) {
   if (!pc.playlist.length) {
-    interaction.editReply("there are no songs in the queue!");
+    interaction.editReply("There are no songs in the queue!");
   } else {
     try {
       let result = "";
