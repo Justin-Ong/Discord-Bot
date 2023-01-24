@@ -61,6 +61,7 @@ function parseSongInput(interaction, input) {
   let playlist_id = input.split("list=")[1];
   let video_id = input.split("&")[0].split("watch?v=")[1];
   if (playlist_id && ytpl.validateID(playlist_id)) {
+    console.log("a");
     ytpl(input, {
       limit: Infinity,
     })
@@ -69,14 +70,15 @@ function parseSongInput(interaction, input) {
       })
       .catch(console.log);
   } else if (video_id && ytdl.validateID(video_id)) {
+    console.log("b");
     addSongToQueue(interaction, input);
   } else {
+    console.log("c");
     search(interaction, input);
   }
 }
 
 function addSongToQueue(interaction, song) {
-  console.log("addSongToQueue " + song);
   playlist.push(song);
   if (playlist.length === 1) {
     playSong(interaction);
@@ -99,11 +101,8 @@ async function search(interaction, song) {
   if (isSearching) {
     if (song in searchChoices) {
       let songNum = song / 1 - 1;
-      console.log(searchList);
-      console.log(songNum);
-      console.log(searchList);
-      addSongToQueue(searchList[songNum].URL);
       interaction.editReply("Selected " + song + ": " + searchList[songNum].title);
+      addSongToQueue(interaction, searchList[songNum].URL);
       searchList.length = 0;
       isSearching = false;
       searchText = null;
@@ -140,7 +139,6 @@ async function search(interaction, song) {
 
 async function playSong(interaction) {
   if (playlist.length > 0) {
-    console.log("playSong " + playlist[0]);
     let info = await ytdl.getInfo(playlist[0]);
     console.log("Playing " + info.videoDetails.title);
     console.log(playlist.length + " songs in queue");
