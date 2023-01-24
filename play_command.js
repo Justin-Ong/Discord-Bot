@@ -18,7 +18,8 @@ var searchList = [];
 var searchStartTime = Date();
 var isSearching = false;
 var searchText = "";
-var isLoopingOne
+var isLoopingOne = false;
+var isLoopingAll = false;
 
 const searchChoices = [1, 2, 3, 4, 5];
 const subscription = undefined;
@@ -40,6 +41,8 @@ module.exports = {
   },
   playlist,
   playSong,
+  isLoopingOne,
+  isLoopingAll,
 };
 
 function getConnection(interaction, input) {
@@ -87,9 +90,8 @@ async function addSongToQueue(interaction, song) {
     playSong(interaction);
     console.log("Playing " + info.videoDetails.title);
     interaction.editReply("Playing " + info.videoDetails.title);
-  }
-  else {
-    interaction.editReply("Added " + info.videoDetails.title + " to queue");    
+  } else {
+    interaction.editReply("Added " + info.videoDetails.title + " to queue");
   }
 }
 
@@ -157,7 +159,13 @@ async function playSong() {
       )
     );
     audioPlayer.on(AudioPlayerStatus.Idle, () => {
-      playlist.shift();
+      if (this.isLoopingList === true) {
+        this.playlist.push(this.playlist.shift());
+      } else if (this.isLoopingSingle === true) {
+        //do nothing
+      } else {
+        playlist.shift();
+      }
       playSong();
     });
     audioPlayer.on("error", (error) => {
