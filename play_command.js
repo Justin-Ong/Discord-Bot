@@ -61,7 +61,6 @@ function parseSongInput(interaction, input) {
   let playlist_id = input.split("list=")[1];
   let video_id = input.split("&")[0].split("watch?v=")[1];
   if (playlist_id && ytpl.validateID(playlist_id)) {
-    console.log("a");
     ytpl(input, {
       limit: Infinity,
     })
@@ -70,10 +69,8 @@ function parseSongInput(interaction, input) {
       })
       .catch(console.log);
   } else if (video_id && ytdl.validateID(video_id)) {
-    console.log("b");
     addSongToQueue(interaction, input);
   } else {
-    console.log("c");
     search(interaction, input);
   }
 }
