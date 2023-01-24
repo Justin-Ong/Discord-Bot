@@ -37,8 +37,8 @@ module.exports = {
     await interaction.deferReply();
     await getConnection(interaction, input);
   },
-  playlist: playlist,
-  playSong: playSong(),
+  playlist,
+  playSong,
 };
 
 function getConnection(interaction, input) {
@@ -160,9 +160,13 @@ async function playSong() {
       console.error(
         `Error: ${error.message} with resource ${error.resource.metadata.title}`
       );
-      playSong();
+      playlist.shift();
+      if (playlist.length > 0) {
+        playSong();
+      }
     });
   } else {
+    audioPlayer.stop();
     console.log("Queue is empty!");
   }
 }

@@ -5,8 +5,8 @@ const pc = require("./play_command");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("skip")
-    .setDescription("Skips current song"),
+    .setName("list")
+    .setDescription("Lists current playlist"),
   async execute(interaction) {
     await interaction.reply("Skipping current song");
     let channel = interaction.member.voice.channel;
