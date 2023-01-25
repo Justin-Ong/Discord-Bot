@@ -1,6 +1,9 @@
+2.1.0:
+Switch from ytdl to play-dl to solve Error:aborted problems while playing long songs
+
 2.0.0:
 Update Discord.js to 14.7.0
-Start refactoring to use slash commands
+Refactor to use slash commands
 General cleanup
 
 1.8.2:

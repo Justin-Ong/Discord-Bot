@@ -8,6 +8,7 @@ const {
   VoiceConnectionStatus,
 } = require("@discordjs/voice");
 const ytdl = require("ytdl-core");
+const play = require("play-dl");
 const ytpl = require("ytpl");
 const ytsr = require("ytsr");
 
@@ -153,12 +154,13 @@ async function search(interaction, song) {
 
 async function playSong() {
   if (playlist.length > 0) {
+    var source = await play.stream(playlist[0], {
+      discordPlayerCompatibility: true,
+    });
     audioPlayer.play(
-      createAudioResource(
-        ytdl(playlist[0], {
-          quality: "lowestaudio",
-        })
-      )
+      createAudioResource(source.stream, {
+        inputType: source.type,
+      })
     );
     if (isFirstPlay) {
       isFirstPlay = false;
@@ -173,9 +175,7 @@ async function playSong() {
         playSong();
       });
       audioPlayer.on("error", (error) => {
-        console.error(
-          `Error: ${error.message}`
-        );
+        console.error(`Error: ${error.message}`);
         playlist.shift();
         if (playlist.length > 0) {
           playSong();
