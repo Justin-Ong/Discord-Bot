@@ -9,7 +9,6 @@ module.exports = {
     .setDescription("Skips current song"),
   async execute(interaction) {
     await interaction.reply("Skipping current song");
-    let channel = interaction.member.voice.channel;
     if (pc.playlist.length >= 1) {
       pc.playlist.shift();
       pc.playSong();

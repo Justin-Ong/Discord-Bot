@@ -42,8 +42,9 @@ module.exports = {
   },
   playlist,
   playSong,
-  isLoopingOne,
-  isLoopingAll,
+  setLoopOne,
+  setLoopAll,
+  setLoopOff,
 };
 
 function getConnection(interaction, input) {
@@ -165,7 +166,7 @@ async function playSong() {
         if (isLoopingAll) {
           console.log("isLoopingAll");
           playlist.push(playlist.shift());
-        } else if (!isLoopingOne) {
+        } else if (isLoopingOne) {
           console.log("isLoopingOne");
           //do nothing
         } else {
@@ -188,4 +189,19 @@ async function playSong() {
     audioPlayer.stop();
     console.log("Queue is empty!");
   }
+}
+
+function setLoopOne() {
+  isLoopingOne = true;
+  isLoopingAll = false;
+}
+
+function setLoopAll() {
+  isLoopingOne = false;
+  isLoopingAll = true;
+}
+
+function setLoopOff() {
+  isLoopingOne = false;
+  isLoopingAll = false;
 }

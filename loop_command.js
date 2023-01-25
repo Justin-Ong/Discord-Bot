@@ -20,16 +20,13 @@ module.exports = {
     const option = interaction.options.getString("option");
     if (option === "one") {
       await interaction.reply("Now looping current song");
-      pc.isLoopingOne = true;
-      pc.isLoopingAll = false;
+      pc.setLoopOne();
     } else if (option === "all") {
       await interaction.reply("Now looping all songs");
-      pc.isLoopingOne = false;
-      pc.isLoopingAll = true;
+      pc.setLoopAll();
     } else if (option === "off") {
       await interaction.reply("Stopping looping of song(s)");
-      pc.isLoopingOne = false;
-      pc.isLoopingAll = false;
+      pc.setLoopOff();
     }
   },
 };
