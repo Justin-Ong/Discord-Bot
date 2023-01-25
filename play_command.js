@@ -20,6 +20,7 @@ var isSearching = false;
 var searchText = "";
 var isLoopingOne = false;
 var isLoopingAll = false;
+var isFirstPlay = true;
 
 const searchChoices = [1, 2, 3, 4, 5];
 const subscription = undefined;
@@ -158,25 +159,31 @@ async function playSong() {
         })
       )
     );
-    audioPlayer.on(AudioPlayerStatus.Idle, () => {
-      if (isLoopingAll) {
-        console.log("isLoopingAll");
-        playlist.push(playlist.shift());
-      } else if (!isLoopingOne) {
-        console.log("isNotLooping");
-        playlist.shift();
-      }
-      playSong();
-    });
-    audioPlayer.on("error", (error) => {
-      console.error(
-        `Error: ${error.message} with resource ${error.resource.metadata.title}`
-      );
-      playlist.shift();
-      if (playlist.length > 0) {
+    if (isFirstPlay) {
+      isFirstPlay = false;
+      audioPlayer.on(AudioPlayerStatus.Idle, () => {
+        if (isLoopingAll) {
+          console.log("isLoopingAll");
+          playlist.push(playlist.shift());
+        } else if (!isLoopingOne) {
+          console.log("isLoopingOne");
+          //do nothing
+        } else {
+          console.log("isNotLooping");
+          playlist.shift();
+        }
         playSong();
-      }
-    });
+      });
+      audioPlayer.on("error", (error) => {
+        console.error(
+          `Error: ${error.message} with resource ${error.resource.metadata.title}`
+        );
+        playlist.shift();
+        if (playlist.length > 0) {
+          playSong();
+        }
+      });
+    }
   } else {
     audioPlayer.stop();
     console.log("Queue is empty!");
