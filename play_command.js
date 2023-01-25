@@ -164,13 +164,10 @@ async function playSong() {
       isFirstPlay = false;
       audioPlayer.on(AudioPlayerStatus.Idle, () => {
         if (isLoopingAll) {
-          console.log("isLoopingAll");
           playlist.push(playlist.shift());
         } else if (isLoopingOne) {
-          console.log("isLoopingOne");
           //do nothing
         } else {
-          console.log("isNotLooping");
           playlist.shift();
         }
         playSong();
