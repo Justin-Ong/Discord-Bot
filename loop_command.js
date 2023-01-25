@@ -4,7 +4,7 @@ const pc = require("./play_command");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("loop")
-    .setDescription("Starts looping of all songs in queue")
+    .setDescription("Handles looping of songs in the queue")
     .addStringOption((option) =>
       option
         .setName("option")
