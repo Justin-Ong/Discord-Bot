@@ -174,7 +174,7 @@ async function playSong() {
       });
       audioPlayer.on("error", (error) => {
         console.error(
-          `Error: ${error.message} with resource ${error.resource.metadata.title}`
+          `Error: ${error.message}`
         );
         playlist.shift();
         if (playlist.length > 0) {
