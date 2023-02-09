@@ -90,7 +90,7 @@ async function addSongToQueue(interaction, song) {
   playlist.push(song);
   console.log(playlist.length + " songs in queue");
   if (playlist.length === 1) {
-    playSong(interaction);
+    playSong();
     console.log("Playing " + info.videoDetails.title);
     interaction.editReply("Playing " + info.videoDetails.title);
   } else {
