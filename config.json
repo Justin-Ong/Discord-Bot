@@ -2,9 +2,7 @@
   "prefix": "$",
   "sites": [
     "safebooru.org",
-    "konachan.net",
-    "tbib.org",
-    "yande.re"
+    "konachan.net"
   ],
   "since_id": "1493885926099107840",
   "channel_id": "877581416450387969"
