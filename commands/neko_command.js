@@ -37,7 +37,7 @@ function neko(interaction, retries = 0) {
     })
     .catch((err) => {
       if (err.name === "BooruError") {
-        console.log("Booru error:", err.message);
+        console.log("Booru error when trying to send from", imageUrl, " : ", err.message);
         neko(interaction, retries + 1);
       } else {
         console.log(err);
