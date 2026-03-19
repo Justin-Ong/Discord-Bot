@@ -1,0 +1,4 @@
+.env
+node_modules/
+startup_log.json
+neko_log.json

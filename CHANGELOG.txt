@@ -1,0 +1,113 @@
+2.1.0:
+Switch from ytdl to play-dl to solve Error:aborted problems while playing long songs
+
+2.0.0:
+Update Discord.js to 14.7.0
+Refactor to use slash commands
+General cleanup
+
+1.8.2:
+Update ytdl
+
+1.8.1:
+Remove twitter integration as it is no longer required
+Update Node version to 16.x and update packages accordingly
+
+1.8.0:
+Add twitter integration to repost tweets from @RappyBurst to Discord
+
+1.7.6:
+Change addSongToQueue to simply store urls instead of getting video data - only get video data when actually playing the song
+Pros: Makes adding playlists and songs much faster
+Cons: Makes the list function work slower as have to get video data on current and next 4 songs
+
+1.7.5:
+Remove simple-youtube-api, use ytpl for playlist processing instead
+Follow Google JS style guide
+
+1.7.4:
+Update code to conform to updated ytsr, ytpl, ytdl-core (3.0.0, 2.0.3, 4.2.1 respectively)
+Limit search to only return videos and not channels
+Update search message on search completion to show chosen song
+Remove network and OS monitoring
+Remove counter
+
+1.7.3:
+Add source feature for neko
+Add additional commands for resetting bot
+
+1.7.2:
+Add network and OS monitoring
+
+1.7.1:
+Bug fixes
+
+1.7.0:
+Add YouTube search command
+
+1.6.5:
+Add loop command to repeat either a single song or the current playlist
+
+1.6.4:
+Modify list command to print song info in a more readable manner
+
+1.6.3:
+Add log file to keep track of login timings
+
+1.6.2:
+Add counter command
+Add file to keep track of counter even after server reset
+
+1.6.1:
+Allow commands to be in CAPS
+Add short forms for some music commands
+
+1.6.0:
+Shift bot hosting from local to Glitch
+
+1.5.2:
+Bug fixes
+
+1.5.1:
+Minor code cleanup
+
+1.5.0:
+Add image scraper to post random neko image from image boards
+
+1.4.4:
+Minor code cleanup
+
+1.4.3:
+Allow dice roller to perform operations besides addition
+
+1.4.2:
+Bug fixes
+
+1.4.1:
+Bug fixes
+
+1.4.0:
+Refactor to use classes
+Add resume, stop, skip and list functionality to music player
+
+1.3.2:
+Add pause functionality to music player
+
+1.3.1:
+Allow bot to send locally hosted images
+
+1.3.0:
+Update dice roller to allow multiple dice (e.g. 1d4 + 1d6)
+
+1.2.1:
+Implement video queue
+
+1.2.0:
+Add ability to play a youtube video from direct link to video
+
+1.1.0:
+Add dice roller that performs single die rolls (e.g. 1d4)
+Inform user if command is invalid
+
+1.0.0:
+Initial Release
