@@ -36,8 +36,9 @@ function neko(interaction, retries = 0) {
       interaction.editReply({ files: [file] });
     })
     .catch((err) => {
-      if (err.name === "booruError") {
-        console.log(err.message);
+      if (err.name === "BooruError") {
+        console.log("Booru error:", err.message);
+        neko(interaction, retries + 1);
       } else {
         console.log(err);
         console.log("retrying...");
