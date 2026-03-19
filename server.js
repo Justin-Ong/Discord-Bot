@@ -97,34 +97,35 @@ client.on(Events.InteractionCreate, async (interaction) => {
   }
 });
 
+const logFile = path.join(__dirname, "startup_log.json");
+
+async function readLog() {
+  try {
+    const data = await fs.readFile(logFile, "utf8");
+    return JSON.parse(data);
+  } catch {
+    return {};
+  }
+}
+
 async function loginSuccess() {
   const now = new Date().toISOString();
   const string = "Logged in as " + client.user.username + " at " + now;
-  try {
-    const data = await fs.readFile("startup_log.json", "utf8");
-    const log = JSON.parse(data);
-    log.prev_success = log.curr_success;
-    log.curr_success = string;
-    await fs.writeFile("startup_log.json", JSON.stringify(log, null, 2));
-    console.log(string);
-  } catch (err) {
-    console.error("Could not update log file:", err.message);
-  }
+  const log = await readLog();
+  log.prev_success = log.curr_success;
+  log.curr_success = string;
+  await fs.writeFile(logFile, JSON.stringify(log, null, 2));
+  console.log(string);
 }
 
 async function loginFailure(error) {
   const now = new Date().toISOString();
   const string = "Failed to log in at " + now + " due to: " + error;
-  try {
-    const data = await fs.readFile("startup_log.json", "utf8");
-    const log = JSON.parse(data);
-    log.prev_failure = log.curr_failure;
-    log.curr_failure = string;
-    await fs.writeFile("startup_log.json", JSON.stringify(log, null, 2));
-    console.log(string);
-  } catch (err) {
-    console.error("Could not update log file:", err.message);
-  }
+  const log = await readLog();
+  log.prev_failure = log.curr_failure;
+  log.curr_failure = string;
+  await fs.writeFile(logFile, JSON.stringify(log, null, 2));
+  console.log(string);
 }
 
 module.exports = { client };
